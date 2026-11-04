@@ -1,0 +1,641 @@
+{
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "close": "Close",
+    "delete": "Delete",
+    "discard": "Discard",
+    "copy": "Copy",
+    "copied": "Copied",
+    "copyFailed": "Not possible",
+    "loading": "Loading …",
+    "on": "On",
+    "off": "Off",
+    "language": "Language"
+  },
+  "brand": {
+    "panelLabel": "What {{product}} does",
+    "tagline": "Applications that look the part.",
+    "subline": "CV, cover letter and application tracker in one app – free and open source.",
+    "features": {
+      "cv": {
+        "title": "CV from building blocks",
+        "text": "Maintain it once in your master profile, pick what goes into each application."
+      },
+      "letter": {
+        "title": "Cover letter and title page",
+        "text": "Following DIN 5008, with a matching title page."
+      },
+      "designs": {
+        "title": "Designs from classic to modern",
+        "text": "One click changes the design without retyping anything."
+      },
+      "export": {
+        "title": "PDF and Word export",
+        "text": "The whole portfolio as PDF, CV and cover letter as Word."
+      },
+      "tracker": {
+        "title": "Application tracker",
+        "text": "Status, interviews and the exact version you sent, at a glance."
+      }
+    },
+    "ai": "AI help is optional: with your own key, a local model, or by copy and paste.",
+    "copyright": "© {{year}} SushiFlux Develop"
+  },
+  "fields": {
+    "username": "Username",
+    "displayName": "Display name",
+    "password": "Password",
+    "passwordHint": "At least {{min}} characters.",
+    "repeat": "Repeat password",
+    "code": "Code",
+    "setupToken": "Setup code"
+  },
+  "rules": {
+    "userName": {
+      "required": "Please enter a username.",
+      "characters": "The username contains characters that are not allowed.",
+      "tooShort": "Too short: {{length}} of at least {{min}} characters.",
+      "tooLong": "Too long: {{length}} of at most {{max}} characters."
+    },
+    "displayName": {
+      "required": "Please enter a display name.",
+      "tooShort": "Too short: {{length}} of at least {{min}} characters.",
+      "tooLong": "Too long: {{length}} of at most {{max}} characters."
+    },
+    "password": {
+      "required": "Please enter a password.",
+      "tooShort": "Too short: {{length}} of at least {{min}} characters.",
+      "tooLong": "Too long: {{length}} of at most {{max}} characters.",
+      "repeatRequired": "Please enter the password again.",
+      "mismatch": "The two passwords are not the same."
+    },
+    "totp": {
+      "required": "Please enter the code from your authenticator app.",
+      "digitsOnly": "The code consists of digits only.",
+      "length": "Too long: the code has exactly {{count}} digits."
+    },
+    "code": {
+      "required": "Please enter the code from your authenticator app or a recovery code."
+    },
+    "setupToken": {
+      "required": "Please enter the setup code.",
+      "characters": "The setup code consists of letters and digits only, without the easily confused 0, 1, I, L and O.",
+      "tooLong": "Too long: the setup code has exactly {{count}} characters.",
+      "incomplete": "Not complete yet: the setup code has exactly {{count}} characters."
+    }
+  },
+  "setup": {
+    "title": "Welcome to {{product}}",
+    "intro": "Create the first account to get started.",
+    "adminHint": "This first account automatically becomes the administrator. You create further accounts yourself later.",
+    "submit": "Create account",
+    "tokenHint": "It is in the server’s log at the first start – on Unraid under Docker → Vitafolio → Logs."
+  },
+  "login": {
+    "title": "Sign in",
+    "intro": "Sign in with your account.",
+    "submit": "Sign in",
+    "noAccount": "No account yet?",
+    "codeTitle": "Second step",
+    "codeIntro": "Enter the six-digit code from your authenticator app.",
+    "codeHint": "Without the app, a recovery code works too (once).",
+    "codeSubmit": "Confirm",
+    "back": "Back to sign-in"
+  },
+  "register": {
+    "title": "Register",
+    "intro": "Create your account.",
+    "submit": "Create account",
+    "haveAccount": "Already have an account?"
+  },
+  "forced2fa": {
+    "title": "Set up two-factor sign-in",
+    "intro": "The administrator requires a second factor for every account.",
+    "hint": "As soon as the setup is done you can continue. Nothing else is possible before."
+  },
+  "nav": {
+    "label": "Main navigation",
+    "overview": "Overview",
+    "admin": "App administration",
+    "settings": "Settings",
+    "signOut": "Sign out"
+  },
+  "shell": {
+    "theme": "Change appearance",
+    "localAccount": "Local account",
+    "signOutFailed": "Signing out did not work."
+  },
+  "roles": {
+    "admin": "Administrator",
+    "user": "User"
+  },
+  "overview": {
+    "welcomeLabel": "Welcome",
+    "welcome": "Welcome, {{name}}",
+    "account": {
+      "title": "Your account"
+    },
+    "twoFactor": {
+      "title": "Two-factor sign-in",
+      "on": "Active",
+      "off": "Not active",
+      "onText": "Signing in also asks for a code from your authenticator app.",
+      "offText": "A second factor protects your account if the password falls into the wrong hands.",
+      "manage": "Manage in settings"
+    },
+    "mode": {
+      "title": "Operation",
+      "server": "Server version: sign-in with an account, reached in the browser.",
+      "desktop": "Windows program: your data stays on this computer, no sign-in needed."
+    },
+    "backup": {
+      "title": "Backups",
+      "last": "Last backup: {{when}}",
+      "none": "No backup yet.",
+      "manage": "Open backups"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Your personal settings.",
+    "tabs": {
+      "appearance": "Appearance",
+      "security": "Security",
+      "backups": "Backups"
+    },
+    "theme": {
+      "title": "Colour scheme",
+      "text": "Light, dark, or automatic following your system setting.",
+      "system": "System",
+      "light": "Light",
+      "dark": "Dark"
+    },
+    "language": {
+      "title": "Language",
+      "text": "The language of the interface."
+    },
+    "password": {
+      "title": "Change password",
+      "text": "Enter the current password once and the new one twice.",
+      "current": "Current password",
+      "new": "New password",
+      "repeat": "Repeat new password",
+      "submit": "Change password",
+      "done": "The password was changed.",
+      "failed": "The password could not be changed:"
+    },
+    "totp": {
+      "title": "Two-factor sign-in",
+      "textOff": "Protect your account additionally with an authenticator app.",
+      "textOn": "Your account is protected with an authenticator app.",
+      "intro": "You need an authenticator app (e.g. on your phone). After the setup you get ten recovery codes for emergencies.",
+      "start": "Start setup",
+      "startFailed": "The setup could not be started:",
+      "qrLabel": "QR code for setting up the authenticator app",
+      "step1": "Scan the QR code with your authenticator app, or type in the key by hand.",
+      "step2": "Then enter the six-digit code shown by the app.",
+      "manualKey": "Key to type in",
+      "codeLabel": "Code from the app",
+      "enable": "Turn on",
+      "codesWarning": "Keep these recovery codes safe. Each one works once and will not be shown again.",
+      "done": "Done, codes saved",
+      "disableIntro": "To turn it off, confirm with your password and a code (from the app or a recovery code).",
+      "password": "Current password",
+      "codeOrRecovery": "Code or recovery code",
+      "disable": "Turn off two-factor",
+      "disableFailed": "Two-factor could not be turned off:"
+    },
+    "sessions": {
+      "title": "Signed-in devices",
+      "text": "All sessions of your account. End the ones you do not recognise.",
+      "device": "Device",
+      "ip": "IP address",
+      "started": "Signed in since",
+      "lastUsed": "Last used",
+      "current": "This device",
+      "end": "End",
+      "confirmTitle": "End session?",
+      "confirmText": "{{device}} ({{ip}}) will be signed out and has to sign in again.",
+      "loadFailed": "The sessions could not be loaded:",
+      "revokeFailed": "The session could not be ended:"
+    }
+  },
+  "admin": {
+    "title": "App administration",
+    "subtitle": "Everything that concerns the whole app for everybody.",
+    "tabs": {
+      "users": "Users",
+      "settings": "Settings",
+      "activity": "Activity log",
+      "backups": "Backups"
+    },
+    "users": {
+      "count_one": "{{count}} account",
+      "count_other": "{{count}} accounts",
+      "create": "Add user",
+      "createTitle": "Add a new user",
+      "createAction": "Add",
+      "name": "Name",
+      "role": "Role",
+      "roleHint": {
+        "user": "Works with their own application data.",
+        "admin": "Manages accounts and the app. Cannot see anybody else's application data."
+      },
+      "status": "Status",
+      "active": "Active",
+      "disabled": "Disabled",
+      "twoFactor": "Two-factor",
+      "lastLogin": "Last sign-in",
+      "never": "Never",
+      "edit": "Edit",
+      "editTitle": "Edit account {{username}}",
+      "accountActive": "Account active",
+      "accountActiveHint": "A disabled account can no longer sign in.",
+      "selfNote": "This is your own account: you can neither disable it nor give up your administrator role.",
+      "saveFailed": "The account could not be saved:",
+      "setPassword": "Set a new password",
+      "passwordTitle": "New password for {{name}}",
+      "passwordText": "You never learn the old password. Pass the new one on to the person in a safe way.",
+      "passwordAction": "Set password",
+      "resetAction": "Reset two-factor",
+      "resetTitle": "Reset two-factor?",
+      "resetText": "Two-factor sign-in is turned off for {{name}}. They can set it up again afterwards.",
+      "resetFailed": "Two-factor could not be reset:",
+      "deleteTitle": "Delete account?",
+      "deleteText": "The account {{name}} ({{username}}) is deleted with all its data. This cannot be undone.",
+      "deleteSelf": "Your own account cannot be deleted",
+      "deleteFailed": "The account could not be deleted:",
+      "loadFailed": "The users could not be loaded:"
+    },
+    "settings": {
+      "accessTitle": "Access",
+      "accessText": "These switches apply to the whole app at once.",
+      "registrationOpen": "Registration open",
+      "registrationOpenHint": "Anybody who reaches the page can create an account. Normally off: the administrator creates accounts.",
+      "requireTwoFactor": "Require two-factor for everybody",
+      "requireTwoFactorHint": "Whoever has no second factor yet has to set one up at the next sign-in.",
+      "confirm2faTitle": "Require two-factor for everybody?",
+      "confirm2faText": "Every account without a second factor has to set one up at the next sign-in; nothing else is possible before.",
+      "confirm2faAction": "Require",
+      "saveFailed": "The setting could not be saved:",
+      "loadFailed": "The settings could not be loaded:"
+    }
+  },
+  "activity": {
+    "filterAction": "Action",
+    "filterUser": "User",
+    "all": "All",
+    "when": "Time",
+    "who": "Who",
+    "what": "Action",
+    "target": "Concerns",
+    "ip": "IP address",
+    "details": "Details",
+    "show": "Show",
+    "empty": "No entries.",
+    "total_one": "{{count}} entry",
+    "total_other": "{{count}} entries",
+    "page": "Page {{page}} of {{pages}}",
+    "previous": "Previous page",
+    "next": "Next page",
+    "loadFailed": "The log could not be loaded:",
+    "actions": {
+      "auth": {
+        "login": "Signed in",
+        "login_failed": "Sign-in failed",
+        "logout": "Signed out",
+        "register": "Registered",
+        "refresh_reuse": "Session ended because of reuse",
+        "reauth_failed": "Confirmation with password failed",
+        "twofactor_failed": "Two-factor code wrong"
+      },
+      "setup": {
+        "completed": "Setup completed"
+      },
+      "settings": {
+        "changed": "Settings changed"
+      },
+      "user": {
+        "created": "Account created",
+        "updated": "Account changed",
+        "deleted": "Account deleted",
+        "disabled": "Account disabled",
+        "enabled": "Account enabled",
+        "role_changed": "Role changed",
+        "password_set": "Password set"
+      },
+      "backup": {
+        "created": "Backup created",
+        "download": "Backup downloaded",
+        "downloaded": "Backup downloaded",
+        "restore": "Restore started",
+        "restored": "Backup restored",
+        "settings_changed": "Backup settings changed",
+        "upload": "Backup uploaded",
+        "uploaded": "Backup uploaded",
+        "auto_created": "Automatic backup created",
+        "auto_unchanged": "Automatic backup skipped (no change)",
+        "auto_failed": "Automatic backup failed",
+        "deleted": "Backup deleted"
+      },
+      "twofactor": {
+        "enabled": "Two-factor turned on",
+        "disabled": "Two-factor turned off",
+        "reset": "Two-factor reset"
+      },
+      "session": {
+        "revoked": "Session ended"
+      },
+      "account": {
+        "password_changed": "Password changed"
+      }
+    },
+    "unknown": "Other action ({{code}})"
+  },
+  "backups": {
+    "weekdays": {
+      "1": "Mon",
+      "2": "Tue",
+      "3": "Wed",
+      "4": "Thu",
+      "5": "Fri",
+      "6": "Sat",
+      "7": "Sun"
+    },
+    "loadFailed": "The backups could not be loaded:",
+    "schedule": {
+      "sectionTitle": "Back up automatically",
+      "sectionText": "Decide when the app backs up your data on its own.",
+      "settingsLabel": "Settings of the automatic backup",
+      "master": "Automatic backup",
+      "masterHint": "Turn this off if you already use your own backup system (e.g. the appdata backup of your NAS). Backing up, downloading and restoring by button always work.",
+      "onStart": "At start",
+      "onStartHint": "A backup as soon as the app starts.",
+      "beforeShutdown": "Before shutdown",
+      "beforeShutdownHint": "One last backup before the app shuts down.",
+      "title": "Schedule",
+      "kindOff": "Off",
+      "kindInterval": "Every … hours",
+      "kindTimes": "At fixed times",
+      "intervalLabel": "Every … hours",
+      "intervalHint": "Hours between two backups.",
+      "weekdays": "On these weekdays",
+      "times": "Times",
+      "timeN": "Time {{n}}",
+      "addTime": "Add time",
+      "removeTime": "Remove time {{time}}",
+      "maxTimes": "At most {{max}} times.",
+      "problem": {
+        "interval": "Please enter a whole number from {{min}} to {{max}}.",
+        "noTimes": "At least one time is still missing.",
+        "duplicateTime": "A time is in the list twice.",
+        "invalidTime": "A time is incomplete.",
+        "noWeekdays": "Please choose at least one weekday."
+      },
+      "catchUp": "Catch up missed backups",
+      "catchUpHint": "If the app was not running at the planned time, the backup is made at the next start.",
+      "saved": "The settings were saved.",
+      "saveFailed": "The settings could not be saved:",
+      "hour": "Hour",
+      "minute": "Minute"
+    },
+    "retention": {
+      "title": "Retention",
+      "recent": "Keep the latest backups",
+      "recentHint": "The newest {{min}} to {{max}} stay.",
+      "daily": "Keep one per day (days)",
+      "dailyHint": "{{min}} to {{max}} days; 0 = none.",
+      "problemRecent": "Please enter a whole number from {{min}} to {{max}}.",
+      "problemDaily": "Please enter a whole number from {{min}} to {{max}}."
+    },
+    "preview": {
+      "title": "The next 7 days",
+      "text": "This is what the plan looks like. It changes live while you edit the settings.",
+      "planned_one": "{{count}} planned backup in the next 7 days.",
+      "planned_other": "{{count}} planned backups in the next 7 days.",
+      "automaticOff": "Automatic backup is off – no automatic backups are planned.",
+      "scheduleOff": "No schedule chosen – no scheduled backups are planned.",
+      "noneInWindow": "No backup is planned in the next 7 days.",
+      "unsaved": "Preview, not saved",
+      "today": "Today",
+      "noRun": "none",
+      "manyRuns": "{{count}} backups",
+      "eventsBoth": "Additionally a backup is made at start and before shutdown.",
+      "eventsStart": "Additionally a backup is made at start.",
+      "eventsShutdown": "Additionally a backup is made before shutdown.",
+      "eventsNone": "No backup is made at start or before shutdown.",
+      "timeZone": "Time zone",
+      "directory": "Backup folder"
+    },
+    "desktopNote": "Backups only run while the program is open. Whatever was missed in the meantime is caught up at the next start (if enabled).",
+    "list": {
+      "title": "Backups",
+      "text": "All existing backups, newest first."
+    },
+    "backupNow": "Back up now",
+    "backupNowFailed": "The backup failed:",
+    "downloadCurrent": "Download current state",
+    "downloadFailed": "The download failed:",
+    "upload": "Upload backup",
+    "download": "Download",
+    "restore": "Restore",
+    "table": {
+      "when": "Time",
+      "kind": "Kind",
+      "size": "Size",
+      "actions": "Actions",
+      "empty": "No backup yet."
+    },
+    "kind": {
+      "start": "At start",
+      "shutdown": "Before shutdown",
+      "scheduled": "Scheduled",
+      "manual": "Manual",
+      "pre-restore": "Before restore",
+      "uploaded": "Uploaded"
+    },
+    "result": {
+      "created": "Backup created: {{file}}",
+      "unchanged": "Nothing has changed since the last backup – no new one was made.",
+      "downloaded": "Downloaded: {{file}}",
+      "uploaded": "Uploaded: {{file}}. It is now in the list and can be restored.",
+      "tooBig": "The file is too large: {{size}} (at most {{max}} allowed).",
+      "deleted": "Deleted: {{file}}"
+    },
+    "reauth": {
+      "password": "Your current password",
+      "passwordHint": "For safety: this action concerns the data of all accounts.",
+      "code": "Code from the authenticator app"
+    },
+    "dialog": {
+      "sensitive": "The file contains the data of all accounts, including the protected passwords. Keep it safe.",
+      "downloadTitle": "Download backup",
+      "downloadText": "The backup from {{date}} is downloaded as a file.",
+      "currentTitle": "Download current state",
+      "currentText": "A fresh backup is made first and then downloaded as a file.",
+      "uploadTitle": "Upload backup",
+      "uploadText": "The file {{name}} ({{size}}) is uploaded.",
+      "uploadChecks": "It is checked: it has to be a valid backup of this app, not from a newer version. Afterwards it is in the list; nothing is restored until you trigger that there.",
+      "restoreTitle": "Restore backup",
+      "restoreIntro": "The backup from {{date}} ({{kind}}) is restored. This is what happens:",
+      "restoreSafety": "The current state is saved as a backup of its own first (“Before restore”) – so you can get it back.",
+      "restoreSignOut": "Everybody is signed out and has to sign in again.",
+      "restoreReloadDesktop": "The program then reloads and shows the restored state.",
+      "restoreReplace": "All data created after this backup is no longer in the running app afterwards.",
+      "deleteTitle": "Delete backup",
+      "deleteText": "The backup from {{date}} ({{kind}}) is deleted.",
+      "deleteIrreversible": "This cannot be undone. The running app is not affected."
+    },
+    "deleteFailed": "The backup could not be deleted:"
+  },
+  "errorScreen": {
+    "401": {
+      "title": "Not signed in",
+      "text": "You have to be signed in for this. Please sign in."
+    },
+    "403": {
+      "title": "No access",
+      "text": "You do not have permission for this page."
+    },
+    "404": {
+      "title": "Page not found",
+      "text": "This address does not exist (any more). Maybe there is a typo."
+    },
+    "429": {
+      "title": "Too many requests",
+      "text": "Too many requests came in a short time. Please wait about {{seconds}} seconds and try again."
+    },
+    "500": {
+      "title": "That did not work",
+      "text": "An error occurred on the server. Please try again."
+    },
+    "503": {
+      "title": "Not reachable",
+      "text": "The server is not answering right now or is being maintained. Please try again in a moment."
+    },
+    "retry": "Try again",
+    "home": "To the overview",
+    "signIn": "To sign-in"
+  },
+  "errors": {
+    "unexpected": "An unexpected error occurred.",
+    "dialogTitle": "That did not work",
+    "statusFallback": "The server answered with status {{status}}.",
+    "validationField": "Input “{{field}}”:",
+    "technical": {
+      "toggle": "Details",
+      "heading": "Technical details",
+      "code": "Error code",
+      "detail": "Message of the server",
+      "field": "Field",
+      "traceId": "Trace id"
+    },
+    "codes": {
+      "network": "The server cannot be reached. Check the connection and try again.",
+      "rate_limited": "Too many attempts. Please try again in {{seconds}} seconds.",
+      "rate_limited_unknown": "Too many attempts. Please wait a moment and try again.",
+      "csrf": {
+        "missing": "The request was refused for security reasons. Please reload the page."
+      },
+      "request": {
+        "invalid": "The request could not be read."
+      },
+      "server": {
+        "error": "An error occurred on the server. The trace id in the technical details finds it in the log."
+      },
+      "status": {
+        "401": "You are not signed in.",
+        "403": "You do not have permission for this.",
+        "404": "That was not found.",
+        "429": "Too many requests. Please wait a moment.",
+        "500": "An error occurred on the server.",
+        "503": "The server is not available right now."
+      },
+      "validation": {
+        "failed": "The input is not valid.",
+        "required": "This field must not be empty.",
+        "min_length": "Too short: at least {{min}} characters.",
+        "max_length": "Too long: at most {{max}} characters.",
+        "min_value": "The value must be at least {{min}}.",
+        "range": "The value must be between {{min}} and {{max}}.",
+        "one_of": "This value is not allowed.",
+        "pattern": "The format is wrong.",
+        "invalid_characters": "Contains characters that are not allowed.",
+        "invalid_value": "This value is not valid.",
+        "duplicates": "A value is in the list twice.",
+        "file_too_large": "The file is too large.",
+        "max_items": "There are too many entries (at most {{max}}).",
+        "time_format": "The time is not in a valid format (HH:mm)."
+      },
+      "auth": {
+        "invalid_credentials": "Username or password is wrong.",
+        "login_failed": "Signing in failed.",
+        "expired": "Your sign-in has expired. Please sign in again.",
+        "required": "Please sign in.",
+        "invalid": "This account no longer exists.",
+        "forbidden": "You do not have permission for this.",
+        "disabled": "This account is disabled. Contact the administrator.",
+        "twofactor_required": "A code for two-factor sign-in is required.",
+        "twofactor_invalid": "The code is wrong or was already used.",
+        "twofactor_failed": "The code does not match.",
+        "twofactor_setup_required": "Two-factor sign-in has to be set up first.",
+        "challenge_invalid": "The sign-in has expired. Please start again with username and password.",
+        "refresh_invalid": "The sign-in has ended. Please sign in again.",
+        "refresh_reused": "This session was ended for security reasons. Please sign in again.",
+        "reauth_failed": "Password or code does not match. Nothing was changed."
+      },
+      "password": {
+        "current_invalid": "The current password is wrong."
+      },
+      "setup": {
+        "already_done": "The setup is already complete. Please sign in.",
+        "required": "The first account has to be set up first.",
+        "token_invalid": "The setup code is wrong. It is in the server’s log at the first start."
+      },
+      "registration": {
+        "closed": "Registration is closed. Ask the administrator for an account."
+      },
+      "user": {
+        "username_taken": "This username is already taken.",
+        "last_admin": "This is the last active administrator; it has to stay an active administrator.",
+        "self_demote": "You cannot remove your own administrator role.",
+        "self_disable": "You cannot disable your own account.",
+        "self_delete": "You cannot delete your own account.",
+        "not_found": "This account does not exist."
+      },
+      "twofactor": {
+        "already_enabled": "Two-factor sign-in is already on.",
+        "setup_not_started": "Start the setup first to get a new key.",
+        "required_by_admin": "The administrator requires two-factor sign-in for everybody; it cannot be turned off.",
+        "not_enabled": "Two-factor sign-in is not on.",
+        "code_already_used": "This code was already used. Wait for the next code of the app or use a recovery code.",
+        "key_unavailable": "The key of the two-factor sign-in cannot be read. Have the administrator reset it and set it up again."
+      },
+      "session": {
+        "not_found": "This session does not exist or has already ended."
+      },
+      "backup": {
+        "failed": "The backup failed. Details are in the server's log.",
+        "unchanged": "Nothing has changed since the last backup.",
+        "too_new": "This backup is from a newer version of the app and cannot be restored here.",
+        "not_found": "This backup does not exist (any more).",
+        "invalid": "The file is not a valid backup of this app.",
+        "too_large": "The file is too large.",
+        "restore_failed": "The restore failed. The previous state was brought back automatically; it is also saved as the backup {{safetyBackup}}. Details are in the server’s log.",
+        "upload_limit": "At most {{max}} uploaded backups – please delete one first.",
+        "restore_failed_not_rolled_back": "The restore failed and the previous state could not be brought back automatically. It is saved as the backup {{safetyBackup}}: restore that backup. Details are in the server’s log.",
+        "busy": "A backup or restore is running right now. Please wait a moment and try again.",
+        "invalid_schema_mismatch": "The file is not an unchanged {{product}} backup: its structure does not fit this app. Only use backups the app made itself and that were not edited."
+      },
+      "not_found": "That was not found.",
+      "maintenance": {
+        "busy": "The app is being maintained right now (e.g. a backup is being restored). Please try again in a moment."
+      },
+      "host": {
+        "not_allowed": "The server does not answer under this name. The operator can allow the name in the setting ALLOWED_HOSTS."
+      },
+      "rate_limited_account": "Too many attempts for this account – please wait 15 minutes."
+    }
+  }
+}

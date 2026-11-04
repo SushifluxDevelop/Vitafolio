@@ -1,0 +1,53 @@
+# Secrets & local environment (never commit)
+.secrets/
+.env
+.env.*
+!.env.example
+!.env.*.example
+
+# Private development documents: intern/ is its own private repository.
+/intern/
+*.local.md
+*.local.json
+.vscode/
+
+# Runtime data of the app when run outside Docker (database, keys)
+.data/
+
+# Database backups
+.backups/
+
+# Runtime state of the start script and the dev build counter
+.logs/
+.run/
+
+# .NET
+bin/
+obj/
+*.user
+*.suo
+.vs/
+TestResults/
+*.binlog
+
+# Published build outputs
+artifacts/
+
+# Node / frontend
+node_modules/
+dist/
+.vite/
+*.tsbuildinfo
+coverage/
+playwright-report/
+test-results/
+
+# OS / editors
+Thumbs.db
+Desktop.ini
+.DS_Store
+.idea/
+*.swp
+
+# End-to-end suite: the saved sign-in of the throw-away test instance
+frontend/e2e/.auth/

@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <!--
+    The server: API, accounts and sign-in, SQLite database, backups and hosting of the built web UI.
+    Used by its own Program.cs (Docker, development) and in-process by the Windows program through ServerApp.Build.
+  -->
+  <PropertyGroup>
+    <RootNamespace>Cv.Server</RootNamespace>
+    <AssemblyName>Cv.Server</AssemblyName>
+    <AssemblyTitle>$(Product) Server</AssemblyTitle>
+    <InvariantGlobalization>false</InvariantGlobalization>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.IdentityModel.JsonWebTokens" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Cv.Server.Tests" />
+  </ItemGroup>
+</Project>

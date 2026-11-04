@@ -1,0 +1,35 @@
+# Keep the build context small and free of local state. The /intern/ folder is private and never part of an image.
+/intern/
+/CLAUDE.md
+.git/
+.github/
+.vs/
+.vscode/
+
+# Local runtime state and generated output
+.data/
+.backups/
+.run/
+.logs/
+artifacts/
+TestResults/
+*.local.json
+*.local.md
+.env
+.env.*
+
+# Build output and dependencies are produced inside the image
+**/bin/
+**/obj/
+**/node_modules/
+frontend/dist/
+frontend/e2e/.auth/
+frontend/test-results/
+frontend/playwright-report/
+**/*.tsbuildinfo
+
+# Not part of the server image
+src/Cv.Desktop/
+tests/
+scripts/
+docs/

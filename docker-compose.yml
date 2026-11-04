@@ -1,0 +1,59 @@
+# Live profile on this PC: the built image exactly as Unraid, NAS and Linux hosts run it - one container, the SQLite database and its
+# backups inside the named volume (the volume survives "down"; never remove it with -v unless the data is meant to go).
+#
+#   .\start.ps1 -Env live         build and start  -> http://127.0.0.1:5242
+#   .\start.ps1 stop -Env live    stop (the volume stays)
+#
+# Plain Docker hosts: "docker compose up -d" works without start.ps1 (the build arguments have defaults); the published port can be
+# changed with APP_PORT. start.ps1 fills the build arguments from version.txt and branding.json and takes the port from its fixed port settings.
+# Own Compose project name, so nothing here can touch the development data in .data\.
+
+name: vitafolio-live
+
+services:
+  app:
+    build:
+      context: .
+      args:
+        APP_VERSION: ${APP_VERSION:-v0.0.0}
+        APP_VERSION_DETAIL: ${APP_VERSION_DETAIL:-}
+        APP_CHANNEL: ${APP_CHANNEL:-release}
+        APP_TITLE: ${APP_TITLE:-App}
+        VCS_REF: ${VCS_REF:-unknown}
+        BUILD_DATE: ${BUILD_DATE:-unknown}
+    image: vitafolio:local
+    ports:
+      # Loopback only: the live profile on this PC is not offered to the home network
+      - "127.0.0.1:${APP_PORT:-5242}:8080"
+    environment:
+      # The container starts as root only to hand /data to this user, then drops to it (deploy/docker-entrypoint.sh)
+      PUID: "${PUID:-99}"
+      PGID: "${PGID:-100}"
+      TZ: "${TZ:-Europe/Berlin}"
+    volumes:
+      - data:/data
+    # Hardening: the process can never gain privileges, all capabilities are dropped except the five the entrypoint needs while it is root
+    # (CHOWN: hand /data to PUID/PGID; DAC_OVERRIDE: enter and read data folders that belong to the app user (mode 700); FOWNER: tighten
+    # the modes of existing files after the chown; SETUID + SETGID: setpriv drops to PUID/PGID). The app itself runs without any capability.
+    # The root file system is read-only; only /tmp (tmpfs) and /data (volume) are writable.
+    # Equivalent docker run flags (Unraid: "Extra Parameters" of the container):
+    #   --cap-drop ALL --cap-add CHOWN --cap-add DAC_OVERRIDE --cap-add FOWNER --cap-add SETUID --cap-add SETGID
+    #   --security-opt no-new-privileges:true --read-only --tmpfs /tmp:rw,noexec,nosuid,size=64m
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - DAC_OVERRIDE
+      - FOWNER
+      - SETUID
+      - SETGID
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=64m
+    stop_grace_period: 40s
+    restart: unless-stopped
+
+volumes:
+  data:

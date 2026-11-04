@@ -1,0 +1,36 @@
+/**
+ * Every action code the server writes to the activity log (the filter offers exactly these, and each has a label in both
+ * languages - a unit test keeps the three in step). An unknown code from a newer server still shows, as "Other action".
+ */
+export const ACTIVITY_ACTIONS = [
+  'auth.login',
+  'auth.login_failed',
+  'auth.logout',
+  'auth.register',
+  'auth.refresh_reuse',
+  'auth.reauth_failed',
+  'auth.twofactor_failed',
+  'account.password_changed',
+  'setup.completed',
+  'settings.changed',
+  'user.created',
+  'user.updated',
+  'user.deleted',
+  'user.disabled',
+  'user.enabled',
+  'user.role_changed',
+  'user.password_set',
+  'twofactor.enabled',
+  'twofactor.disabled',
+  'twofactor.reset',
+  'session.revoked',
+  'backup.created',
+  'backup.deleted',
+  'backup.auto_created',
+  'backup.auto_unchanged',
+  'backup.auto_failed',
+  'backup.downloaded',
+  'backup.uploaded',
+  'backup.restored',
+  'backup.settings_changed',
+] as const

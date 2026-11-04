@@ -1,0 +1,116 @@
+/*
+ * Design tokens. Every colour in the app comes from here - components never hard-code one. Light is the base, dark
+ * overrides it; "data-theme" on <html> is set by the theme provider (system preference by default, manual switch saved).
+ *
+ * Action-colour categories (one accent per meaning, decided up front):
+ *   create   - gold    : makes something new ("+ New user")
+ *   confirm  - blue    : saves / confirms / continues
+ *   select   - blue tint with a gold indicator: the active tab, filter, navigation entry
+ *   danger   - red     : destructive actions and errors
+ * Toggles have their own pair (on = green, off = red) because their meaning is unrelated to the categories above.
+ *
+ * Contrast (WCAG 2.x) of the text/background pairs and of the UI parts is pinned by src/styles/tokens.test.ts for both
+ * themes; change a value here and that test tells whether it still passes.
+ */
+:root,
+[data-theme='light'] {
+  color-scheme: light;
+
+  --bg: #f4f1e8;
+  --bg-sunken: #ebe7db;
+  --surface: #ffffff;
+  --surface-2: #f8f6f0;
+  --line: #dad3c1;
+  --line-strong: #857f6c;
+
+  --ink: #14213d;
+  --ink-muted: #4e5568;
+
+  --link: #24478f;
+  --focus: #2f5db4;
+  --gold-text: #7a5410;
+
+  --confirm: #2b4170;
+  --confirm-hover: #22365f;
+  --confirm-ink: #ffffff;
+
+  --create: #d9ae57;
+  --create-hover: #cc9f45;
+  --create-ink: #14213d;
+
+  --select-bg: #e3e9f6;
+  --select-ink: #1b2f5e;
+  --indicator: #a27420;
+
+  --danger: #b3261e;
+  --danger-hover: #961e17;
+  --danger-ink: #ffffff;
+  --danger-soft: #fbeae8;
+  --danger-soft-ink: #8e1b15;
+
+  --success-soft: #e4f3e8;
+  --success-soft-ink: #14602e;
+  --warning-soft: #fbf1db;
+  --warning-soft-ink: #6b4a08;
+
+  --toggle-on: #1e7a3c;
+  --toggle-off: #b3261e;
+  --toggle-knob: #ffffff;
+
+  --heart: #1e7a3c;
+
+  --overlay: rgb(10 15 28 / 0.55);
+  --elev-card: 0 1px 2px rgb(20 33 61 / 0.06), 0 4px 14px rgb(20 33 61 / 0.05);
+  --elev-pop: 0 18px 50px rgb(10 15 28 / 0.28);
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  --bg: #0d1322;
+  --bg-sunken: #090e1a;
+  --surface: #151d33;
+  --surface-2: #1b2440;
+  --line: #2a355a;
+  --line-strong: #7280a8;
+
+  --ink: #f3eee2;
+  --ink-muted: #a8b1c8;
+
+  --link: #9db5ee;
+  --focus: #a9bef0;
+  --gold-text: #e3bc6a;
+
+  --confirm: #93adea;
+  --confirm-hover: #a9bef0;
+  --confirm-ink: #0b1530;
+
+  --create: #d9ae57;
+  --create-hover: #e5be6b;
+  --create-ink: #14213d;
+
+  --select-bg: #24325c;
+  --select-ink: #e3eaff;
+  --indicator: #d9ae57;
+
+  --danger: #ff8f86;
+  --danger-hover: #ffaaa3;
+  --danger-ink: #1a0707;
+  --danger-soft: #3a1a1f;
+  --danger-soft-ink: #ffb4ad;
+
+  --success-soft: #16301f;
+  --success-soft-ink: #86dba1;
+  --warning-soft: #3a301a;
+  --warning-soft-ink: #f0cf86;
+
+  --toggle-on: #46c36f;
+  --toggle-off: #e5645c;
+  --toggle-knob: #0d1322;
+
+  --heart: #4ade80;
+
+  --overlay: rgb(3 6 14 / 0.7);
+  --elev-card: 0 1px 2px rgb(0 0 0 / 0.3), 0 6px 18px rgb(0 0 0 / 0.25);
+  --elev-pop: 0 18px 50px rgb(0 0 0 / 0.55);
+}

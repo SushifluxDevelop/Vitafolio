@@ -1,0 +1,78 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!--
+    The Windows program: its own window (WinForms + WebView2) around the same web UI the Docker version serves. The server runs in this
+    process (Cv.Server, ServerApp.Build in desktop mode, loopback only); there is no browser tab and no separate server to install.
+    The exe is named after the product (branding.json, read by Directory.Build.props). Packaging (Velopack installer) is done by
+    scripts/build-windows.ps1 and kept out of this project.
+  -->
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <RootNamespace>Cv.Desktop</RootNamespace>
+    <!-- Product name from branding.json; the neutral fallback only applies if that file is missing -->
+    <AssemblyName Condition="'$(CvProductName)' != ''">$(CvProductName)</AssemblyName>
+    <AssemblyName Condition="'$(CvProductName)' == ''">Cv.Desktop</AssemblyName>
+    <AssemblyTitle>$(Product)</AssemblyTitle>
+    <Description>$(Product) for Windows</Description>
+    <ApplicationIcon>Assets\app.ico</ApplicationIcon>
+    <!-- Per monitor DPI: crisp on mixed setups; the window and the dialogs take the scale of the monitor they are on -->
+    <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
+    <ApplicationVisualStyles>true</ApplicationVisualStyles>
+    <ApplicationUseCompatibleTextRendering>false</ApplicationUseCompatibleTextRendering>
+    <ApplicationDefaultFont>Segoe UI, 9.5pt</ApplicationDefaultFont>
+    <!-- The server (an executable of its own for Docker) runs as a library inside this exe -->
+    <ValidateExecutableReferencesMatchSelfContained>false</ValidateExecutableReferencesMatchSelfContained>
+    <!-- No forms designer is used: positions and values are set in code -->
+    <NoWarn>$(NoWarn);WFO1000</NoWarn>
+    <!-- Needed by the generated P/Invoke code of LibraryImport (Native.cs) -->
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <!-- Where the built web UI comes from (frontend/dist) and where the packaging script puts its output -->
+    <CvFrontendDist>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\..\frontend\dist'))</CvFrontendDist>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.Web.WebView2" />
+    <PackageReference Include="Velopack" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cv.Server\Cv.Server.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- The window icon is also read at run time (loading view, dialogs) -->
+    <EmbeddedResource Include="Assets\app.ico" LogicalName="app.ico" />
+    <InternalsVisibleTo Include="Cv.Desktop.Tests" />
+  </ItemGroup>
+
+  <!-- The built web UI becomes the program's wwwroot (build output and publish folder) -->
+  <ItemGroup Condition="Exists('$(CvFrontendDist)\index.html')">
+    <Content Include="$(CvFrontendDist)\**\*" Link="wwwroot\%(RecursiveDir)%(Filename)%(Extension)"
+             CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <!-- version.txt (written by the pre-commit hook) travels with the program; it does not exist before the first commit -->
+  <ItemGroup Condition="Exists('$(MSBuildThisFileDirectory)..\..\version.txt')">
+    <Content Include="..\..\version.txt" Link="version.txt" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <!-- The WebView2 package always references its WPF control too; this program uses only the WinForms one. Dropping the WPF
+       assembly avoids a WindowsBase version conflict warning and keeps an unused DLL out of the program folder. -->
+  <Target Name="CvDropWebView2Wpf" BeforeTargets="ResolveAssemblyReferences">
+    <ItemGroup>
+      <Reference Remove="@(Reference)" Condition="'%(Filename)' == 'Microsoft.Web.WebView2.Wpf'" />
+    </ItemGroup>
+  </Target>
+
+  <Target Name="CvWarnWithoutFrontend" BeforeTargets="CoreCompile" Condition="!Exists('$(CvFrontendDist)\index.html')">
+    <Warning Code="CVDESK001"
+             Text="frontend/dist/index.html fehlt: das Windows-Programm hat keine Oberfläche (zuerst 'npm run build' in frontend/ ausführen). Der Entwicklungsmodus (--dev) lädt die Oberfläche vom Vite-Server und braucht sie nicht." />
+  </Target>
+
+  <!-- A published program without its UI is broken: stop there instead of shipping it -->
+  <Target Name="CvRequireFrontendForPublish" BeforeTargets="PrepareForPublish" Condition="!Exists('$(CvFrontendDist)\index.html')">
+    <Error Code="CVDESK002" Text="frontend/dist/index.html fehlt: ohne gebaute Oberfläche wird nichts veröffentlicht (zuerst 'npm run build' in frontend/)." />
+  </Target>
+</Project>

@@ -1,0 +1,344 @@
+@import 'tailwindcss';
+@import './fonts.css';
+@import './tokens.css';
+
+/* "dark:" follows the manual/system theme switch (data-theme on <html>), not the OS setting directly. */
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+@theme inline {
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, 'Segoe UI', sans-serif;
+  --font-display: 'Outfit', 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, 'Cascadia Mono', 'SFMono-Regular', Consolas, monospace;
+
+  /* One tight corner language: xs badges, sm buttons and inputs, md cards and panels, lg dialogs. */
+  --radius-xs: 2px;
+  --radius-sm: 3px;
+  --radius-md: 5px;
+  --radius-lg: 7px;
+
+  --color-bg: var(--bg);
+  --color-sunken: var(--bg-sunken);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-link: var(--link);
+  --color-focus: var(--focus);
+  --color-gold-text: var(--gold-text);
+  --color-confirm: var(--confirm);
+  --color-confirm-ink: var(--confirm-ink);
+  --color-create: var(--create);
+  --color-create-ink: var(--create-ink);
+  --color-select: var(--select-bg);
+  --color-select-ink: var(--select-ink);
+  --color-indicator: var(--indicator);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-danger-soft-ink: var(--danger-soft-ink);
+  --color-success-soft: var(--success-soft);
+  --color-success-soft-ink: var(--success-soft-ink);
+  --color-warning-soft: var(--warning-soft);
+  --color-warning-soft-ink: var(--warning-soft-ink);
+  --color-toggle-on: var(--toggle-on);
+  --color-toggle-off: var(--toggle-off);
+  --color-toggle-knob: var(--toggle-knob);
+  --color-heart: var(--heart);
+
+  --shadow-card: var(--elev-card);
+  --shadow-pop: var(--elev-pop);
+}
+
+@layer base {
+  html {
+    /* A page that becomes scrollable must not shift sideways. */
+    scrollbar-gutter: stable;
+    font-family: var(--font-sans);
+    font-feature-settings: 'cv11', 'ss03';
+    -webkit-font-smoothing: antialiased;
+    background: var(--bg);
+    color: var(--ink);
+  }
+
+  body {
+    min-width: 1024px;
+    min-height: 100vh;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+
+  a {
+    color: var(--link);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--indicator) 35%, transparent);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/*
+ * Shared building blocks. A recurring action has ONE class used everywhere it occurs (never a look-alike), so the
+ * treatment cannot drift between pages.
+ */
+@layer components {
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 2.25rem;
+    padding: 0 0.875rem;
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    text-decoration: none;
+    transition:
+      background-color 0.12s,
+      border-color 0.12s,
+      color 0.12s;
+  }
+  .btn:disabled,
+  .btn[aria-disabled='true'] {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+  .btn-sm {
+    min-height: 1.875rem;
+    padding: 0 0.625rem;
+    font-size: 0.8125rem;
+  }
+  /* confirm / save / continue */
+  .btn-confirm {
+    background: var(--confirm);
+    color: var(--confirm-ink);
+  }
+  .btn-confirm:hover:not(:disabled) {
+    background: var(--confirm-hover);
+  }
+  /* create something new */
+  .btn-create {
+    background: var(--create);
+    color: var(--create-ink);
+  }
+  .btn-create:hover:not(:disabled) {
+    background: var(--create-hover);
+  }
+  /* destructive */
+  .btn-danger {
+    background: var(--danger);
+    color: var(--danger-ink);
+  }
+  .btn-danger:hover:not(:disabled) {
+    background: var(--danger-hover);
+  }
+  /* neutral / cancel / secondary */
+  .btn-secondary {
+    background: var(--surface);
+    border-color: var(--line-strong);
+    color: var(--ink);
+  }
+  .btn-secondary:hover:not(:disabled) {
+    background: var(--surface-2);
+  }
+  .btn-ghost {
+    background: transparent;
+    color: var(--ink);
+  }
+  .btn-ghost:hover:not(:disabled) {
+    background: var(--surface-2);
+  }
+  .btn-danger-outline {
+    background: var(--surface);
+    border-color: var(--danger);
+    color: var(--danger);
+  }
+  .btn-danger-outline:hover:not(:disabled) {
+    background: var(--danger-soft);
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    box-shadow: var(--elev-card);
+  }
+
+  .input {
+    width: 100%;
+    min-height: 2.5rem;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--ink);
+    font-size: 0.9375rem;
+  }
+  .input::placeholder {
+    color: var(--ink-muted);
+  }
+  .input:focus {
+    outline: 2px solid var(--focus);
+    outline-offset: 0;
+    border-color: var(--focus);
+  }
+  .input[aria-invalid='true'] {
+    border-color: var(--danger);
+  }
+  .input:disabled {
+    background: var(--bg-sunken);
+    cursor: not-allowed;
+  }
+
+  /* Box metrics of a notice, shared with the invisible copies that reserve its room (see AlertSlot). */
+  .notice,
+  .notice-reserve,
+  .notice-reserve-plain {
+    --notice-icon: 1.125rem;
+    --notice-gap: 0.5rem;
+    --notice-pad-x: 0.75rem;
+    --notice-footer: 2rem;
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    padding: 0.5rem var(--notice-pad-x);
+    font-size: 0.875rem;
+  }
+  .notice-danger {
+    background: var(--danger-soft);
+    color: var(--danger-soft-ink);
+    border-color: color-mix(in srgb, var(--danger-soft-ink) 35%, transparent);
+  }
+  .notice-success {
+    background: var(--success-soft);
+    color: var(--success-soft-ink);
+    border-color: color-mix(in srgb, var(--success-soft-ink) 35%, transparent);
+  }
+  .notice-warning {
+    background: var(--warning-soft);
+    color: var(--warning-soft-ink);
+    border-color: color-mix(in srgb, var(--warning-soft-ink) 35%, transparent);
+  }
+  .notice-info {
+    background: var(--select-bg);
+    color: var(--select-ink);
+    border-color: color-mix(in srgb, var(--select-ink) 35%, transparent);
+  }
+  .notice-reserve {
+    padding: 0.5rem var(--notice-pad-x) calc(0.5rem + var(--notice-footer));
+    padding-left: calc(var(--notice-pad-x) + var(--notice-icon) + var(--notice-gap));
+    border: 1px solid transparent;
+    font-size: 0.875rem;
+  }
+  .notice-reserve-plain {
+    padding: 0.5rem var(--notice-pad-x);
+    padding-left: calc(var(--notice-pad-x) + 1.125rem + 0.5rem);
+    border: 1px solid transparent;
+    font-size: 0.875rem;
+  }
+  .notice-reserve-plain::after,
+  .notice-reserve::after {
+    content: attr(data-reserved);
+  }
+
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+  }
+  .table th {
+    padding: 0.625rem 0.75rem;
+    text-align: left;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--line);
+  }
+  .table td {
+    padding: 0.625rem 0.75rem;
+    border-bottom: 1px solid var(--line);
+    vertical-align: middle;
+  }
+  .table tbody tr:last-child td {
+    border-bottom: 0;
+  }
+  .table tbody tr:hover td {
+    background: var(--surface-2);
+  }
+
+  .badge {
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.125rem 0.5rem;
+    border-radius: var(--radius-xs);
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1.25rem;
+  }
+  .badge-neutral {
+    background: var(--bg-sunken);
+    color: var(--ink);
+  }
+  .badge-select {
+    background: var(--select-bg);
+    color: var(--select-ink);
+  }
+  .badge-success {
+    background: var(--success-soft);
+    color: var(--success-soft-ink);
+  }
+  .badge-danger {
+    background: var(--danger-soft);
+    color: var(--danger-soft-ink);
+  }
+  .badge-warning {
+    background: var(--warning-soft);
+    color: var(--warning-soft-ink);
+  }
+}
+
+/* Sign-in pages: the scrollbar gutter beside the brand panel is navy too (set by AuthLayout). */
+html[data-auth] {
+  background: #14213d;
+}
+
+/* The navy brand panel is the same in both themes (it is part of the brand, like the logo plate). */
+.brand-panel {
+  background:
+    radial-gradient(60rem 36rem at 105% -10%, rgb(217 174 87 / 0.16), transparent 60%),
+    radial-gradient(48rem 30rem at -10% 110%, rgb(79 112 190 / 0.2), transparent 60%),
+    linear-gradient(160deg, #16264a 0%, #14213d 45%, #0d172c 100%);
+  color: #f3eee2;
+}

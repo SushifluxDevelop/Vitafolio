@@ -1,0 +1,31 @@
+<Project>
+  <!-- Shared build settings for every .NET project in the repository. -->
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+
+    <NuGetAudit>true</NuGetAudit>
+    <NuGetAuditMode>all</NuGetAuditMode>
+    <NuGetAuditLevel>low</NuGetAuditLevel>
+  </PropertyGroup>
+
+  <!--
+    The product name and the company live only in branding.json ("name", "company"). They are read here once and become the assembly's
+    Product and Company attributes, which the server reads at runtime (Branding.ProductName, Branding.Company) - a rename only ever touches
+    branding.json.
+  -->
+  <PropertyGroup>
+    <CvBrandingFile>$(MSBuildThisFileDirectory)branding.json</CvBrandingFile>
+    <CvBrandingJson Condition="Exists('$(CvBrandingFile)')">$([System.IO.File]::ReadAllText('$(CvBrandingFile)'))</CvBrandingJson>
+    <CvProductName Condition="'$(CvBrandingJson)' != ''">$([System.Text.RegularExpressions.Regex]::Match('$(CvBrandingJson)', '"name"\s*:\s*"([^"]+)"').Groups[1].Value)</CvProductName>
+    <Product Condition="'$(CvProductName)' != ''">$(CvProductName)</Product>
+    <CvCompany Condition="'$(CvBrandingJson)' != ''">$([System.Text.RegularExpressions.Regex]::Match('$(CvBrandingJson)', '"company"\s*:\s*"([^"]+)"').Groups[1].Value)</CvCompany>
+    <Company Condition="'$(CvCompany)' != ''">$(CvCompany)</Company>
+    <Authors Condition="'$(CvCompany)' != ''">$(CvCompany)</Authors>
+    <Copyright Condition="'$(CvCompany)' != ''">© 2026 $(CvCompany)</Copyright>
+    <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+  </PropertyGroup>
+</Project>
