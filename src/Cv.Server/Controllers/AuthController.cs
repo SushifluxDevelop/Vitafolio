@@ -134,6 +134,74 @@ public sealed class AuthController(
         return await CompleteLoginAsync(user, "register", ct);
     }
 
+    [HttpPost("emergency-reset/request")]
+    [AllowAnonymous]
+    [ServerModeOnly]
+    [EnableRateLimiting(RateLimitPolicies.EmergencyReset)]
+    public async Task<IActionResult> RequestEmergencyReset(
+        [FromServices] EmergencyToken emergencyToken,
+        CancellationToken ct)
+    {
+        var admins = await db.Users.Where(u => u.Role == Roles.Admin && !u.Disabled && !u.IsLocalOwner).ToListAsync(ct);
+        if (admins.Count == 0)
+        {
+            throw ApiException.BadRequest("admin.emergency_reset_no_admin", "No active administrator account was found.");
+        }
+        if (admins.Count > 1)
+        {
+            throw ApiException.Conflict("admin.emergency_reset_other_admins_exist",
+                "Another administrator account is active. Please ask another administrator to reset your password in App-Administration -> Users.");
+        }
+        emergencyToken.GenerateAndAnnounce();
+        return Ok(new { requested = true });
+    }
+
+    [HttpPost("emergency-reset/confirm")]
+    [AllowAnonymous]
+    [ServerModeOnly]
+    [EnableRateLimiting(RateLimitPolicies.EmergencyReset)]
+    public async Task<IActionResult> ConfirmEmergencyReset(
+        [FromBody] EmergencyResetConfirmRequest body,
+        [FromServices] EmergencyToken emergencyToken,
+        [FromServices] ILogger<AuthController> logger,
+        CancellationToken ct)
+    {
+        var errors = new FieldErrors();
+        InputRules.Required(errors, "code", body.Code, 128);
+        InputRules.Password(errors, "newPassword", body.NewPassword);
+        errors.ThrowIfAny();
+
+        var admins = await db.Users.Where(u => u.Role == Roles.Admin && !u.Disabled && !u.IsLocalOwner).ToListAsync(ct);
+        if (admins.Count == 0)
+        {
+            throw ApiException.BadRequest("admin.emergency_reset_no_admin", "No active administrator account was found.");
+        }
+        if (admins.Count > 1)
+        {
+            throw ApiException.Conflict("admin.emergency_reset_other_admins_exist",
+                "Another administrator account is active. Please ask another administrator to reset your password in App-Administration -> Users.");
+        }
+
+        if (!emergencyToken.Matches(body.Code))
+        {
+            logger.LogWarning("Admin-Notfall-Reset mit ungültigem oder abgelaufenem Code abgewiesen (IP {Ip}).", ClientInfo.Ip(HttpContext));
+            throw ApiException.Field("code", "emergency_reset.code_invalid",
+                "The emergency reset code is missing, expired or wrong.", StatusCodes.Status403Forbidden);
+        }
+
+        var admin = admins[0];
+        accounts.SetPassword(admin, body.NewPassword!);
+        await twoFactor.DisableAsync(admin, ct);
+        emergencyToken.Consume();
+        await db.SaveChangesAsync(ct);
+
+        await sessions.RevokeAllAsync(admin.Id, "emergency_reset", null, ct);
+        await activity.RecordNowAsync(HttpContext, "admin.emergency_reset", admin.Username, new { resetTwoFactor = true }, admin.Id, admin.Username, ct);
+        logger.LogWarning("Passwort und 2FA für Administrator '{Admin}' per Notfall-Reset zurückgesetzt (IP {Ip}).", admin.Username, ClientInfo.Ip(HttpContext));
+
+        return Ok(new { success = true, username = admin.Username });
+    }
+
     [HttpGet("me")]
     [Authorize]
     [AllowDuringTwoFactorSetup]

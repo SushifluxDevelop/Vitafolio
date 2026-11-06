@@ -189,6 +189,8 @@ public sealed class RateLimitSettings
 
     public int Password { get; init; } = 5;
 
+    public int EmergencyReset { get; init; } = 5;
+
     public int StepUp { get; init; } = 10;
 
     /// <summary>Sign-in / 2FA attempts per account and <see cref="AccountWindow"/> (whatever the IP).</summary>
@@ -205,6 +207,7 @@ public sealed class RateLimitSettings
         Setup = Math.Max(1, section.GetValue("Setup", 5)),
         Register = Math.Max(1, section.GetValue("Register", 5)),
         Password = Math.Max(1, section.GetValue("Password", 5)),
+        EmergencyReset = Math.Max(1, section.GetValue("EmergencyReset", 5)),
         StepUp = Math.Max(1, section.GetValue("StepUp", 10)),
         AccountAttempts = Math.Max(1, section.GetValue("AccountAttempts", 20)),
         AccountWindow = TimeSpan.FromMinutes(Math.Clamp(section.GetValue("AccountWindowMinutes", 15), 1, 1440)),

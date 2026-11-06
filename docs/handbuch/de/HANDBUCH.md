@@ -280,8 +280,8 @@ Vitafolio prüft Ihre Eingaben schon beim Tippen. Ein Problem erscheint sofort u
 > nur einmal. Schließen Sie sie trotzdem ab, **bevor** Sie Vitafolio für andere erreichbar machen.
 
 > [!HINWEIS]
-> Notieren Sie das Passwort des Administrators an einem sicheren Ort, zum Beispiel in einem Passwort-Manager. In dieser
-> Version gibt es keinen Weg, das Passwort des **einzigen** Administrators zurückzusetzen (siehe Kapitel 13).
+> Notieren Sie das Passwort des Administrators an einem sicheren Ort, zum Beispiel in einem Passwort-Manager. Sollten Sie das Passwort
+> des einzigen Administrators vergessen, können Sie es über den Notfall-Zugang mit einem Einmal-Code aus den Server-Logs zurücksetzen (siehe Kapitel 13).
 
 # 6 Anmelden und Abmelden
 
@@ -732,8 +732,8 @@ Einzelheiten auf.
 | „Dieser Code wurde schon verwendet. Warten Sie auf den nächsten Code der App oder nehmen Sie einen Wiederherstellungscode.“ | Der Code war richtig, aber Sie haben ihn gerade schon benutzt. Jeder Code gilt nur einmal. | Warten Sie bis zu 30 Sekunden auf den nächsten Code der App oder nehmen Sie einen Wiederherstellungscode. |
 | „Der Schlüssel der Zwei-Faktor-Anmeldung kann nicht gelesen werden. …“ | Die Sicherung wurde in einen neuen Datenordner eingespielt, ohne den Ordner `keys` (Abschnitt 11.5). | Melden Sie sich mit einem Wiederherstellungscode an oder lassen Sie die Zwei-Faktor-Anmeldung von einem Administrator zurücksetzen. |
 | „Die Anmeldung ist abgelaufen. Bitte beginnen Sie noch einmal mit Benutzername und Passwort.“ | Der zweite Schritt dauerte länger als 5 Minuten oder hatte mehr als 5 Versuche. | Melden Sie sich neu an. |
-| Handy und Wiederherstellungscodes verloren | – | Bitten Sie einen Administrator, Ihre Zwei-Faktor-Anmeldung zurückzusetzen (Abschnitt 10.3). |
-| Passwort vergessen | – | Ein anderer Administrator setzt Ihnen ein neues Passwort (Abschnitt 10.3). Für den **einzigen** Administrator gibt es in dieser Version keinen Weg in der App. Notieren Sie das Passwort darum sicher. |
+| Handy und Wiederherstellungscodes verloren | – | Bitten Sie einen Administrator, Ihre Zwei-Faktor-Anmeldung zurückzusetzen (Abschnitt 10.3). Als einziger Administrator nutzen Sie den Notfall-Zugang, der auch 2FA zurücksetzt. |
+| Passwort vergessen | – | Ein anderer Administrator setzt Ihnen ein neues Passwort (Abschnitt 10.3). Für den **einzigen** Administrator nutzen Sie den Link „Passwort vergessen? (Administrator-Notfallzugang)“ auf der Anmeldeseite: Er erzeugt einen Einmal-Code in den Server-Logs (Docker/Unraid Logs), mit dem Sie ein neues Passwort festlegen können. |
 | „Die Registrierung ist geschlossen. Bitten Sie den Administrator um ein Konto.“ | Registrierung ist aus. | Lassen Sie sich ein Konto anlegen. |
 | „Die Zwei-Faktor-Anmeldung muss zuerst eingerichtet werden.“ | Der Administrator verlangt sie für alle. | Richten Sie sie ein (Abschnitt 8.2). Vorher geht nichts anderes. |
 | „Die Anfrage wurde aus Sicherheitsgründen abgelehnt. Bitte laden Sie die Seite neu.“ | Die Seite war alt oder wurde von einer fremden Seite aufgerufen. | Laden Sie die Seite neu. |

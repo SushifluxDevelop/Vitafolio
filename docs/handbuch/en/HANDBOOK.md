@@ -272,8 +272,8 @@ least 12 characters." The button does not send anything as long as something is 
 > Still, finish it **before** you make Vitafolio reachable for others.
 
 > [!NOTE]
-> Write the administrator's password down in a safe place, for example in a password manager. In this version there is no
-> way to reset the password of the **only** administrator (see Chapter 13).
+> Write the administrator's password down in a safe place, for example in a password manager. If you ever forget the password
+> of the only administrator, you can reset it via the emergency reset using a one-time code from the server logs (see Chapter 13).
 
 # 6 Signing in and out
 
@@ -708,8 +708,8 @@ the text into your message when you look for help. With "Details" you open the t
 | "This code was already used. Wait for the next code of the app or use a recovery code." | The code was right, but you had just used it. Each code works only once. | Wait up to 30 seconds for the next code of the app, or use a recovery code. |
 | "The key of the two-factor sign-in cannot be read. …" | The backup was restored into a new data folder without the `keys` folder (Section 11.5). | Sign in with a recovery code, or have an administrator reset the two-factor sign-in. |
 | "The sign-in has expired. Please start again with username and password." | The second step took longer than 5 minutes or had more than 5 attempts. | Sign in again. |
-| Phone and recovery codes lost | – | Ask an administrator to reset your two-factor sign-in (Section 10.3). |
-| Forgotten password | – | Another administrator sets a new password for you (Section 10.3). For the **only** administrator there is no way in the app in this version. So keep the password safe. |
+| Phone and recovery codes lost | – | Ask an administrator to reset your two-factor sign-in (Section 10.3). As the sole administrator, use the emergency reset, which also disables 2FA. |
+| Forgotten password | – | Another administrator sets a new password for you (Section 10.3). For the **only** administrator, use the link "Forgot password? (Administrator emergency reset)" on the sign-in page: it prints a one-time code to the server logs (Docker/Unraid logs) that lets you set a new password. |
 | "Registration is closed. Ask the administrator for an account." | Registration is off. | Have an account created for you. |
 | "Two-factor sign-in has to be set up first." | The administrator requires it for everybody. | Set it up (Section 8.2). Nothing else works before. |
 | "The request was refused for security reasons. Please reload the page." | The page was old or was called from a foreign page. | Reload the page. |

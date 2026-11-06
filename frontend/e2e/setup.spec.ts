@@ -14,33 +14,37 @@ async function asksForSetupToken(page: Page): Promise<boolean> {
   return bootstrap.setupTokenRequired === true
 }
 
-test('the first start leads to the setup, and typing into it moves nothing', async ({ page }) => {
-  const bootstrap = await (await page.request.get('/api/bootstrap')).json()
-  expect(bootstrap.setupRequired, 'the E2E instance must start with an empty database').toBe(true)
+// German is longer than English: the setup (with the setup-code field) is measured in both, at the narrowest supported width.
+for (const language of ['de', 'en'] as const) {
+  test(`the first start leads to the setup, and typing into it moves nothing (${language})`, async ({ page }) => {
+    await page.addInitScript((value) => localStorage.setItem('cv.language', value), language)
+    const bootstrap = await (await page.request.get('/api/bootstrap')).json()
+    expect(bootstrap.setupRequired, 'the E2E instance must start with an empty database').toBe(true)
 
-  await page.goto('/')
-  await expect(page).toHaveURL(/\/setup$/)
-  await expect(field(page, 'username')).toBeVisible()
-  const before = await settledLayout(page)
+    await page.goto('/')
+    await expect(page).toHaveURL(/\/setup$/)
+    await expect(field(page, 'username')).toBeVisible()
+    const before = await settledLayout(page)
 
-  if (bootstrap.setupTokenRequired) {
-    await expectNothingMoves(page, 'a wrong character in the setup code', () => field(page, 'setupToken').fill('ab!d'), before)
-    await expectNothingMoves(page, 'a setup code that is too long', () => field(page, 'setupToken').fill('ABCD-EFGH-JKMN-PQRS-TUVW-XYZ2-3456-7'), before)
-    await expectNothingMoves(page, 'the setup code emptied again', () => field(page, 'setupToken').fill(''), before)
-  }
-  await expectNothingMoves(page, 'forbidden character in the username', () => field(page, 'username').fill('bad name!'), before)
-  await expectNothingMoves(page, 'username too short', () => field(page, 'username').fill('ab'), before)
-  await expectNothingMoves(page, 'too short password', () => field(page, 'password').fill('short'), before)
-  await expectNothingMoves(page, 'a repeat that does not match', () => field(page, 'repeat').fill('shx'), before)
-  await expectNothingMoves(
-    page,
-    'everything emptied again',
-    async () => {
-      for (const name of ['username', 'password', 'repeat']) await field(page, name).fill('')
-    },
-    before,
-  )
-})
+    if (bootstrap.setupTokenRequired) {
+      await expectNothingMoves(page, 'a wrong character in the setup code', () => field(page, 'setupToken').fill('ab!d'), before)
+      await expectNothingMoves(page, 'a setup code that is too long', () => field(page, 'setupToken').fill('ABCD-EFGH-JKMN-PQRS-TUVW-XYZ2-3456-7'), before)
+      await expectNothingMoves(page, 'the setup code emptied again', () => field(page, 'setupToken').fill(''), before)
+    }
+    await expectNothingMoves(page, 'forbidden character in the username', () => field(page, 'username').fill('bad name!'), before)
+    await expectNothingMoves(page, 'username too short', () => field(page, 'username').fill('ab'), before)
+    await expectNothingMoves(page, 'too short password', () => field(page, 'password').fill('short'), before)
+    await expectNothingMoves(page, 'a repeat that does not match', () => field(page, 'repeat').fill('shx'), before)
+    await expectNothingMoves(
+      page,
+      'everything emptied again',
+      async () => {
+        for (const name of ['username', 'password', 'repeat']) await field(page, name).fill('')
+      },
+      before,
+    )
+  })
+}
 
 test('a problem shows while typing, before any blur or click', async ({ page }) => {
   await page.goto('/setup')

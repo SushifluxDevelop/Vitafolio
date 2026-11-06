@@ -160,3 +160,252 @@ export interface ProblemDetails {
   errors?: Record<string, FieldProblem[]>
   traceId?: string
 }
+
+export interface Experience {
+  id: string
+  jobTitle: string
+  employer: string
+  employmentType?: string | null
+  city?: string | null
+  country?: string | null
+  startDate: string
+  endDate?: string | null
+  isCurrent: boolean
+  description?: string | null
+  sortOrder: number
+  createdAt: string
+  updatedAt: string
+}
+
+export interface Education {
+  id: string
+  degree: string
+  fieldOfStudy?: string | null
+  institution: string
+  city?: string | null
+  country?: string | null
+  startDate: string
+  endDate?: string | null
+  isCurrent: boolean
+  grade?: string | null
+  description?: string | null
+  sortOrder: number
+  createdAt: string
+  updatedAt: string
+}
+
+export interface Skill {
+  id: string
+  name: string
+  category?: string | null
+  level: number
+  sortOrder: number
+  createdAt: string
+  updatedAt: string
+}
+
+export interface LanguageSkill {
+  id: string
+  language: string
+  level: string
+  sortOrder: number
+  createdAt: string
+  updatedAt: string
+}
+
+export interface Certificate {
+  id: string
+  title: string
+  issuer?: string | null
+  issueDate?: string | null
+  expiryDate?: string | null
+  credentialUrl?: string | null
+  credentialId?: string | null
+  sortOrder: number
+  createdAt: string
+  updatedAt: string
+}
+
+export interface Interest {
+  id: string
+  name: string
+  category?: string | null
+  description?: string | null
+  sortOrder: number
+  createdAt: string
+  updatedAt: string
+}
+
+export interface CustomSectionItem {
+  id: string
+  title: string
+  subtitle?: string | null
+  dateRange?: string | null
+  description?: string | null
+  sortOrder: number
+  createdAt: string
+  updatedAt: string
+}
+
+export interface CustomSection {
+  id: string
+  title: string
+  sortOrder: number
+  createdAt: string
+  updatedAt: string
+  items: CustomSectionItem[]
+}
+
+export interface Profile {
+  id: string
+  firstName: string
+  lastName: string
+  academicTitle?: string | null
+  professionalTitle?: string | null
+  email?: string | null
+  phone?: string | null
+  street?: string | null
+  postalCode?: string | null
+  city?: string | null
+  country?: string | null
+  dateOfBirth?: string | null
+  placeOfBirth?: string | null
+  nationality?: string | null
+  maritalStatus?: string | null
+  website?: string | null
+  linkedIn?: string | null
+  gitHub?: string | null
+  xing?: string | null
+  bio?: string | null
+  hasPhoto: boolean
+  createdAt: string
+  updatedAt: string
+  experiences: Experience[]
+  educations: Education[]
+  skills: Skill[]
+  languages: LanguageSkill[]
+  certificates: Certificate[]
+  interests: Interest[]
+  customSections: CustomSection[]
+}
+
+export interface PersonalDataPayload {
+  firstName: string
+  lastName: string
+  academicTitle?: string | null
+  professionalTitle?: string | null
+  email?: string | null
+  phone?: string | null
+  street?: string | null
+  postalCode?: string | null
+  city?: string | null
+  country?: string | null
+  dateOfBirth?: string | null
+  placeOfBirth?: string | null
+  nationality?: string | null
+  maritalStatus?: string | null
+  website?: string | null
+  linkedIn?: string | null
+  gitHub?: string | null
+  xing?: string | null
+  bio?: string | null
+}
+
+export interface CvRenderOptions {
+  design?: 'classic' | 'modern' | 'plain'
+  accentColor?: string
+  font?: string
+  showPhoto?: boolean
+  photoShape?: 'round' | 'rounded' | 'rect'
+  language?: 'de' | 'en'
+}
+
+export interface CoverLetter {
+  id: string
+  title: string
+  senderName?: string | null
+  senderStreet?: string | null
+  senderPostalCode?: string | null
+  senderCity?: string | null
+  senderPhone?: string | null
+  senderEmail?: string | null
+  recipientCompany: string
+  recipientDepartment?: string | null
+  recipientContactPerson?: string | null
+  recipientStreet?: string | null
+  recipientPostalCode?: string | null
+  recipientCity: string
+  recipientCountry?: string | null
+  place?: string | null
+  date?: string | null
+  subject: string
+  salutation: string
+  body: string
+  closing: string
+  signatureName?: string | null
+  hasSignature: boolean
+  attachmentsNote?: string | null
+  language: 'de' | 'en'
+  font?: string | null
+  accentColor?: string | null
+  createdAt: string
+  updatedAt: string
+}
+
+export interface CoverLetterListItem {
+  id: string
+  title: string
+  recipientCompany: string
+  subject: string
+  date?: string | null
+  updatedAt: string
+}
+
+export interface CoverLetterPayload {
+  title: string
+  senderName?: string | null
+  senderStreet?: string | null
+  senderPostalCode?: string | null
+  senderCity?: string | null
+  senderPhone?: string | null
+  senderEmail?: string | null
+  recipientCompany: string
+  recipientDepartment?: string | null
+  recipientContactPerson?: string | null
+  recipientStreet?: string | null
+  recipientPostalCode?: string | null
+  recipientCity: string
+  recipientCountry?: string | null
+  place?: string | null
+  date?: string | null
+  subject: string
+  salutation: string
+  body: string
+  closing?: string | null
+  signatureName?: string | null
+  attachmentsNote?: string | null
+  language?: 'de' | 'en'
+  font?: string | null
+  accentColor?: string | null
+}
+
+export interface CoverLetterRenderOptions {
+  font?: string
+  accentColor?: string
+  language?: 'de' | 'en'
+  includeFoldMarks?: boolean
+}
+
+export interface CoverSheetOptions {
+  targetJob?: string
+  targetCompany?: string
+  contents?: string[]
+  accentColor?: string
+  font?: string
+  showPhoto?: boolean
+  photoShape?: 'round' | 'rounded' | 'rect'
+  language?: 'de' | 'en'
+}
+
+
+

@@ -27,6 +27,7 @@ public class ServerFixture : IAsyncLifetime
         ["RateLimits:Setup"] = "1000",
         ["RateLimits:Register"] = "1000",
         ["RateLimits:Password"] = "1000",
+        ["RateLimits:EmergencyReset"] = "1000",
         ["RateLimits:StepUp"] = "1000",
     };
 
@@ -55,6 +56,13 @@ public class ServerFixture : IAsyncLifetime
     public string SetupToken()
     {
         var file = Path.Combine(DataDir, "setup-token");
+        return File.Exists(file) ? File.ReadAllText(file).Trim() : "";
+    }
+
+    /// <summary>The one-time emergency reset code the server wrote into its data folder (empty if none active).</summary>
+    public string EmergencyToken()
+    {
+        var file = Path.Combine(DataDir, "emergency-token");
         return File.Exists(file) ? File.ReadAllText(file).Trim() : "";
     }
 

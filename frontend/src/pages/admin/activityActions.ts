@@ -11,6 +11,7 @@ export const ACTIVITY_ACTIONS = [
   'auth.reauth_failed',
   'auth.twofactor_failed',
   'account.password_changed',
+  'admin.emergency_reset',
   'setup.completed',
   'settings.changed',
   'user.created',

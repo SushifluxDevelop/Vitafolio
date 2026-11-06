@@ -6,6 +6,7 @@ import { ACTIVITY_ACTIONS } from './activityActions'
 /** The action codes the server writes (every Record/RecordNow call in its controllers and services). */
 const SERVER_ACTIONS = [
   'account.password_changed',
+  'admin.emergency_reset',
   'auth.login',
   'auth.login_failed',
   'auth.logout',

@@ -60,6 +60,9 @@ public static class ServerApp
         services.AddSingleton<SettingsService>();
         services.AddSingleton<DesktopOwner>();
         services.AddSingleton<SetupToken>();
+        services.AddSingleton<EmergencyToken>();
+        services.AddSingleton<Documents.TypstRenderer>();
+        services.AddSingleton<Documents.DocxRenderer>();
         services.AddSingleton<AccountAttemptLimiter>();
         services.AddSingleton<BackupService>();
         services.AddSingleton<BackupSettingsStore>();
@@ -189,6 +192,7 @@ public static class ServerApp
     {
         using var scope = services.CreateScope();
         if (!scope.ServiceProvider.GetRequiredService<AppDbContext>().Users.Any()) services.GetRequiredService<SetupToken>().EnsureAndAnnounce();
+        services.GetRequiredService<EmergencyToken>().CheckTriggerFile();
     }
 
     private static void ConfigurePipeline(WebApplication app, ServerSettings settings)

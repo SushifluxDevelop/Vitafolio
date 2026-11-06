@@ -70,6 +70,22 @@ public static partial class InputRules
             errors.Add(field, "validation.one_of", new() { ["allowed"] = allowed });
         }
     }
+
+    public static void Optional(FieldErrors errors, string field, string? value, int max)
+    {
+        if (value is not null && value.Length > max)
+        {
+            errors.Add(field, "validation.max_length", new() { ["max"] = max, ["actual"] = value.Length });
+        }
+    }
+
+    public static void Range(FieldErrors errors, string field, int value, int min, int max)
+    {
+        if (value < min || value > max)
+        {
+            errors.Add(field, "validation.range", new() { ["min"] = min, ["max"] = max, ["actual"] = value });
+        }
+    }
 }
 
 /// <summary>Collects field errors and throws one <c>validation.failed</c> problem for all of them.</summary>

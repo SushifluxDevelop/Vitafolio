@@ -4,11 +4,14 @@ import { ErrorScreen } from './components/ErrorScreen'
 import type { ErrorKind } from './components/ErrorScreen'
 import { AppShell } from './components/layout/AppShell'
 import { AdminPage } from './pages/admin/AdminPage'
+import { EmergencyResetPage } from './pages/auth/EmergencyResetPage'
 import { LoginPage } from './pages/auth/LoginPage'
 import { RegisterPage } from './pages/auth/RegisterPage'
 import { SetupPage } from './pages/auth/SetupPage'
 import { TwoFactorSetupPage } from './pages/auth/TwoFactorSetupPage'
+import { CoverLettersPage } from './pages/cover-letter/CoverLettersPage'
 import { OverviewPage } from './pages/OverviewPage'
+import { ProfilePage } from './pages/profile/ProfilePage'
 import { SettingsPage } from './pages/settings/SettingsPage'
 
 const KINDS: readonly string[] = ['401', '403', '404', '429', '500', '503']
@@ -29,6 +32,7 @@ export const router = createBrowserRouter([
         element: <GuestOnly />,
         children: [
           { path: '/login', element: <LoginPage /> },
+          { path: '/emergency-reset', element: <EmergencyResetPage /> },
           { element: <RegistrationOnly />, children: [{ path: '/register', element: <RegisterPage /> }] },
         ],
       },
@@ -40,6 +44,8 @@ export const router = createBrowserRouter([
             element: <AppShell />,
             children: [
               { path: '/', element: <OverviewPage /> },
+              { path: '/profile', element: <ProfilePage /> },
+              { path: '/cover-letters', element: <CoverLettersPage /> },
               { path: '/settings', element: <SettingsPage /> },
               { element: <RequireAdmin />, children: [{ path: '/admin', element: <AdminPage /> }] },
             ],

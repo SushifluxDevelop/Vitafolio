@@ -1,4 +1,4 @@
-import { api, del, get, patch, post, put } from './client'
+import { api, apiResponse, del, get, patch, post, put } from './client'
 import { downloadPost } from './download'
 import type {
   ActivityPage,
@@ -8,10 +8,26 @@ import type {
   BackupSettings,
   BackupSettingsInfo,
   Bootstrap,
+  Certificate,
+  CoverLetter,
+  CoverLetterListItem,
+  CoverLetterPayload,
+  CoverLetterRenderOptions,
+  CoverSheetOptions,
+  CustomSection,
+  CustomSectionItem,
+  CvRenderOptions,
+  Education,
+  Experience,
+  Interest,
   LanguageCode,
+  LanguageSkill,
   LoginResult,
+  PersonalDataPayload,
+  Profile,
   Role,
   SessionInfo,
+  Skill,
   ThemePreference,
   TotpSetup,
   UserEnvelope,
@@ -40,6 +56,9 @@ export const authApi = {
   loginTwoFactor: (body: { challengeId: string; code: string }) => post<UserEnvelope>('/api/auth/login/2fa', body),
   logout: () => post('/api/auth/logout'),
   me: () => get<UserEnvelope>('/api/auth/me'),
+  requestEmergencyReset: () => post<{ requested: boolean }>('/api/auth/emergency-reset/request', {}),
+  confirmEmergencyReset: (body: { code: string; newPassword: string }) =>
+    post<{ success: boolean; username: string }>('/api/auth/emergency-reset/confirm', body),
 }
 
 export const accountApi = {
@@ -100,4 +119,156 @@ export const adminApi = {
 export interface Reauth {
   password?: string
   code?: string
+}
+
+export const profileApi = {
+  get: () => get<Profile>('/api/profile'),
+  update: (body: PersonalDataPayload) => put<Profile>('/api/profile', body),
+  uploadPhoto: (file: File) => {
+    const form = new FormData()
+    form.append('photo', file)
+    return post<Profile>('/api/profile/photo', form)
+  },
+  deletePhoto: () => del('/api/profile/photo'),
+
+  // Experiences
+  addExperience: (body: Omit<Experience, 'id' | 'createdAt' | 'updatedAt'>) => post<Experience>('/api/profile/experiences', body),
+  updateExperience: (id: string, body: Omit<Experience, 'id' | 'createdAt' | 'updatedAt'>) => put<Experience>(`/api/profile/experiences/${encodeURIComponent(id)}`, body),
+  deleteExperience: (id: string) => del(`/api/profile/experiences/${encodeURIComponent(id)}`),
+  reorderExperiences: (ids: string[]) => put('/api/profile/experiences/reorder', { ids }),
+
+  // Educations
+  addEducation: (body: Omit<Education, 'id' | 'createdAt' | 'updatedAt'>) => post<Education>('/api/profile/educations', body),
+  updateEducation: (id: string, body: Omit<Education, 'id' | 'createdAt' | 'updatedAt'>) => put<Education>(`/api/profile/educations/${encodeURIComponent(id)}`, body),
+  deleteEducation: (id: string) => del(`/api/profile/educations/${encodeURIComponent(id)}`),
+  reorderEducations: (ids: string[]) => put('/api/profile/educations/reorder', { ids }),
+
+  // Skills
+  addSkill: (body: Omit<Skill, 'id' | 'createdAt' | 'updatedAt'>) => post<Skill>('/api/profile/skills', body),
+  updateSkill: (id: string, body: Omit<Skill, 'id' | 'createdAt' | 'updatedAt'>) => put<Skill>(`/api/profile/skills/${encodeURIComponent(id)}`, body),
+  deleteSkill: (id: string) => del(`/api/profile/skills/${encodeURIComponent(id)}`),
+  reorderSkills: (ids: string[]) => put('/api/profile/skills/reorder', { ids }),
+
+  // Languages
+  addLanguage: (body: Omit<LanguageSkill, 'id' | 'createdAt' | 'updatedAt'>) => post<LanguageSkill>('/api/profile/languages', body),
+  updateLanguage: (id: string, body: Omit<LanguageSkill, 'id' | 'createdAt' | 'updatedAt'>) => put<LanguageSkill>(`/api/profile/languages/${encodeURIComponent(id)}`, body),
+  deleteLanguage: (id: string) => del(`/api/profile/languages/${encodeURIComponent(id)}`),
+  reorderLanguages: (ids: string[]) => put('/api/profile/languages/reorder', { ids }),
+
+  // Certificates
+  addCertificate: (body: Omit<Certificate, 'id' | 'createdAt' | 'updatedAt'>) => post<Certificate>('/api/profile/certificates', body),
+  updateCertificate: (id: string, body: Omit<Certificate, 'id' | 'createdAt' | 'updatedAt'>) => put<Certificate>(`/api/profile/certificates/${encodeURIComponent(id)}`, body),
+  deleteCertificate: (id: string) => del(`/api/profile/certificates/${encodeURIComponent(id)}`),
+  reorderCertificates: (ids: string[]) => put('/api/profile/certificates/reorder', { ids }),
+
+  // Interests
+  addInterest: (body: Omit<Interest, 'id' | 'createdAt' | 'updatedAt'>) => post<Interest>('/api/profile/interests', body),
+  updateInterest: (id: string, body: Omit<Interest, 'id' | 'createdAt' | 'updatedAt'>) => put<Interest>(`/api/profile/interests/${encodeURIComponent(id)}`, body),
+  deleteInterest: (id: string) => del(`/api/profile/interests/${encodeURIComponent(id)}`),
+  reorderInterests: (ids: string[]) => put('/api/profile/interests/reorder', { ids }),
+
+  // Custom sections
+  addCustomSection: (body: { title: string; sortOrder: number }) => post<CustomSection>('/api/profile/custom-sections', body),
+  updateCustomSection: (id: string, body: { title: string; sortOrder: number }) => put<CustomSection>(`/api/profile/custom-sections/${encodeURIComponent(id)}`, body),
+  deleteCustomSection: (id: string) => del(`/api/profile/custom-sections/${encodeURIComponent(id)}`),
+  reorderCustomSections: (ids: string[]) => put('/api/profile/custom-sections/reorder', { ids }),
+
+  addCustomSectionItem: (sectionId: string, body: Omit<CustomSectionItem, 'id' | 'createdAt' | 'updatedAt'>) =>
+    post<CustomSectionItem>(`/api/profile/custom-sections/${encodeURIComponent(sectionId)}/items`, body),
+  updateCustomSectionItem: (sectionId: string, id: string, body: Omit<CustomSectionItem, 'id' | 'createdAt' | 'updatedAt'>) =>
+    put<CustomSectionItem>(`/api/profile/custom-sections/${encodeURIComponent(sectionId)}/items/${encodeURIComponent(id)}`, body),
+  deleteCustomSectionItem: (sectionId: string, id: string) =>
+    del(`/api/profile/custom-sections/${encodeURIComponent(sectionId)}/items/${encodeURIComponent(id)}`),
+  reorderCustomSectionItems: (sectionId: string, ids: string[]) =>
+    put(`/api/profile/custom-sections/${encodeURIComponent(sectionId)}/items/reorder`, { ids }),
+
+  // PDF Preview & Export
+  getPreviewPdf: async (options: CvRenderOptions): Promise<Blob> => {
+    const res = await apiResponse('POST', '/api/profile/preview/pdf', options)
+    return res.blob()
+  },
+  exportPdf: async (options: CvRenderOptions): Promise<{ blob: Blob; filename: string }> => {
+    const res = await apiResponse('POST', '/api/profile/export/pdf', options)
+    const blob = await res.blob()
+    const disposition = res.headers.get('content-disposition')
+    let filename = options.language === 'en' ? 'Resume.pdf' : 'Lebenslauf.pdf'
+    if (disposition) {
+      const match = /filename\*?=['"]?(?:UTF-\d['"]*)?([^;\r\n"']*)['"]?/i.exec(disposition)
+      if (match?.[1]) filename = decodeURIComponent(match[1])
+    }
+    return { blob, filename }
+  },
+
+  exportDocx: async (options: CvRenderOptions): Promise<{ blob: Blob; filename: string }> => {
+    const res = await apiResponse('POST', '/api/profile/export/docx', options)
+    const blob = await res.blob()
+    const disposition = res.headers.get('content-disposition')
+    let filename = options.language === 'en' ? 'Resume.docx' : 'Lebenslauf.docx'
+    if (disposition) {
+      const match = /filename\*?=['"]?(?:UTF-\d['"]*)?([^;\r\n"']*)['"]?/i.exec(disposition)
+      if (match?.[1]) filename = decodeURIComponent(match[1])
+    }
+    return { blob, filename }
+  },
+
+  getPreviewCoverSheetPdf: async (options: CoverSheetOptions): Promise<Blob> => {
+    const res = await apiResponse('POST', '/api/profile/preview/cover-sheet/pdf', options)
+    return res.blob()
+  },
+
+  exportCoverSheetPdf: async (options: CoverSheetOptions): Promise<{ blob: Blob; filename: string }> => {
+    const res = await apiResponse('POST', '/api/profile/export/cover-sheet/pdf', options)
+    const blob = await res.blob()
+    const disposition = res.headers.get('content-disposition')
+    let filename = options.language === 'en' ? 'CoverSheet.pdf' : 'Deckblatt.pdf'
+    if (disposition) {
+      const match = /filename\*?=['"]?(?:UTF-\d['"]*)?([^;\r\n"']*)['"]?/i.exec(disposition)
+      if (match?.[1]) filename = decodeURIComponent(match[1])
+    }
+    return { blob, filename }
+  },
+}
+
+export const coverLettersApi = {
+  list: () => get<CoverLetterListItem[]>('/api/cover-letters'),
+  get: (id: string) => get<CoverLetter>(`/api/cover-letters/${encodeURIComponent(id)}`),
+  create: (body: CoverLetterPayload) => post<CoverLetter>('/api/cover-letters', body),
+  update: (id: string, body: CoverLetterPayload) => put<CoverLetter>(`/api/cover-letters/${encodeURIComponent(id)}`, body),
+  delete: (id: string) => del(`/api/cover-letters/${encodeURIComponent(id)}`),
+
+  uploadSignature: (id: string, file: File) => {
+    const form = new FormData()
+    form.append('file', file)
+    return post<CoverLetter>(`/api/cover-letters/${encodeURIComponent(id)}/signature`, form)
+  },
+  deleteSignature: (id: string) => del<CoverLetter>(`/api/cover-letters/${encodeURIComponent(id)}/signature`),
+
+  getPreviewPdf: async (id: string, options: CoverLetterRenderOptions): Promise<Blob> => {
+    const res = await apiResponse('POST', `/api/cover-letters/${encodeURIComponent(id)}/preview/pdf`, options)
+    return res.blob()
+  },
+
+  exportPdf: async (id: string, options: CoverLetterRenderOptions): Promise<{ blob: Blob; filename: string }> => {
+    const res = await apiResponse('POST', `/api/cover-letters/${encodeURIComponent(id)}/export/pdf`, options)
+    const blob = await res.blob()
+    const disposition = res.headers.get('content-disposition')
+    let filename = options.language === 'en' ? 'Cover_Letter.pdf' : 'Anschreiben.pdf'
+    if (disposition) {
+      const match = /filename\*?=['"]?(?:UTF-\d['"]*)?([^;\r\n"']*)['"]?/i.exec(disposition)
+      if (match?.[1]) filename = decodeURIComponent(match[1])
+    }
+    return { blob, filename }
+  },
+
+  exportDocx: async (id: string, options: CoverLetterRenderOptions): Promise<{ blob: Blob; filename: string }> => {
+    const res = await apiResponse('POST', `/api/cover-letters/${encodeURIComponent(id)}/export/docx`, options)
+    const blob = await res.blob()
+    const disposition = res.headers.get('content-disposition')
+    let filename = options.language === 'en' ? 'Cover_Letter.docx' : 'Anschreiben.docx'
+    if (disposition) {
+      const match = /filename\*?=['"]?(?:UTF-\d['"]*)?([^;\r\n"']*)['"]?/i.exec(disposition)
+      if (match?.[1]) filename = decodeURIComponent(match[1])
+    }
+    return { blob, filename }
+  },
 }

@@ -101,13 +101,31 @@
     "codeIntro": "Geben Sie den sechsstelligen Code aus Ihrer Authenticator-App ein.",
     "codeHint": "Ohne App: ein Wiederherstellungscode funktioniert auch (einmalig).",
     "codeSubmit": "Bestätigen",
-    "back": "Zurück zur Anmeldung"
+    "back": "Zurück zur Anmeldung",
+    "emergencyResetLink": "Passwort vergessen? (Administrator-Notfallzugang)"
   },
   "register": {
     "title": "Registrieren",
     "intro": "Legen Sie Ihr Konto an.",
     "submit": "Konto anlegen",
     "haveAccount": "Schon ein Konto?"
+  },
+  "emergencyReset": {
+    "title": "Notfall-Zugang für Administratoren",
+    "intro": "Wenn Sie der einzige Administrator sind und Ihr Passwort oder den Zugriff auf Ihre Authenticator-App verloren haben, können Sie hier Ihr Passwort und die Zwei-Faktor-Authentifizierung zurücksetzen.",
+    "adminOnlyNotice": "Dieser Notfall-Weg steht nur zur Verfügung, wenn es keinen anderen aktiven Administrator gibt.",
+    "step1Title": "1. Notfall-Code anfordern",
+    "step1Hint": "Klicken Sie auf den Knopf, um einen Notfall-Code im Server-Protokoll zu erzeugen (auf Unraid unter Docker → Vitafolio → Logs oder in der Datei emergency-token im Datenordner).",
+    "requestCode": "Notfall-Code im Server-Log erzeugen",
+    "codeGeneratedNotice": "Der Notfall-Code wurde erzeugt! Schauen Sie in die Server-Logs oder in die Datei 'emergency-token' im Datenordner.",
+    "step2Title": "2. Code und neues Passwort eingeben",
+    "codeLabel": "Notfall-Code aus den Logs",
+    "codeHint": "Format: XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX (28 Zeichen).",
+    "submit": "Passwort zurücksetzen und 2FA deaktivieren",
+    "successTitle": "Passwort erfolgreich zurückgesetzt!",
+    "successText": "Das Passwort für '{{username}}' wurde neu gesetzt und die Zwei-Faktor-Anmeldung wurde deaktiviert. Alle bestehenden Sitzungen wurden beendet.",
+    "toLogin": "Zur Anmeldung",
+    "backToLogin": "Zurück zur Anmeldung"
   },
   "forced2fa": {
     "title": "Zwei-Faktor-Anmeldung einrichten",
@@ -117,6 +135,8 @@
   "nav": {
     "label": "Hauptnavigation",
     "overview": "Übersicht",
+    "profile": "Stammprofil",
+    "coverLetters": "Anschreiben",
     "admin": "App-Administration",
     "settings": "Einstellungen",
     "signOut": "Abmelden"
@@ -154,6 +174,278 @@
       "last": "Letzte Sicherung: {{when}}",
       "none": "Noch keine Sicherung vorhanden.",
       "manage": "Datensicherung öffnen"
+    }
+  },
+  "profile": {
+    "title": "Stammprofil",
+    "description": "Ihre vollständige Lebensakte: Pflegen Sie Ihre persönlichen Daten und Bausteine einmalig hier. Für einzelne Bewerbungen wählen Sie später flexibel aus, welche Stationen und Kenntnisse erscheinen.",
+    "tabs": {
+      "personal": "Persönliches",
+      "experiences": "Berufserfahrung",
+      "educations": "Ausbildung",
+      "skills": "Kenntnisse",
+      "languages": "Sprachen",
+      "certificates": "Zertifikate",
+      "interests": "Interessen & Aktivitäten",
+      "customSections": "Eigene Abschnitte",
+      "preview": "Vorschau & Export"
+    },
+    "personal": {
+      "title": "Persönliche Daten",
+      "subtitle": "Name, Kontaktdaten und Angaben zur Person (alles außer Vor- und Nachname ist freiwillig nach AGG).",
+      "firstName": "Vorname",
+      "lastName": "Nachname",
+      "academicTitle": "Akademischer Titel",
+      "professionalTitle": "Berufsbezeichnung / Untertitel",
+      "email": "E-Mail-Adresse",
+      "phone": "Telefonnummer",
+      "street": "Straße und Hausnummer",
+      "postalCode": "Postleitzahl",
+      "city": "Ort",
+      "country": "Land",
+      "dateOfBirth": "Geburtsdatum",
+      "placeOfBirth": "Geburtsort",
+      "nationality": "Staatsangehörigkeit",
+      "maritalStatus": "Familienstand",
+      "website": "Webseite / Portfolio",
+      "linkedIn": "LinkedIn-Profil",
+      "gitHub": "GitHub-Profil",
+      "xing": "Xing-Profil",
+      "bio": "Kurzprofil / Über mich",
+      "bioHint": "Einige prägnante Sätze über Ihre Schwerpunkte, Arbeitsweise oder Motivation.",
+      "photo": "Bewerbungsfoto",
+      "photoUpload": "Foto hochladen",
+      "photoChange": "Foto ändern",
+      "photoDelete": "Foto entfernen",
+      "photoHint": "JPEG, PNG oder WebP, maximal 5 MB. Ein Foto ist im Lebenslauf freiwillig.",
+      "saveSuccess": "Persönliche Daten gespeichert."
+    },
+    "experiences": {
+      "title": "Berufserfahrung",
+      "subtitle": "Berufliche Stationen, Praktika und Projekte. Das Neueste steht im Lebenslauf automatisch oben.",
+      "add": "Station hinzufügen",
+      "edit": "Station bearbeiten",
+      "delete": "Station löschen",
+      "deleteConfirm": "Möchten Sie diese Station wirklich löschen?",
+      "empty": "Noch keine Berufserfahrung eingetragen.",
+      "jobTitle": "Position / Berufsbezeichnung",
+      "employer": "Arbeitgeber / Unternehmen",
+      "employmentType": "Beschäftigungsart",
+      "employmentTypePlaceholder": "z. B. Vollzeit, Teilzeit, Freiberuflich, Praktikum",
+      "city": "Ort",
+      "country": "Land",
+      "startDate": "Beginn (Monat/Jahr)",
+      "endDate": "Ende (Monat/Jahr)",
+      "isCurrent": "Aktuelle Position (bis heute)",
+      "description": "Aufgaben, Erfolge & Schwerpunkte",
+      "moveUp": "Nach oben verschieben",
+      "moveDown": "Nach unten verschieben"
+    },
+    "educations": {
+      "title": "Ausbildung & Studium",
+      "subtitle": "Schulbildung, Berufsausbildung, akademische Grade und Abschlüsse.",
+      "add": "Ausbildung hinzufügen",
+      "edit": "Ausbildung bearbeiten",
+      "delete": "Ausbildung löschen",
+      "deleteConfirm": "Möchten Sie diesen Eintrag wirklich löschen?",
+      "empty": "Noch keine Ausbildung eingetragen.",
+      "degree": "Abschluss / Titel",
+      "degreePlaceholder": "z. B. B.Sc. Informatik, Abitur, Fachinformatiker",
+      "fieldOfStudy": "Fachrichtung / Studiengang",
+      "institution": "Einrichtung / Schule / Hochschule",
+      "city": "Ort",
+      "country": "Land",
+      "startDate": "Beginn",
+      "endDate": "Ende",
+      "isCurrent": "Laufende Ausbildung",
+      "grade": "Abschlussnote",
+      "description": "Schwerpunkte, Abschlussarbeit, Details"
+    },
+    "skills": {
+      "title": "Kenntnisse & Fähigkeiten",
+      "subtitle": "Fachkenntnisse, Softwaretools, Methodiken und Soft Skills.",
+      "add": "Kenntnis hinzufügen",
+      "edit": "Kenntnis bearbeiten",
+      "delete": "Kenntnis löschen",
+      "deleteConfirm": "Möchten Sie diese Kenntnis wirklich löschen?",
+      "empty": "Noch keine Kenntnisse eingetragen.",
+      "name": "Bezeichnung",
+      "namePlaceholder": "z. B. React, C#, Projektmanagement, Docker",
+      "category": "Kategorie",
+      "categoryPlaceholder": "z. B. Programmiersprachen, Werkzeuge, Methoden",
+      "level": "Niveau (Stufe 1–5)",
+      "noLevel": "Keine Stufenangabe",
+      "levelLabels": {
+        "0": "Ohne Stufe",
+        "1": "Grundkenntnisse (1/5)",
+        "2": "Gute Kenntnisse (2/5)",
+        "3": "Fortgeschritten (3/5)",
+        "4": "Sehr gut (4/5)",
+        "5": "Experte (5/5)"
+      }
+    },
+    "languages": {
+      "title": "Sprachkenntnisse",
+      "subtitle": "Sprachen und Einstufung nach europäischem Referenzrahmen (GER) oder als Muttersprache.",
+      "add": "Sprache hinzufügen",
+      "edit": "Sprache bearbeiten",
+      "delete": "Sprache löschen",
+      "deleteConfirm": "Möchten Sie diese Sprache wirklich löschen?",
+      "empty": "Noch keine Sprachen eingetragen.",
+      "language": "Sprache",
+      "level": "Niveau",
+      "levels": {
+        "native": "Muttersprache",
+        "A1": "A1 – Anfänger",
+        "A2": "A2 – Grundlegende Kenntnisse",
+        "B1": "B1 – Fortgeschrittene Sprachverwendung",
+        "B2": "B2 – Selbstständige Sprachverwendung",
+        "C1": "C1 – Fachkundige Sprachkenntnisse",
+        "C2": "C2 – Annähernd muttersprachliche Kenntnisse"
+      }
+    },
+    "certificates": {
+      "title": "Weiterbildung & Zertifikate",
+      "subtitle": "Erworbene Zertifizierungen, Scheine, Seminare und Fortbildungen.",
+      "add": "Zertifikat hinzufügen",
+      "edit": "Zertifikat bearbeiten",
+      "delete": "Zertifikat löschen",
+      "deleteConfirm": "Möchten Sie dieses Zertifikat wirklich löschen?",
+      "empty": "Noch keine Zertifikate eingetragen.",
+      "certTitle": "Titel / Bezeichnung",
+      "issuer": "Aussteller / Organisation",
+      "issueDate": "Ausstellungsdatum",
+      "expiryDate": "Gültig bis",
+      "credentialUrl": "Nachweis-Link / URL",
+      "credentialId": "Zertifikatsnummer / ID"
+    },
+    "interests": {
+      "title": "Interessen & Aktivitäten",
+      "subtitle": "Hobbys, ehrenamtliche Tätigkeiten, Mitgliedschaften oder Führerscheinklassen.",
+      "add": "Eintrag hinzufügen",
+      "edit": "Eintrag bearbeiten",
+      "delete": "Eintrag löschen",
+      "deleteConfirm": "Möchten Sie diesen Eintrag wirklich löschen?",
+      "empty": "Noch keine Interessen eingetragen.",
+      "name": "Bezeichnung / Aktivität",
+      "category": "Kategorie (z. B. Hobby, Ehrenamt, Führerschein)",
+      "description": "Ergänzende Beschreibung"
+    },
+    "customSections": {
+      "title": "Eigene Abschnitte",
+      "subtitle": "Erstellen Sie individuelle Sektionen für Ihren Lebenslauf (z. B. Publikationen, Patente, Auszeichnungen).",
+      "addSection": "Abschnitt anlegen",
+      "editSection": "Abschnitt bearbeiten",
+      "deleteSection": "Abschnitt löschen",
+      "sectionTitle": "Abschnittsname (z. B. Publikationen)",
+      "empty": "Noch keine eigenen Abschnitte angelegt.",
+      "addItem": "Eintrag hinzufügen",
+      "editItem": "Eintrag bearbeiten",
+      "deleteItem": "Eintrag löschen",
+      "itemTitle": "Titel",
+      "itemSubtitle": "Untertitel / Herausgeber",
+      "itemDate": "Datum / Zeitraum",
+      "itemDescription": "Beschreibung"
+    },
+    "preview": {
+      "title": "Lebenslauf-Vorschau",
+      "subtitle": "Wählen Sie Design und Optionen und laden Sie Ihren druckfertigen Lebenslauf als PDF herunter.",
+      "design": "Design-Vorlage",
+      "designs": {
+        "classic": "Klassisch",
+        "classicDesc": "Tabellarisch, einspaltig – übersichtlich und traditionell",
+        "modern": "Modern",
+        "modernDesc": "Mit Seitenleiste für Kontakt und Kenntnisse sowie Akzentfarbe",
+        "plain": "Schlicht",
+        "plainDesc": "Einspaltig, ohne Grafik – ideal für Bewerberportale (ATS)"
+      },
+      "color": "Akzentfarbe",
+      "font": "Schriftart",
+      "language": "Dokument-Sprache",
+      "languageDe": "Deutsch",
+      "languageEn": "Englisch",
+      "photo": "Bewerbungsfoto",
+      "showPhoto": "Foto im Lebenslauf anzeigen",
+      "photoShape": "Foto-Form",
+      "photoShapes": {
+        "round": "Rund",
+        "rounded": "Abgerundet",
+        "rect": "Eckig"
+      },
+      "download": "PDF herunterladen",
+      "downloading": "Wird erzeugt …",
+      "downloadDocx": "Word herunterladen (.docx)",
+      "downloadingDocx": "Word wird erzeugt …",
+      "refresh": "Vorschau aktualisieren",
+      "loading": "Vorschau wird erzeugt …",
+      "noPdf": "Die Vorschau konnte nicht geladen werden.",
+      "openNewTab": "In neuem Tab öffnen"
+    }
+  },
+  "coverLetters": {
+    "title": "Anschreiben",
+    "subtitle": "Verfassen Sie normgerechte Anschreiben nach DIN 5008 für Ihre Bewerbungen.",
+    "newLetter": "Neues Anschreiben",
+    "createTitle": "Neues Anschreiben erstellen",
+    "editTitle": "Anschreiben bearbeiten",
+    "empty": "Noch keine Anschreiben vorhanden. Erstellen Sie Ihr erstes Anschreiben!",
+    "deleteConfirm": "Möchten Sie das Anschreiben \"{{title}}\" wirklich löschen?",
+    "tabs": {
+      "editor": "Inhalt & DIN 5008",
+      "preview": "PDF-Vorschau",
+      "options": "Design & Formatierung"
+    },
+    "fields": {
+      "title": "Interner Titel (z. B. Bewerbung Softwareentwickler bei Musterfirma)",
+      "language": "Dokument-Sprache",
+      "senderSection": "Absenderangaben",
+      "senderHint": "Wird standardmäßig aus Ihrem Stammprofil übernommen. Kann hier individuell angepasst werden.",
+      "senderName": "Vor- und Nachname",
+      "senderStreet": "Straße und Hausnummer",
+      "senderPostalCode": "Postleitzahl",
+      "senderCity": "Wohnort",
+      "senderPhone": "Telefonnummer",
+      "senderEmail": "E-Mail-Adresse",
+      "recipientSection": "Empfänger (nach DIN 5008)",
+      "recipientCompany": "Unternehmensname / Organisation",
+      "recipientDepartment": "Abteilung / z. Hd.",
+      "recipientContactPerson": "Ansprechpartner (z. B. Frau Dr. Schmidt)",
+      "recipientStreet": "Straße und Hausnummer / Postfach",
+      "recipientPostalCode": "Postleitzahl",
+      "recipientCity": "Ort",
+      "recipientCountry": "Land (optional, falls Ausland)",
+      "metaSection": "Datum & Ort",
+      "place": "Ort der Unterzeichnung (z. B. Berlin)",
+      "date": "Datum (z. B. 06.11.2026 oder 6. November 2026)",
+      "contentSection": "Briefinhalt",
+      "subject": "Betreffzeile (DIN 5008: Fettgedruckt, ohne das Wort 'Betreff')",
+      "salutation": "Anrede (z. B. Sehr geehrte Damen und Herren,)",
+      "body": "Brieftext",
+      "bodyPlaceholder": "Formulieren Sie hier Ihr Anschreiben. Absätze trennen Sie einfach mit einer Leerzeile...",
+      "closing": "Grußformel (z. B. Mit freundlichen Grüßen)",
+      "signatureName": "Name unter der Unterschrift",
+      "signatureSection": "Unterschrift & Signatur",
+      "signatureHint": "Laden Sie ein transparentes PNG oder JPEG Ihrer handschriftlichen Unterschrift hoch (max. 2 MB).",
+      "uploadSignature": "Unterschrift hochladen",
+      "deleteSignature": "Unterschrift entfernen",
+      "hasSignature": "Unterschrift hinterlegt",
+      "noSignature": "Keine Unterschrift (Platzhalter für handschriftliche Signatur)",
+      "attachmentsSection": "Anlagenvermerk",
+      "attachmentsNote": "Anlagenvermerk (z. B. Lebenslauf, Zeugnisse, Zertifikate)",
+      "optionsSection": "Design & Format",
+      "font": "Schriftart",
+      "accentColor": "Akzentfarbe",
+      "foldMarks": "DIN-Falz- und Lochmarken",
+      "foldMarksHint": "Druckt unauffällige Hilfslinien am linken Rand für DIN-Lang-Fensterumschläge"
+    },
+    "actions": {
+      "save": "Anschreiben speichern",
+      "saving": "Wird gespeichert …",
+      "downloadPdf": "PDF herunterladen",
+      "downloadDocx": "Word herunterladen (.docx)",
+      "refreshPreview": "Vorschau aktualisieren",
+      "backToList": "Zurück zur Übersicht",
+      "openNewTab": "PDF im neuen Tab öffnen"
     }
   },
   "settings": {
@@ -312,6 +604,9 @@
       },
       "setup": {
         "completed": "Einrichtung abgeschlossen"
+      },
+      "admin": {
+        "emergency_reset": "Passwort und 2FA per Notfall-Reset zurückgesetzt"
       },
       "settings": {
         "changed": "Einstellungen geändert"
@@ -588,6 +883,13 @@
       "password": {
         "current_invalid": "Das aktuelle Passwort ist falsch."
       },
+      "admin": {
+        "emergency_reset_other_admins_exist": "Es gibt weitere aktive Administratoren. Bitte wenden Sie sich an einen anderen Administrator, um Ihr Passwort zurückzusetzen.",
+        "emergency_reset_no_admin": "Es wurde kein aktives Administrator-Konto gefunden."
+      },
+      "emergency_reset": {
+        "code_invalid": "Der Notfall-Code ist falsch, abgelaufen oder wurde bereits verwendet."
+      },
       "setup": {
         "already_done": "Die Einrichtung ist schon abgeschlossen. Bitte melden Sie sich an.",
         "required": "Zuerst muss das erste Konto eingerichtet werden.",
@@ -634,6 +936,38 @@
       },
       "host": {
         "not_allowed": "Der Server antwortet nicht unter diesem Namen. Der Betreiber kann den Namen in der Einstellung ALLOWED_HOSTS erlauben."
+      },
+      "profile": {
+        "item_not_found": "Der Eintrag wurde nicht gefunden."
+      },
+      "experience": {
+        "not_found": "Die Position wurde nicht gefunden."
+      },
+      "education": {
+        "not_found": "Die Ausbildung wurde nicht gefunden."
+      },
+      "skill": {
+        "not_found": "Die Kenntnis wurde nicht gefunden."
+      },
+      "language": {
+        "not_found": "Die Sprache wurde nicht gefunden."
+      },
+      "certificate": {
+        "not_found": "Das Zertifikat wurde nicht gefunden."
+      },
+      "interest": {
+        "not_found": "Der Eintrag wurde nicht gefunden."
+      },
+      "custom_section": {
+        "not_found": "Der Abschnitt wurde nicht gefunden."
+      },
+      "custom_section_item": {
+        "not_found": "Der Eintrag wurde nicht gefunden."
+      },
+      "photo": {
+        "required": "Bitte eine Bilddatei auswählen.",
+        "too_large": "Das Bild ist größer als die maximal erlaubten 5 MB.",
+        "invalid_format": "Es werden nur JPEG-, PNG- und WebP-Bilder akzeptiert."
       },
       "rate_limited_account": "Zu viele Versuche für dieses Konto – bitte 15 Minuten warten."
     }

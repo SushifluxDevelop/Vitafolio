@@ -26,6 +26,8 @@ public sealed record UpdateUserRequest(string? DisplayName, string? Role, bool? 
 
 public sealed record SetPasswordRequest(string? NewPassword);
 
+public sealed record EmergencyResetConfirmRequest(string? Code, string? NewPassword);
+
 public sealed record SettingsRequest(bool? RegistrationOpen, bool? RequireTwoFactor);
 
 // Responses

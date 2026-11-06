@@ -18,6 +18,7 @@ public static class RateLimitPolicies
     public const string Setup = "setup";
     public const string Register = "register";
     public const string Password = "password";
+    public const string EmergencyReset = "emergency-reset";
 
     /// <summary>Backup download, upload and restore (they check the admin password again).</summary>
     public const string StepUp = "stepup";
@@ -40,6 +41,7 @@ public static class RateLimitPolicies
         Add(options, Setup, limits.Setup, limits.Window);
         Add(options, Register, limits.Register, limits.Window);
         Add(options, Password, limits.Password, limits.Window);
+        Add(options, EmergencyReset, limits.EmergencyReset, limits.Window);
         Add(options, StepUp, limits.StepUp, limits.Window);
     }
 

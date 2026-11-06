@@ -36,8 +36,11 @@ export default defineConfig({
         {
           name: 'chromium',
           dependencies: ['setup'],
-          testIgnore: ['setup.spec.ts', '**/handbuch/**'],
+          testIgnore: ['setup.spec.ts', '**/handbuch/**', 'restore.spec.ts'],
           use: { ...devices['Desktop Chrome'], storageState: 'e2e/.auth/owner.json' },
         },
+        // A restore ends every session (the signing key is replaced), including the one the other tests share, so it runs
+        // last and signs in itself.
+        { name: 'destructive', dependencies: ['chromium'], testMatch: 'restore.spec.ts', use: { ...devices['Desktop Chrome'] } },
       ],
 })

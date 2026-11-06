@@ -59,6 +59,8 @@ export function AppShell() {
 
   const items: NavItem[] = [
     { to: '/', label: t('nav.overview'), icon: 'home', end: true },
+    { to: '/profile', label: t('nav.profile'), icon: 'fileText' },
+    { to: '/cover-letters', label: t('nav.coverLetters'), icon: 'files' },
     ...(user.role === 'admin' && !desktop ? [{ to: '/admin', label: t('nav.admin'), icon: 'userShield' as const }] : []),
   ]
 

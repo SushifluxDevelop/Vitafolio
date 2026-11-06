@@ -95,14 +95,21 @@ function PasswordStep({ onCode }: { onCode: (challengeId: string) => void }) {
           {server.error !== null && <ErrorNotice error={server.error} />}
         </AlertSlot>
       </form>
-      {bootstrap.registrationOpen && (
-        <p className="mt-2 text-sm text-ink-muted">
-          {t('login.noAccount')}{' '}
-          <Link to="/register" className="font-semibold">
-            {t('register.title')}
+      <div className="mt-3 flex flex-col gap-1 text-sm text-ink-muted">
+        {bootstrap.registrationOpen && (
+          <p>
+            {t('login.noAccount')}{' '}
+            <Link to="/register" className="font-semibold text-link underline">
+              {t('register.title')}
+            </Link>
+          </p>
+        )}
+        <p>
+          <Link to="/emergency-reset" className="text-ink-muted hover:text-ink underline">
+            {t('login.emergencyResetLink')}
           </Link>
         </p>
-      )}
+      </div>
     </>
   )
 }
