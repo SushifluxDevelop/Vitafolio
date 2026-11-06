@@ -7,7 +7,7 @@
 <a name="english"></a>
 ## English
 
-## v2026.11.3-rc1 (All)
+## v2026.11.4-rc2 (All)
 
 Complete suite for modern job applications: visual resume builder with Typst typesetting and Open XML Word export, DIN 5008 cover letters, Kanban application tracker with revision-safe dossier snapshots, privacy-first AI assistance with PII pseudonymization and server-wide admin keys, JSON Resume data portability, career gap analysis, guided wizard mode, centralized credential attachment management, and official Unraid CA template with multi-branch (Stable / Beta / Nightly) support.
 
@@ -29,7 +29,7 @@ Complete suite for modern job applications: visual resume builder with Typst typ
 <a name="deutsch"></a>
 ## Deutsch
 
-## v2026.11.3-rc1 (All)
+## v2026.11.4-rc2 (All)
 
 Vollständige Suite für professionelle Bewerbungen: Visueller Lebenslauf-Editor mit Typst-Setzmaschine und Word-Export (.docx), normgerechte DIN-5008-Anschreiben, Kanban-Bewerbungs-Tracker mit revisionssicherer Dossier-Archivierung, datenschutzfreundliche KI-Unterstützung mit automatischer Pseudonymisierung und geteiltem Server-Schlüssel, JSON-Resume-Datenportabilität, Lücken-Analyse im Werdegang, geführter Profil-Assistent, zentrale Anlagen- und Zeugnisverwaltung sowie Unraid-Community-Vorlage mit Kanal-Auswahl (Stable, Beta, Nightly).
 
@@ -45,3 +45,4 @@ Vollständige Suite für professionelle Bewerbungen: Visueller Lebenslauf-Editor
 - **Geführter Profil-Assistent (Wizard):** 5-stufiger Schritt-für-Schritt-Modus für Einsteiger, nahtlos und verlustfrei mit der gewohnten Reiter-Ansicht umschaltbar.
 - **Zentrale Anlagen- und Zeugnis-Verwaltung:** Dokumentenablage für Arbeitszeugnisse, Diplome und Zertifikate (PDF, PNG, JPEG, WebP bis 20 MB) mit automatischer Einbettung von Bildnachweisen auf eigenen Seiten im Bewerbungsdossier.
 - **Unraid-Vorlage & Automatisierter Release-Workflow:** Offizielle Unraid Community Applications Vorlage mit 3 Kanälen (Stable, Beta, Nightly) sowie GitHub-Actions-Pipeline für Docker- und Windows-Builds.
+
