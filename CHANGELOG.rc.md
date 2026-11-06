@@ -7,7 +7,7 @@
 <a name="english"></a>
 ## English
 
-## v2026.11.4-rc2 (All)
+## v2026.11.5-rc3 (All)
 
 Complete suite for modern job applications: visual resume builder with Typst typesetting and Open XML Word export, DIN 5008 cover letters, Kanban application tracker with revision-safe dossier snapshots, privacy-first AI assistance with PII pseudonymization and server-wide admin keys, JSON Resume data portability, career gap analysis, guided wizard mode, centralized credential attachment management, and official Unraid CA template with multi-branch (Stable / Beta / Nightly) support.
 
@@ -29,7 +29,7 @@ Complete suite for modern job applications: visual resume builder with Typst typ
 <a name="deutsch"></a>
 ## Deutsch
 
-## v2026.11.4-rc2 (All)
+## v2026.11.5-rc3 (All)
 
 Vollständige Suite für professionelle Bewerbungen: Visueller Lebenslauf-Editor mit Typst-Setzmaschine und Word-Export (.docx), normgerechte DIN-5008-Anschreiben, Kanban-Bewerbungs-Tracker mit revisionssicherer Dossier-Archivierung, datenschutzfreundliche KI-Unterstützung mit automatischer Pseudonymisierung und geteiltem Server-Schlüssel, JSON-Resume-Datenportabilität, Lücken-Analyse im Werdegang, geführter Profil-Assistent, zentrale Anlagen- und Zeugnisverwaltung sowie Unraid-Community-Vorlage mit Kanal-Auswahl (Stable, Beta, Nightly).
 

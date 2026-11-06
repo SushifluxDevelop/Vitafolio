@@ -88,7 +88,7 @@ jobs:
     if: needs.inspect.outputs.builds_unraid == 'true'
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       packages: write
     steps:
       - name: Check out
@@ -132,11 +132,22 @@ jobs:
           name: unraid-template
           path: unraid/vitafolio.xml
 
+      - name: Attach Unraid template to release
+        uses: softprops/action-gh-release@v3
+        with:
+          tag_name: ${{ needs.inspect.outputs.tag }}
+          name: ${{ needs.inspect.outputs.release_name }}
+          draft: ${{ needs.inspect.outputs.is_rc == 'true' }}
+          prerelease: ${{ needs.inspect.outputs.is_rc == 'true' }}
+          files: unraid/vitafolio.xml
+
   windows:
     name: Build Windows Desktop Installer
     needs: inspect
     if: needs.inspect.outputs.builds_windows == 'true'
     runs-on: windows-latest
+    permissions:
+      contents: write
     steps:
       - name: Check out
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -173,33 +184,29 @@ jobs:
           name: windows-release
           path: artifacts/windows/*
 
-  publish:
-    name: Publish GitHub Release
-    needs: [inspect, docker, windows]
-    if: always() && (needs.docker.result == 'success' || needs.docker.result == 'skipped') && (needs.windows.result == 'success' || needs.windows.result == 'skipped')
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - name: Download all workflow artifacts
-        uses: actions/download-artifact@cc203385981b70ca67e1cc392babf9cc229d5806 # v4.1.9
-        with:
-          path: release-files
-
-      - name: Collect release assets
-        id: collect
-        run: |
-          mkdir -p dist
-          find release-files -type f -exec cp {} dist/ \;
-          ls -la dist/
-
-      - name: Create GitHub Release
+      - name: Attach Windows artifacts to release
         uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{ needs.inspect.outputs.tag }}
           name: ${{ needs.inspect.outputs.release_name }}
           draft: ${{ needs.inspect.outputs.is_rc == 'true' }}
           prerelease: ${{ needs.inspect.outputs.is_rc == 'true' }}
-          files: dist/*
+          files: artifacts/windows/*
+
+  publish:
+    name: Finalize GitHub Release
+    needs: [inspect, docker, windows]
+    if: always() && (needs.docker.result == 'success' || needs.docker.result == 'skipped') && (needs.windows.result == 'success' || needs.windows.result == 'skipped')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Create or Update GitHub Release
+        uses: softprops/action-gh-release@v3
+        with:
+          tag_name: ${{ needs.inspect.outputs.tag }}
+          name: ${{ needs.inspect.outputs.release_name }}
+          draft: ${{ needs.inspect.outputs.is_rc == 'true' }}
+          prerelease: ${{ needs.inspect.outputs.is_rc == 'true' }}
           generate_release_notes: true
 
