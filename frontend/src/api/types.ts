@@ -407,5 +407,241 @@ export interface CoverSheetOptions {
   language?: 'de' | 'en'
 }
 
+export type ApplicationStatus =
+  | 'draft'
+  | 'applied'
+  | 'acknowledged'
+  | 'interview'
+  | 'offer'
+  | 'rejected'
+  | 'withdrawn'
+
+export interface ApplicationEvent {
+  id: string
+  applicationId: string
+  status: ApplicationStatus
+  date: string
+  title: string | null
+  note: string | null
+  createdAt: string
+}
+
+export interface ApplicationListItem {
+  id: string
+  jobTitle: string
+  company: string
+  location?: string | null
+  status: ApplicationStatus
+  appliedAt?: string | null
+  followUpAt?: string | null
+  isFollowUpDue: boolean
+  coverLetterTitle?: string | null
+  hasArchivedPdf: boolean
+  updatedAt: string
+}
+
+export interface Application {
+  id: string
+  jobTitle: string
+  company: string
+  location?: string | null
+  contactPerson?: string | null
+  contactEmail?: string | null
+  contactPhone?: string | null
+  jobPostingUrl?: string | null
+  jobDescription?: string | null
+  salaryExpectation?: string | null
+  status: ApplicationStatus
+  appliedAt?: string | null
+  followUpAt?: string | null
+  isFollowUpDue: boolean
+  coverLetterId?: string | null
+  coverLetterTitle?: string | null
+  cvDesign: string
+  cvAccentColor?: string | null
+  cvFont?: string | null
+  cvLanguage: 'de' | 'en'
+  cvShowPhoto: boolean
+  cvPhotoShape: 'round' | 'rounded' | 'rect'
+  includeCoverSheet: boolean
+  attachmentIds: string[]
+  hasArchivedPdf: boolean
+  notes?: string | null
+  createdAt: string
+  updatedAt: string
+  events: ApplicationEvent[]
+}
+
+export interface Attachment {
+  id: string
+  title: string
+  fileName: string
+  category?: string | null
+  contentType: string
+  sizeBytes: number
+  sortOrder: number
+  createdAt: string
+  updatedAt: string
+}
+
+export interface ApplicationPayload {
+  jobTitle: string
+  company: string
+  location?: string | null
+  contactPerson?: string | null
+  contactEmail?: string | null
+  contactPhone?: string | null
+  jobPostingUrl?: string | null
+  jobDescription?: string | null
+  salaryExpectation?: string | null
+  status?: ApplicationStatus
+  appliedAt?: string | null
+  followUpAt?: string | null
+  coverLetterId?: string | null
+  cvDesign?: string
+  cvAccentColor?: string
+  cvFont?: string
+  cvLanguage?: 'de' | 'en'
+  cvShowPhoto?: boolean
+  cvPhotoShape?: 'round' | 'rounded' | 'rect'
+  includeCoverSheet?: boolean
+  attachmentIds?: string[]
+  notes?: string | null
+}
+
+export interface ApplicationStatusUpdatePayload {
+  status: ApplicationStatus
+  date?: string | null
+  note?: string | null
+}
+
+export interface ApplicationEventPayload {
+  date?: string | null
+  status?: ApplicationStatus
+  title: string
+  note?: string | null
+}
+
+export interface ApplicationStats {
+  total: number
+  draft: number
+  applied: number
+  acknowledged: number
+  interview: number
+  offer: number
+  rejected: number
+  withdrawn: number
+  followUpsDue: number
+}
+
+// ==================== AI ASSISTANT TYPES ====================
+
+export type AiProvider = 'copy_paste' | 'openai' | 'anthropic' | 'gemini' | 'ollama' | 'custom'
+
+export type AiTask =
+  | 'generate_cover_letter'
+  | 'analyze_job'
+  | 'generate_summary'
+  | 'improve_bullet'
+  | 'translate_content'
+
+export interface AiConfig {
+  provider: AiProvider
+  model: string
+  baseUrl: string | null
+  hasApiKey: boolean
+  pseudonymize: boolean
+}
+
+export interface UpdateAiConfigPayload {
+  provider?: AiProvider
+  model?: string
+  baseUrl?: string | null
+  apiKey?: string | null
+  pseudonymize?: boolean
+}
+
+export interface TestAiConnectionResult {
+  success: boolean
+  message: string | null
+}
+
+export interface AiPromptPayload {
+  task: AiTask
+  jobTitle?: string | null
+  company?: string | null
+  jobDescription?: string | null
+  recipientPerson?: string | null
+  tone?: string | null
+  language?: string | null
+  inputText?: string | null
+  coverLetterId?: string | null
+}
+
+export interface AiPromptResult {
+  task: AiTask
+  systemPrompt: string
+  userPrompt: string
+  fullCopyPasteText: string
+  pseudonymized: boolean
+}
+
+export interface AiParsePayload {
+  task: AiTask
+  rawResponse: string
+  pseudonymized: boolean
+  language?: string | null
+}
+
+export interface AiCoverLetterResult {
+  subject: string
+  salutation: string
+  opening: string
+  body: string
+  closing: string
+  keyMatches?: string[]
+}
+
+export interface MatchedRequirement {
+  requirement: string
+  candidateMatch: string
+}
+
+export interface MissingRequirement {
+  requirement: string
+  suggestion: string
+}
+
+export interface AiJobAnalysisResult {
+  matchScore: number
+  summary: string
+  matchedRequirements: MatchedRequirement[]
+  missingRequirements: MissingRequirement[]
+  tips: string[]
+}
+
+export interface AiSummaryResult {
+  shortSummary: string
+  bulletPoints: string[]
+}
+
+export interface AiImproveBulletResult {
+  improved: string
+  alternatives: string[]
+  explanation: string
+}
+
+export interface TranslatedItem {
+  key: string
+  translation: string
+}
+
+export interface AiTranslateResult {
+  translatedText: string
+  items?: TranslatedItem[]
+}
+
+
+
 
 

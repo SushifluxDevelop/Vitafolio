@@ -137,6 +137,8 @@
     "overview": "Overview",
     "profile": "Master profile",
     "coverLetters": "Cover letters",
+    "applications": "Applications",
+    "aiSettings": "AI Settings",
     "admin": "App administration",
     "settings": "Settings",
     "signOut": "Sign out"
@@ -446,6 +448,164 @@
       "refreshPreview": "Refresh Preview",
       "backToList": "Back to Overview",
       "openNewTab": "Open PDF in New Tab"
+    }
+  },
+  "applications": {
+    "title": "Application Tracker",
+    "subtitle": "Keep track of all your active job applications, interview rounds, and portfolio dossiers.",
+    "newApplication": "New Application",
+    "createTitle": "Create New Application",
+    "editTitle": "Edit Application",
+    "detailsTitle": "Application Details",
+    "empty": "No job applications yet. Create your first application!",
+    "noResults": "No applications found matching your criteria.",
+    "deleteConfirm": "Do you really want to delete the application at \"{{company}}\" for \"{{jobTitle}}\"?",
+    "followUpAlert": "{{count}} application(s) are due for follow-up (no response > 14 days).",
+    "views": {
+      "kanban": "Kanban Board",
+      "list": "List View"
+    },
+    "filter": {
+      "all": "All Statuses",
+      "searchPlaceholder": "Search by company, job title, or location..."
+    },
+    "stats": {
+      "total": "Total",
+      "draft": "Draft",
+      "applied": "Applied",
+      "acknowledged": "Acknowledged",
+      "interview": "Interview",
+      "offer": "Offer",
+      "rejected": "Rejected",
+      "withdrawn": "Withdrawn",
+      "followUpsDue": "Follow-up Due"
+    },
+    "statuses": {
+      "draft": "Draft",
+      "applied": "Applied",
+      "acknowledged": "Acknowledged",
+      "interview": "Interview",
+      "offer": "Offer Received",
+      "rejected": "Rejected",
+      "withdrawn": "Withdrawn"
+    },
+    "fields": {
+      "jobTitle": "Job Title",
+      "company": "Company",
+      "location": "Location / Remote",
+      "contactPerson": "Contact Person",
+      "contactEmail": "Contact Email",
+      "contactPhone": "Contact Phone",
+      "jobPostingUrl": "Link to Job Posting",
+      "salaryExpectation": "Salary Expectation",
+      "status": "Current Status",
+      "appliedAt": "Applied Date",
+      "followUpAt": "Follow-up Planned Date",
+      "coverLetter": "Assigned Cover Letter",
+      "noCoverLetter": "No Cover Letter",
+      "includeCoverSheet": "Include Cover Sheet in Dossier",
+      "cvDesign": "Resume Design",
+      "cvAccentColor": "Accent Color",
+      "cvFont": "Font",
+      "cvLanguage": "Language",
+      "cvShowPhoto": "Show Photo",
+      "cvPhotoShape": "Photo Shape",
+      "jobDescription": "Job Description",
+      "notes": "Personal Notes & Feedback"
+    },
+    "timeline": {
+      "title": "History & Timeline Events",
+      "addEvent": "Add Event",
+      "date": "Date",
+      "eventTitle": "Title (e.g. 1st Technical Interview)",
+      "note": "Note (optional)",
+      "status": "Associated Status",
+      "noEvents": "No events recorded yet."
+    },
+    "dossier": {
+      "title": "Application Dossier",
+      "frozenBadge": "Archived Snapshot",
+      "liveBadge": "Live Preview",
+      "frozenHint": "This PDF snapshot was frozen when the application was marked as applied.",
+      "download": "Download Dossier (PDF)",
+      "preview": "View Dossier",
+      "archiveNow": "Update Snapshot"
+    },
+    "actions": {
+      "changeStatus": "Change Status",
+      "viewDetails": "View Details",
+      "downloadDossier": "Dossier",
+      "delete": "Delete",
+      "save": "Save",
+      "saving": "Saving…",
+      "cancel": "Cancel"
+    }
+  },
+  "ai": {
+    "title": "AI Assistant",
+    "settingsTitle": "AI Settings",
+    "provider": "AI Provider",
+    "providers": {
+      "copy_paste": "Copy & Paste (Free & no API key required)",
+      "openai": "OpenAI (ChatGPT)",
+      "anthropic": "Anthropic (Claude)",
+      "gemini": "Google Gemini",
+      "ollama": "Ollama (Local on this PC / server)",
+      "custom": "Custom Endpoint (LM Studio / vLLM)"
+    },
+    "model": "Model",
+    "modelPlaceholder": "e.g. gpt-4o-mini, claude-3-5-haiku-20241022, gemini-2.5-flash, llama3.2",
+    "baseUrl": "Base URL / Server Address",
+    "baseUrlPlaceholder": "http://localhost:11434 for Ollama or http://localhost:1234/v1 for LM Studio",
+    "apiKey": "API Key",
+    "apiKeyPlaceholder": "Enter new key (leave empty to keep existing)...",
+    "apiKeyStored": "Key is securely encrypted and stored",
+    "apiKeyMissing": "No key stored",
+    "pseudonymize": "Protect personal data with placeholders (Privacy)",
+    "pseudonymizeHint": "Replaces name, contact info and address with tokens before transmission and restores them afterwards.",
+    "testConnection": "Test Connection",
+    "testing": "Testing connection...",
+    "testSuccess": "Connection successfully established!",
+    "save": "Save Settings",
+    "saving": "Saving...",
+    "saved": "AI settings successfully saved.",
+    "tasks": {
+      "coverLetter": "Draft Cover Letter",
+      "analyzeJob": "Analyze Job Posting",
+      "summary": "Draft Profile Summary",
+      "improveBullet": "Optimize Bullet Point"
+    },
+    "assistant": {
+      "title": "AI Assistant",
+      "jobTitle": "Target Position",
+      "company": "Target Company",
+      "jobDescription": "Job Description / Requirements",
+      "recipient": "Contact Person",
+      "tone": "Desired Tone",
+      "tones": {
+        "confident": "Confident & persuasive",
+        "professional": "Professional & formal",
+        "dynamic": "Dynamic & innovative",
+        "classic": "Classic & reserved"
+      },
+      "directMode": "Generate Directly",
+      "copyPasteMode": "Copy & Paste",
+      "copyPrompt": "1. Copy Prompt",
+      "promptCopied": "Prompt copied to clipboard! Now paste into ChatGPT, Claude or Gemini.",
+      "pasteAnswer": "2. Paste AI response here",
+      "pastePlaceholder": "Paste the complete response from your AI chat here...",
+      "parseAnswer": "3. Evaluate & apply response",
+      "generate": "Generate Suggestion",
+      "generating": "AI is analyzing and drafting...",
+      "apply": "Apply",
+      "applyToCoverLetter": "Apply to Cover Letter",
+      "applySuccess": "Applied successfully!",
+      "matchScore": "Job Fit Score",
+      "matchedRequirements": "Matched Requirements",
+      "missingRequirements": "Gaps & Tactical Tips",
+      "tips": "Application Tips",
+      "keyMatches": "Highlighted Strengths",
+      "openSettings": "Configure AI Settings"
     }
   },
   "settings": {
@@ -968,6 +1128,15 @@
         "required": "Please select an image file.",
         "too_large": "The image exceeds the maximum size of 5 MB.",
         "invalid_format": "Only JPEG, PNG, and WebP images are accepted."
+      },
+      "ai": {
+        "invalid_json": "The AI response did not contain valid JSON. Please instruct the AI to output valid JSON only.",
+        "parse_failed": "The AI response could not be parsed.",
+        "missing_fields": "Required data fields are missing from the AI response.",
+        "copy_paste_only": "Copy & Paste mode is active. Please use 'Copy Prompt' or configure an API key in settings.",
+        "api_error": "Error communicating with the AI service.",
+        "missing_key": "An API key is required for this provider.",
+        "invalid_url": "The provided base URL is invalid."
       },
       "rate_limited_account": "Too many attempts for this account – please wait 15 minutes."
     }

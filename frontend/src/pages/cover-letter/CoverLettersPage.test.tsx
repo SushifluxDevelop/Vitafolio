@@ -4,7 +4,7 @@ import i18n from 'i18next'
 import { MemoryRouter } from 'react-router'
 import { beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import '../../i18n'
-import { coverLettersApi, profileApi } from '../../api/endpoints'
+import { coverLettersApi } from '../../api/endpoints'
 import type { CoverLetter, CoverLetterListItem } from '../../api/types'
 import { ConfirmProvider } from '../../components/ui/ConfirmDialog'
 import { CoverLettersPage } from './CoverLettersPage'
@@ -69,6 +69,15 @@ vi.mock('../../api/endpoints', () => ({
   },
   profileApi: {
     get: vi.fn(),
+  },
+  aiApi: {
+    getConfig: vi.fn().mockResolvedValue({
+      provider: 'copy_paste',
+      model: 'gpt-4o-mini',
+      baseUrl: null,
+      hasApiKey: false,
+      pseudonymize: true,
+    }),
   },
 }))
 

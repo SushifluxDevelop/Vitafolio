@@ -57,6 +57,8 @@ public sealed class ApiException(
 
     public static ApiException BadRequest(string code, string detail) => new(StatusCodes.Status400BadRequest, code, detail);
 
+    public static ApiException Unauthorized(string code, string detail) => new(StatusCodes.Status401Unauthorized, code, detail);
+
     /// <summary>A failure that belongs to one field, e.g. the current password is wrong.</summary>
     public static ApiException Field(string field, string code, string detail, int status = StatusCodes.Status400BadRequest) =>
         new(status, code, detail, null, new Dictionary<string, IReadOnlyList<FieldError>> { [field] = [new FieldError(code)] });

@@ -984,6 +984,30 @@ public sealed class ProfileController(
     }
 
     // -----------------------------------------------------------------------------------------------------------------
+    // JSON Resume Standard (Import & Export - v1.0.0)
+    // -----------------------------------------------------------------------------------------------------------------
+
+    [HttpGet("json-resume")]
+    public async Task<ActionResult<Documents.JsonResumeDto>> GetJsonResume(CancellationToken ct)
+    {
+        var profile = await GetOrCreateProfileAsync(ct);
+        var jsonResume = Documents.JsonResumeConverter.ToJsonResume(ProfileResponse.From(profile));
+        return Ok(jsonResume);
+    }
+
+    [HttpPost("json-resume/import")]
+    public async Task<ActionResult<ProfileResponse>> ImportJsonResume(
+        [FromBody] Documents.JsonResumeDto resume,
+        [FromQuery] bool replace = false,
+        CancellationToken ct = default)
+    {
+        var profile = await GetOrCreateProfileAsync(ct);
+        Documents.JsonResumeConverter.ApplyJsonResume(db, profile, resume, time, replaceExisting: replace);
+        await db.SaveChangesAsync(ct);
+        return Ok(ProfileResponse.From(profile));
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
     // PDF Document Generation (Preview & Export)
     // -----------------------------------------------------------------------------------------------------------------
 

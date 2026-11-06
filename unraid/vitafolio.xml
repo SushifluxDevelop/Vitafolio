@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>Vitafolio</Name>
+  <Repository>ghcr.io/sushifluxdevelop/vitafolio:latest</Repository>
+  <Registry>https://github.com/SushifluxDevelop/Vitafolio/pkgs/container/vitafolio</Registry>
+  <DefaultTagDescription>Releases only (recommended) / Nur Releases (empfohlen)</DefaultTagDescription>
+  <Branch>
+    <Tag>beta</Tag>
+    <TagDescription>Betas (β) and releases, always the newest of both. / Betas (β) und Releases, immer die neueste von beiden.</TagDescription>
+  </Branch>
+  <Branch>
+    <Tag>nightly</Tag>
+    <TagDescription>Nightly builds (α), betas (β) and releases, always the newest of all three. / Nightly-Builds (α), Betas (β) und Releases, immer die neueste aller drei.</TagDescription>
+  </Branch>
+  <Network>bridge</Network>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/SushifluxDevelop/Vitafolio/issues</Support>
+  <Project>https://github.com/SushifluxDevelop/Vitafolio</Project>
+  <Overview>Vitafolio – Open-Source-Bewerbungsmappen, Lebensläufe &amp; Anschreiben nach DIN 5008, Bewerbungs-Tracker und datenschutzfreundliche KI-Unterstützung. ASP.NET Core Backend mit integriertem React-Frontend und integrierter Typst-PDF-Engine. SQLite-Datenbank und Datensicherungen liegen eigenständig im gemounteten Datenordner.</Overview>
+  <Category>Productivity: Office: Other:</Category>
+  <WebUI>http://[IP]:[PORT:8080]</WebUI>
+  <TemplateURL>https://raw.githubusercontent.com/SushifluxDevelop/Vitafolio/main/unraid/vitafolio.xml</TemplateURL>
+  <Icon>https://raw.githubusercontent.com/SushifluxDevelop/Vitafolio/main/branding/logo.svg</Icon>
+  <ExtraParams>--restart=unless-stopped --cap-drop ALL --cap-add CHOWN --cap-add DAC_OVERRIDE --cap-add FOWNER --cap-add SETUID --cap-add SETGID --security-opt no-new-privileges:true --read-only --tmpfs /tmp:rw,noexec,nosuid,size=64m</ExtraParams>
+  <DateInstalled></DateInstalled>
+
+  <!-- Web-Port -->
+  <Config
+    Name="Web UI Port"
+    Target="8080"
+    Default="8080"
+    Mode="tcp"
+    Description="Port über den Vitafolio im Browser erreichbar ist."
+    Type="Port"
+    Display="always"
+    Required="true"
+    Mask="false">8080</Config>
+
+  <!-- Datenordner -->
+  <Config
+    Name="App-Datenordner"
+    Target="/data"
+    Default="/mnt/user/appdata/vitafolio"
+    Description="Speicherort für SQLite-Datenbank, Verschlüsselungsschlüssel, Dokument-Snapshots und automatische Sicherungen. Muss persistent erhalten bleiben."
+    Type="Path"
+    Display="always"
+    Required="true"
+    Mode="rw">/mnt/user/appdata/vitafolio</Config>
+
+  <!-- Berechtigungen -->
+  <Config
+    Name="PUID"
+    Target="PUID"
+    Default="99"
+    Description="Benutzer-ID für Dateirechte (Standard für Unraid: 99)."
+    Type="Variable"
+    Display="advanced"
+    Required="false"
+    Mask="false">99</Config>
+
+  <Config
+    Name="PGID"
+    Target="PGID"
+    Default="100"
+    Description="Gruppen-ID für Dateirechte (Standard für Unraid: 100)."
+    Type="Variable"
+    Display="advanced"
+    Required="false"
+    Mask="false">100</Config>
+
+  <Config
+    Name="Zeitzone"
+    Target="TZ"
+    Default="Europe/Berlin"
+    Description="Zeitzone für Sicherungszeitpläne und Protokollstempel."
+    Type="Variable"
+    Display="advanced"
+    Required="false"
+    Mask="false">Europe/Berlin</Config>
+
+  <!-- Sicherheit / Host-Schutz -->
+  <Config
+    Name="Erlaubte Hosts (ALLOWED_HOSTS)"
+    Target="ALLOWED_HOSTS"
+    Default=""
+    Description="Optional für Zugriff über Domain/Reverse-Proxy (z.B. vitafolio.meinedomain.de). Mehrere Hostnamen kommagetrennt. Lokale IPs und localhost sind immer erlaubt."
+    Type="Variable"
+    Display="advanced"
+    Required="false"
+    Mask="false"></Config>
+</Container>
+

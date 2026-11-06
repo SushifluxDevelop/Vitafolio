@@ -326,4 +326,144 @@ public sealed class ProfileTests(ServerFixture server) : IClassFixture<ServerFix
         // 6. After deletion: 404
         Assert.Equal(HttpStatusCode.NotFound, (await user.GetAsync("/api/profile/photo")).StatusCode);
     }
+
+    [Fact]
+    public async Task Json_resume_export_and_import()
+    {
+        var admin = await server.AdminAsync();
+        var (user, _) = await server.UserAsync(admin, "jsonresumeuser");
+
+        // 1. Initial export
+        var exportRes = await user.GetAsync("/api/profile/json-resume");
+        Assert.Equal(HttpStatusCode.OK, exportRes.StatusCode);
+        var exportDoc = await exportRes.JsonAsync();
+        Assert.True(exportDoc.TryGetProperty("basics", out var basicsObj));
+        Assert.Equal(System.Text.Json.JsonValueKind.Object, basicsObj.ValueKind);
+
+        // 2. Import sample JSON Resume
+        var sampleResume = new
+        {
+            basics = new
+            {
+                name = "Max Mustermann",
+                label = "Cloud Architect",
+                email = "max@example.com",
+                phone = "+49 987 654321",
+                summary = "Erfahrener Architekt für verteilte Systeme.",
+                location = new
+                {
+                    address = "Musterstraße 42",
+                    postalCode = "10115",
+                    city = "Berlin",
+                    countryCode = "DE"
+                },
+                profiles = new[]
+                {
+                    new { network = "LinkedIn", url = "https://linkedin.com/in/max-mustermann" },
+                    new { network = "GitHub", url = "https://github.com/max-mustermann" }
+                }
+            },
+            work = new[]
+            {
+                new
+                {
+                    name = "Tech Solutions GmbH",
+                    position = "Lead Architect",
+                    startDate = "2022-01",
+                    endDate = (string?)null,
+                    summary = "Leitung der Cloud-Migration.",
+                    highlights = new[] { "Docker & Kubernetes", "Zero Downtime" }
+                }
+            },
+            education = new[]
+            {
+                new
+                {
+                    institution = "TU Berlin",
+                    studyType = "M.Sc. Informatik",
+                    area = "Verteilte Systeme",
+                    startDate = "2016-10",
+                    endDate = "2021-09",
+                    score = "1.3"
+                }
+            },
+            skills = new[]
+            {
+                new
+                {
+                    name = "C# / .NET",
+                    level = "Master",
+                    keywords = new[] { "Backend" }
+                }
+            },
+            languages = new[]
+            {
+                new
+                {
+                    language = "Deutsch",
+                    fluency = "Muttersprache"
+                },
+                new
+                {
+                    language = "Englisch",
+                    fluency = "Verhandlungssicher (C1)"
+                }
+            }
+        };
+
+        var importRes = await user.PostAsync("/api/profile/json-resume/import", sampleResume);
+        Assert.Equal(HttpStatusCode.OK, importRes.StatusCode);
+
+        var profile = await importRes.JsonAsync();
+        Assert.Equal("Max", profile.GetProperty("firstName").GetString());
+        Assert.Equal("Mustermann", profile.GetProperty("lastName").GetString());
+        Assert.Equal("Cloud Architect", profile.GetProperty("professionalTitle").GetString());
+        Assert.Equal("https://linkedin.com/in/max-mustermann", profile.GetProperty("linkedIn").GetString());
+
+        var experiences = profile.GetProperty("experiences").EnumerateArray().ToList();
+        Assert.Single(experiences);
+        Assert.Equal("Tech Solutions GmbH", experiences[0].GetProperty("employer").GetString());
+        Assert.Equal("Lead Architect", experiences[0].GetProperty("jobTitle").GetString());
+
+        var educations = profile.GetProperty("educations").EnumerateArray().ToList();
+        Assert.Single(educations);
+        Assert.Equal("TU Berlin", educations[0].GetProperty("institution").GetString());
+
+        var skills = profile.GetProperty("skills").EnumerateArray().ToList();
+        Assert.Single(skills);
+        Assert.Equal("C# / .NET", skills[0].GetProperty("name").GetString());
+        Assert.Equal(5, skills[0].GetProperty("level").GetInt32());
+
+        var languages = profile.GetProperty("languages").EnumerateArray().ToList();
+        Assert.Equal(2, languages.Count);
+
+        // 3. Export again and verify contents match
+        var reExportRes = await user.GetAsync("/api/profile/json-resume");
+        Assert.Equal(HttpStatusCode.OK, reExportRes.StatusCode);
+        var reExportDoc = await reExportRes.JsonAsync();
+        var reBasics = reExportDoc.GetProperty("basics");
+        Assert.Equal("Max Mustermann", reBasics.GetProperty("name").GetString());
+        Assert.Equal("Cloud Architect", reBasics.GetProperty("label").GetString());
+
+        // 4. Import with replace = true
+        var replaceResume = new
+        {
+            basics = new { name = "Neuer Name", label = "DevOps Engineer" },
+            work = new[]
+            {
+                new { name = "Single Work", position = "DevOps", startDate = "2024-01" }
+            }
+        };
+        var replaceRes = await user.PostAsync("/api/profile/json-resume/import?replace=true", replaceResume);
+        Assert.Equal(HttpStatusCode.OK, replaceRes.StatusCode);
+        var replacedProfile = await replaceRes.JsonAsync();
+        Assert.Equal("Neuer", replacedProfile.GetProperty("firstName").GetString());
+        Assert.Equal("Name", replacedProfile.GetProperty("lastName").GetString());
+        Assert.Equal("DevOps Engineer", replacedProfile.GetProperty("professionalTitle").GetString());
+        var replacedWork = replacedProfile.GetProperty("experiences").EnumerateArray().ToList();
+        Assert.Single(replacedWork);
+        Assert.Equal("Single Work", replacedWork[0].GetProperty("employer").GetString());
+        Assert.Empty(replacedProfile.GetProperty("educations").EnumerateArray().ToList());
+        Assert.Empty(replacedProfile.GetProperty("skills").EnumerateArray().ToList());
+    }
 }

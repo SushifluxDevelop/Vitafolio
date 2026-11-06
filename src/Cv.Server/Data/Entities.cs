@@ -61,6 +61,10 @@ public sealed class User
     public UserProfile? Profile { get; set; }
 
     public List<CoverLetter> CoverLetters { get; set; } = [];
+
+    public List<JobApplication> Applications { get; set; } = [];
+
+    public UserAiConfig? AiConfig { get; set; }
 }
 
 /// <summary>One 2FA recovery code (SHA-256 hash of a high-entropy random code), usable once.</summary>
@@ -477,5 +481,179 @@ public sealed class CoverLetter
     public string? AccentColor { get; set; }
 
     public DateTime CreatedAt { get; set; }
+    public DateTime UpdatedAt { get; set; }
+}
+
+public static class ApplicationStatuses
+{
+    public const string Draft = "draft";
+    public const string Applied = "applied";
+    public const string Acknowledged = "acknowledged";
+    public const string Interview = "interview";
+    public const string Offer = "offer";
+    public const string Rejected = "rejected";
+    public const string Withdrawn = "withdrawn";
+
+    public static readonly string[] All = [Draft, Applied, Acknowledged, Interview, Offer, Rejected, Withdrawn];
+
+    public static bool IsValid(string? status) => !string.IsNullOrEmpty(status) && All.Contains(status.Trim().ToLowerInvariant());
+}
+
+/// <summary>Uploaded certificate, reference letter, credential, or work sample.</summary>
+public sealed class Attachment
+{
+    public Guid Id { get; set; }
+
+    public Guid UserId { get; set; }
+
+    public User? User { get; set; }
+
+    public string Title { get; set; } = "";
+
+    public string FileName { get; set; } = "";
+
+    public string? Category { get; set; }
+
+    public string ContentType { get; set; } = "application/pdf";
+
+    public long SizeBytes { get; set; }
+
+    /// <summary>Relative to data directory (e.g. "attachments/userId/id.pdf").</summary>
+    public string StoragePath { get; set; } = "";
+
+    public int SortOrder { get; set; }
+
+    public DateTime CreatedAt { get; set; }
+
+    public DateTime UpdatedAt { get; set; }
+}
+
+/// <summary>A tracked job application with company, position, status, documents and timeline events.</summary>
+public sealed class JobApplication
+{
+    public Guid Id { get; set; }
+
+    public Guid UserId { get; set; }
+
+    public User? User { get; set; }
+
+    public string JobTitle { get; set; } = "";
+
+    public string Company { get; set; } = "";
+
+    public string? Location { get; set; }
+
+    public string? ContactPerson { get; set; }
+
+    public string? ContactEmail { get; set; }
+
+    public string? ContactPhone { get; set; }
+
+    public string? JobPostingUrl { get; set; }
+
+    public string? JobDescription { get; set; }
+
+    public string? SalaryExpectation { get; set; }
+
+    public string Status { get; set; } = ApplicationStatuses.Draft;
+
+    public DateTime? AppliedAt { get; set; }
+
+    public DateTime? FollowUpAt { get; set; }
+
+    // Associated Cover Letter
+    public Guid? CoverLetterId { get; set; }
+
+    public CoverLetter? CoverLetter { get; set; }
+
+    // CV design options for this specific application
+    public string CvDesign { get; set; } = "classic";
+
+    public string? CvAccentColor { get; set; }
+
+    public string? CvFont { get; set; }
+
+    public string CvLanguage { get; set; } = "de";
+
+    public bool CvShowPhoto { get; set; } = true;
+
+    public string CvPhotoShape { get; set; } = "rounded";
+
+    public bool IncludeCoverSheet { get; set; } = true;
+
+    /// <summary>Comma-separated list of selected Attachment GUIDs included in the dossier.</summary>
+    public string? AttachmentIds { get; set; }
+
+    /// <summary>Path to the archived exact sent PDF dossier relative to the data directory.</summary>
+    public string? ArchivedPdfPath { get; set; }
+
+    public string? Notes { get; set; }
+
+    public DateTime CreatedAt { get; set; }
+
+    public DateTime UpdatedAt { get; set; }
+
+    public List<ApplicationEvent> Events { get; set; } = [];
+}
+
+/// <summary>A timeline entry in the application lifecycle (e.g. status transition, phone screen, interview, feedback).</summary>
+public sealed class ApplicationEvent
+{
+    public Guid Id { get; set; }
+
+    public Guid ApplicationId { get; set; }
+
+    public JobApplication? Application { get; set; }
+
+    public string Status { get; set; } = ApplicationStatuses.Draft;
+
+    public DateTime Date { get; set; }
+
+    public string? Title { get; set; }
+
+    public string? Note { get; set; }
+
+    public DateTime CreatedAt { get; set; }
+}
+
+public static class AiProviders
+{
+    public const string CopyPaste = "copy_paste";
+    public const string OpenAi = "openai";
+    public const string Anthropic = "anthropic";
+    public const string Gemini = "gemini";
+    public const string Ollama = "ollama";
+    public const string Custom = "custom";
+
+    public static bool IsValid(string? provider) =>
+        provider is CopyPaste or OpenAi or Anthropic or Gemini or Ollama or Custom;
+}
+
+/// <summary>Per-user AI provider configuration and encrypted API credentials.</summary>
+public sealed class UserAiConfig
+{
+    public Guid Id { get; set; }
+
+    public Guid UserId { get; set; }
+
+    public User? User { get; set; }
+
+    /// <summary>Provider identifier from <see cref="AiProviders"/> (default: <see cref="AiProviders.CopyPaste"/>).</summary>
+    public string Provider { get; set; } = AiProviders.CopyPaste;
+
+    /// <summary>Selected LLM model (e.g. "gpt-4o-mini", "claude-3-5-haiku-20241022", "gemini-2.5-flash", "llama3.2").</summary>
+    public string Model { get; set; } = "gpt-4o-mini";
+
+    /// <summary>Custom endpoint URL for Ollama, LM Studio or private proxies (e.g. "http://localhost:11434").</summary>
+    public string? BaseUrl { get; set; }
+
+    /// <summary>Encrypted API key (ASP.NET Core Data Protection). Never sent to the client.</summary>
+    public string? ApiKeyProtected { get; set; }
+
+    /// <summary>Whether candidate PII (name, email, phone, address, birthdate) is pseudonymized before sending to AI.</summary>
+    public bool Pseudonymize { get; set; } = true;
+
+    public DateTime CreatedAt { get; set; }
+
     public DateTime UpdatedAt { get; set; }
 }

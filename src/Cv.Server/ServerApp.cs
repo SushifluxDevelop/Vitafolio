@@ -74,6 +74,11 @@ public static class ServerApp
         services.AddScoped<SessionService>();
         services.AddScoped<TwoFactorService>();
         services.AddScoped<StepUp>();
+        services.AddHttpClient<Ai.IAiClient, Ai.AiClient>(c =>
+        {
+            c.Timeout = TimeSpan.FromSeconds(60);
+        });
+        services.AddScoped<Ai.AiService>();
         services.AddHostedService<BackupWorker>();
         services.AddHostedService<SessionCleanupWorker>();
 

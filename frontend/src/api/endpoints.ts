@@ -4,6 +4,18 @@ import type {
   ActivityPage,
   AdminSettings,
   AdminUser,
+  AiConfig,
+  AiParsePayload,
+  AiPromptPayload,
+  AiPromptResult,
+  Application,
+  ApplicationEvent,
+  ApplicationEventPayload,
+  ApplicationListItem,
+  ApplicationPayload,
+  ApplicationStats,
+  ApplicationStatusUpdatePayload,
+  Attachment,
   BackupEntry,
   BackupSettings,
   BackupSettingsInfo,
@@ -28,8 +40,10 @@ import type {
   Role,
   SessionInfo,
   Skill,
+  TestAiConnectionResult,
   ThemePreference,
   TotpSetup,
+  UpdateAiConfigPayload,
   UserEnvelope,
   VersionInfo,
 } from './types'
@@ -227,6 +241,11 @@ export const profileApi = {
     }
     return { blob, filename }
   },
+
+  // JSON Resume Standard (Import & Export - v1.0.0)
+  getJsonResume: () => get<Record<string, unknown>>('/api/profile/json-resume'),
+  importJsonResume: (resume: Record<string, unknown>, replace = false) =>
+    post<Profile>(`/api/profile/json-resume/import?replace=${replace}`, resume),
 }
 
 export const coverLettersApi = {
@@ -272,3 +291,67 @@ export const coverLettersApi = {
     return { blob, filename }
   },
 }
+
+export const applicationsApi = {
+  list: (params?: { status?: string; search?: string }) => {
+    const query = new URLSearchParams()
+    if (params?.status) query.set('status', params.status)
+    if (params?.search) query.set('search', params.search)
+    const qs = query.toString()
+    return get<ApplicationListItem[]>(`/api/applications${qs ? `?${qs}` : ''}`)
+  },
+  stats: () => get<ApplicationStats>('/api/applications/stats'),
+  get: (id: string) => get<Application>(`/api/applications/${encodeURIComponent(id)}`),
+  create: (body: ApplicationPayload) => post<Application>('/api/applications', body),
+  update: (id: string, body: ApplicationPayload) => put<Application>(`/api/applications/${encodeURIComponent(id)}`, body),
+  delete: (id: string) => del(`/api/applications/${encodeURIComponent(id)}`),
+  updateStatus: (id: string, body: ApplicationStatusUpdatePayload) =>
+    post<Application>(`/api/applications/${encodeURIComponent(id)}/status`, body),
+  addEvent: (id: string, body: ApplicationEventPayload) =>
+    post<ApplicationEvent>(`/api/applications/${encodeURIComponent(id)}/events`, body),
+  deleteEvent: (id: string, eventId: string) =>
+    del(`/api/applications/${encodeURIComponent(id)}/events/${encodeURIComponent(eventId)}`),
+  getPreviewPdf: async (id: string): Promise<Blob> => {
+    const res = await apiResponse('GET', `/api/applications/${encodeURIComponent(id)}/dossier/preview`)
+    return res.blob()
+  },
+  downloadDossier: async (id: string): Promise<{ blob: Blob; filename: string }> => {
+    const res = await apiResponse('GET', `/api/applications/${encodeURIComponent(id)}/dossier/download`)
+    const disposition = res.headers.get('content-disposition')
+    let filename = 'Bewerbung.pdf'
+    if (disposition) {
+      const match = /filename\*?=['"]?(?:UTF-\d['"]*)?([^;\r\n"']*)['"]?/i.exec(disposition)
+      if (match?.[1]) filename = decodeURIComponent(match[1])
+    }
+    const blob = await res.blob()
+    return { blob, filename }
+  },
+  archiveSnapshot: (id: string) =>
+    post<Application>(`/api/applications/${encodeURIComponent(id)}/dossier/archive`),
+}
+
+export const aiApi = {
+  getConfig: () => get<AiConfig>('/api/ai/config'),
+  saveConfig: (body: UpdateAiConfigPayload) => put<AiConfig>('/api/ai/config', body),
+  testConnection: () => post<TestAiConnectionResult>('/api/ai/test-connection', {}),
+  buildPrompt: (body: AiPromptPayload) => post<AiPromptResult>('/api/ai/prompt', body),
+  parseResponse: <T>(body: AiParsePayload) => post<T>('/api/ai/parse', body),
+  generate: <T>(body: AiPromptPayload) => post<T>('/api/ai/generate', body),
+}
+
+export const attachmentsApi = {
+  list: () => get<Attachment[]>('/api/attachments'),
+  upload: (file: File, title?: string, category?: string) => {
+    const form = new FormData()
+    form.append('file', file)
+    if (title) form.append('title', title)
+    if (category) form.append('category', category)
+    return post<Attachment>('/api/attachments', form)
+  },
+  update: (id: string, body: { title?: string; category?: string; sortOrder?: number }) =>
+    put<Attachment>(`/api/attachments/${encodeURIComponent(id)}`, body),
+  delete: (id: string) => del(`/api/attachments/${encodeURIComponent(id)}`),
+  reorder: (ids: string[]) => put('/api/attachments/reorder', { ids }),
+  downloadUrl: (id: string) => `/api/attachments/${encodeURIComponent(id)}/file`,
+}
+

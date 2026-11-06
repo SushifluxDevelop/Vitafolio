@@ -137,6 +137,8 @@
     "overview": "Übersicht",
     "profile": "Stammprofil",
     "coverLetters": "Anschreiben",
+    "applications": "Bewerbungen",
+    "aiSettings": "KI-Einstellungen",
     "admin": "App-Administration",
     "settings": "Einstellungen",
     "signOut": "Abmelden"
@@ -446,6 +448,164 @@
       "refreshPreview": "Vorschau aktualisieren",
       "backToList": "Zurück zur Übersicht",
       "openNewTab": "PDF im neuen Tab öffnen"
+    }
+  },
+  "applications": {
+    "title": "Bewerbungs-Tracker",
+    "subtitle": "Behalten Sie den Überblick über all Ihre laufenden Bewerbungen, Termine und Dossiers.",
+    "newApplication": "Neue Bewerbung",
+    "createTitle": "Neue Bewerbung anlegen",
+    "editTitle": "Bewerbung bearbeiten",
+    "detailsTitle": "Bewerbungsdetails",
+    "empty": "Noch keine Bewerbungen vorhanden. Legen Sie Ihre erste Bewerbung an!",
+    "noResults": "Keine Bewerbungen gefunden, die den Kriterien entsprechen.",
+    "deleteConfirm": "Möchten Sie die Bewerbung bei \"{{company}}\" als \"{{jobTitle}}\" wirklich löschen?",
+    "followUpAlert": "Bei {{count}} Bewerbung(en) ist ein Nachfassen fällig (keine Rückmeldung > 14 Tage).",
+    "views": {
+      "kanban": "Kanban-Board",
+      "list": "Listenansicht"
+    },
+    "filter": {
+      "all": "Alle Status",
+      "searchPlaceholder": "Unternehmen, Stelle oder Ort suchen..."
+    },
+    "stats": {
+      "total": "Gesamt",
+      "draft": "Entwurf",
+      "applied": "Beworben",
+      "acknowledged": "Bestätigt",
+      "interview": "Gespräch",
+      "offer": "Angebot",
+      "rejected": "Absage",
+      "withdrawn": "Zurückgezogen",
+      "followUpsDue": "Nachfassen fällig"
+    },
+    "statuses": {
+      "draft": "Entwurf",
+      "applied": "Beworben",
+      "acknowledged": "Eingangsbestätigung",
+      "interview": "Vorstellungsgespräch",
+      "offer": "Angebot erhalten",
+      "rejected": "Absage",
+      "withdrawn": "Zurückgezogen"
+    },
+    "fields": {
+      "jobTitle": "Stellenbezeichnung",
+      "company": "Unternehmen",
+      "location": "Standort / Remote",
+      "contactPerson": "Ansprechpartner",
+      "contactEmail": "E-Mail-Adresse",
+      "contactPhone": "Telefonnummer",
+      "jobPostingUrl": "Link zur Stellenausschreibung",
+      "salaryExpectation": "Gehaltsvorstellung",
+      "status": "Aktueller Status",
+      "appliedAt": "Beworben am",
+      "followUpAt": "Nachfassen geplant am",
+      "coverLetter": "Zugeordnetes Anschreiben",
+      "noCoverLetter": "Kein Anschreiben",
+      "includeCoverSheet": "Deckblatt ins Dossier einbinden",
+      "cvDesign": "Lebenslauf-Design",
+      "cvAccentColor": "Akzentfarbe",
+      "cvFont": "Schriftart",
+      "cvLanguage": "Sprache",
+      "cvShowPhoto": "Foto anzeigen",
+      "cvPhotoShape": "Fotoform",
+      "jobDescription": "Stellenbeschreibung",
+      "notes": "Persönliche Notizen & Feedback"
+    },
+    "timeline": {
+      "title": "Verlauf & Ereignisse",
+      "addEvent": "Ereignis hinzufügen",
+      "date": "Datum",
+      "eventTitle": "Titel (z. B. 1. Vorstellungsgespräch)",
+      "note": "Notiz (optional)",
+      "status": "Zugehöriger Status",
+      "noEvents": "Noch keine Ereignisse dokumentiert."
+    },
+    "dossier": {
+      "title": "Bewerbungs-Dossier",
+      "frozenBadge": "Archivierter Snapshot",
+      "liveBadge": "Live-Vorschau",
+      "frozenHint": "Dieser Stand wurde beim Einreichen der Bewerbung eingefroren.",
+      "download": "Dossier herunterladen (PDF)",
+      "preview": "Dossier ansehen",
+      "archiveNow": "Snapshot aktualisieren"
+    },
+    "actions": {
+      "changeStatus": "Status ändern",
+      "viewDetails": "Details anzeigen",
+      "downloadDossier": "Dossier",
+      "delete": "Löschen",
+      "save": "Speichern",
+      "saving": "Wird gespeichert…",
+      "cancel": "Abbrechen"
+    }
+  },
+  "ai": {
+    "title": "KI-Assistent",
+    "settingsTitle": "KI-Einstellungen",
+    "provider": "KI-Anbieter",
+    "providers": {
+      "copy_paste": "Kopieren & Einfügen (Kostenlos & ohne API-Key)",
+      "openai": "OpenAI (ChatGPT)",
+      "anthropic": "Anthropic (Claude)",
+      "gemini": "Google Gemini",
+      "ollama": "Ollama (Lokal auf diesem PC / Server)",
+      "custom": "Benutzerdefinierter Endpunkt (LM Studio / vLLM)"
+    },
+    "model": "Modell",
+    "modelPlaceholder": "z. B. gpt-4o-mini, claude-3-5-haiku-20241022, gemini-2.5-flash, llama3.2",
+    "baseUrl": "Basis-URL / Server-Adresse",
+    "baseUrlPlaceholder": "http://localhost:11434 für Ollama oder http://localhost:1234/v1 für LM Studio",
+    "apiKey": "API-Schlüssel",
+    "apiKeyPlaceholder": "Neuen Schlüssel eingeben (leer lassen, um vorhandenen beizubehalten)...",
+    "apiKeyStored": "Schlüssel ist sicher verschlüsselt hinterlegt",
+    "apiKeyMissing": "Kein Schlüssel hinterlegt",
+    "pseudonymize": "Persönliche Daten durch Platzhalter schützen (Datenschutz)",
+    "pseudonymizeHint": "Ersetzt Name, Kontaktdaten und Adresse vor dem Senden durch Tokens und fügt sie erst in der App wieder ein.",
+    "testConnection": "Verbindung testen",
+    "testing": "Verbindung wird geprüft...",
+    "testSuccess": "Verbindung erfolgreich hergestellt!",
+    "save": "Einstellungen speichern",
+    "saving": "Wird gespeichert...",
+    "saved": "KI-Einstellungen erfolgreich gespeichert.",
+    "tasks": {
+      "coverLetter": "Anschreiben formulieren",
+      "analyzeJob": "Stellenanzeige analysieren",
+      "summary": "Kurzprofil formulieren",
+      "improveBullet": "Stichpunkt optimieren"
+    },
+    "assistant": {
+      "title": "KI-Assistent",
+      "jobTitle": "Zielposition",
+      "company": "Unternehmen",
+      "jobDescription": "Stellenanzeige / Anforderungen",
+      "recipient": "Ansprechpartner",
+      "tone": "Gewünschter Stil",
+      "tones": {
+        "confident": "Selbstbewusst & überzeugend",
+        "professional": "Professionell & sachlich",
+        "dynamic": "Dynamisch & innovativ",
+        "classic": "Klassisch & zurückhaltend"
+      },
+      "directMode": "Direkt generieren",
+      "copyPasteMode": "Kopieren & Einfügen",
+      "copyPrompt": "1. Prompt kopieren",
+      "promptCopied": "Prompt in die Zwischenablage kopiert! Fügen Sie ihn nun in ChatGPT, Claude oder Gemini ein.",
+      "pasteAnswer": "2. KI-Antwort hier einfügen",
+      "pastePlaceholder": "Fügen Sie die vollständige Antwort aus Ihrem KI-Chat hier ein...",
+      "parseAnswer": "3. Antwort auswerten & übernehmen",
+      "generate": "Vorschlag generieren",
+      "generating": "KI analysiert und formuliert...",
+      "apply": "Übernehmen",
+      "applyToCoverLetter": "In Anschreiben übernehmen",
+      "applySuccess": "Erfolgreich übernommen!",
+      "matchScore": "Passung zur Stelle",
+      "matchedRequirements": "Erfüllte Anforderungen",
+      "missingRequirements": "Offene Punkte & Tipps zum Ausgleich",
+      "tips": "Strategische Bewerbungstipps",
+      "keyMatches": "Hervorgehobene Stärken",
+      "openSettings": "KI-Einstellungen anpassen"
     }
   },
   "settings": {
@@ -968,6 +1128,15 @@
         "required": "Bitte eine Bilddatei auswählen.",
         "too_large": "Das Bild ist größer als die maximal erlaubten 5 MB.",
         "invalid_format": "Es werden nur JPEG-, PNG- und WebP-Bilder akzeptiert."
+      },
+      "ai": {
+        "invalid_json": "Die KI-Antwort enthielt kein gültiges JSON. Bitte fordern Sie die KI auf, ausschließlich JSON auszugeben.",
+        "parse_failed": "Die Antwort konnte nicht verarbeitet werden.",
+        "missing_fields": "Erforderliche Datenfelder fehlen in der KI-Antwort.",
+        "copy_paste_only": "Es ist der Modus 'Kopieren & Einfügen' aktiv. Bitte nutzen Sie 'Prompt kopieren' oder hinterlegen Sie einen API-Key.",
+        "api_error": "Fehler bei der Kommunikation mit dem KI-Dienst.",
+        "missing_key": "Für diesen Anbieter wird ein API-Key benötigt.",
+        "invalid_url": "Die angegebene Basis-URL ist ungültig."
       },
       "rate_limited_account": "Zu viele Versuche für dieses Konto – bitte 15 Minuten warten."
     }

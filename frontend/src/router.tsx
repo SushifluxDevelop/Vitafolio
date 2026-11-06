@@ -10,6 +10,7 @@ import { RegisterPage } from './pages/auth/RegisterPage'
 import { SetupPage } from './pages/auth/SetupPage'
 import { TwoFactorSetupPage } from './pages/auth/TwoFactorSetupPage'
 import { CoverLettersPage } from './pages/cover-letter/CoverLettersPage'
+import { ApplicationsPage } from './pages/tracker/ApplicationsPage'
 import { OverviewPage } from './pages/OverviewPage'
 import { ProfilePage } from './pages/profile/ProfilePage'
 import { SettingsPage } from './pages/settings/SettingsPage'
@@ -46,6 +47,7 @@ export const router = createBrowserRouter([
               { path: '/', element: <OverviewPage /> },
               { path: '/profile', element: <ProfilePage /> },
               { path: '/cover-letters', element: <CoverLettersPage /> },
+              { path: '/applications', element: <ApplicationsPage /> },
               { path: '/settings', element: <SettingsPage /> },
               { element: <RequireAdmin />, children: [{ path: '/admin', element: <AdminPage /> }] },
             ],

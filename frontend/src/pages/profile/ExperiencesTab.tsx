@@ -11,6 +11,7 @@ import { useErrorDialog } from '../../components/ui/ErrorDialog'
 import { Icon } from '../../components/ui/Icon'
 import { TextField } from '../../components/ui/TextField'
 import { Toggle } from '../../components/ui/Toggle'
+import { GapAnalyzerCard } from '../../features/profile/GapAnalyzerCard'
 
 interface ExperienceFormData {
   id?: string
@@ -103,6 +104,19 @@ export function ExperiencesTab({ profile }: { profile: Profile }) {
     setDialogOpen(true)
   }
 
+  const handleQuickAddFromGap = (start: string, end: string, title: string) => {
+    setEditingItem({
+      ...emptyForm,
+      jobTitle: title,
+      employer: 'Selbststudium / Orientierung',
+      startDate: start,
+      endDate: end,
+      isCurrent: false,
+      sortOrder: profile.experiences.length,
+    })
+    setDialogOpen(true)
+  }
+
   const handleOpenEdit = (exp: Experience) => {
     setEditingItem({
       id: exp.id,
@@ -147,6 +161,8 @@ export function ExperiencesTab({ profile }: { profile: Profile }) {
           {t('profile.experiences.add')}
         </Button>
       </div>
+
+      <GapAnalyzerCard profile={profile} onQuickAdd={handleQuickAddFromGap} />
 
       {profile.experiences.length === 0 ? (
         <div className="card flex flex-col items-center justify-center p-12 text-center text-ink-muted">

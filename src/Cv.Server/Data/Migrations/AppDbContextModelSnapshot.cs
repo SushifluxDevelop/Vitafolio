@@ -78,6 +78,93 @@ namespace Cv.Server.Data.Migrations
                     b.ToTable("app_settings", (string)null);
                 });
 
+            modelBuilder.Entity("Cv.Server.Data.ApplicationEvent", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("ApplicationId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Note")
+                        .HasMaxLength(2048)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Title")
+                        .HasMaxLength(128)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationId", "Date");
+
+                    b.ToTable("application_events", (string)null);
+                });
+
+            modelBuilder.Entity("Cv.Server.Data.Attachment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Category")
+                        .HasMaxLength(64)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ContentType")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("TEXT");
+
+                    b.Property<long>("SizeBytes")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("SortOrder")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("StoragePath")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId", "SortOrder");
+
+                    b.ToTable("attachments", (string)null);
+                });
+
             modelBuilder.Entity("Cv.Server.Data.Certificate", b =>
                 {
                     b.Property<Guid>("Id")
@@ -513,6 +600,123 @@ namespace Cv.Server.Data.Migrations
                     b.ToTable("profile_interests", (string)null);
                 });
 
+            modelBuilder.Entity("Cv.Server.Data.JobApplication", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("AppliedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ArchivedPdfPath")
+                        .HasMaxLength(256)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("AttachmentIds")
+                        .HasMaxLength(1024)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Company")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ContactEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ContactPerson")
+                        .HasMaxLength(128)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ContactPhone")
+                        .HasMaxLength(64)
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid?>("CoverLetterId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CvAccentColor")
+                        .HasMaxLength(16)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CvDesign")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CvFont")
+                        .HasMaxLength(64)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CvLanguage")
+                        .IsRequired()
+                        .HasMaxLength(8)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CvPhotoShape")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("CvShowPhoto")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime?>("FollowUpAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IncludeCoverSheet")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("JobDescription")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("JobPostingUrl")
+                        .HasMaxLength(512)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("JobTitle")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Location")
+                        .HasMaxLength(128)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("SalaryExpectation")
+                        .HasMaxLength(64)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CoverLetterId");
+
+                    b.HasIndex("UserId", "Status");
+
+                    b.HasIndex("UserId", "UpdatedAt");
+
+                    b.ToTable("applications", (string)null);
+                });
+
             modelBuilder.Entity("Cv.Server.Data.LanguageSkill", b =>
                 {
                     b.Property<Guid>("Id")
@@ -761,6 +965,49 @@ namespace Cv.Server.Data.Migrations
                     b.ToTable("users", (string)null);
                 });
 
+            modelBuilder.Entity("Cv.Server.Data.UserAiConfig", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ApiKeyProtected")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("BaseUrl")
+                        .HasMaxLength(512)
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Model")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Provider")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("Pseudonymize")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("user_ai_configs", (string)null);
+                });
+
             modelBuilder.Entity("Cv.Server.Data.UserProfile", b =>
                 {
                     b.Property<Guid>("Id")
@@ -866,6 +1113,28 @@ namespace Cv.Server.Data.Migrations
                     b.ToTable("profiles", (string)null);
                 });
 
+            modelBuilder.Entity("Cv.Server.Data.ApplicationEvent", b =>
+                {
+                    b.HasOne("Cv.Server.Data.JobApplication", "Application")
+                        .WithMany("Events")
+                        .HasForeignKey("ApplicationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Application");
+                });
+
+            modelBuilder.Entity("Cv.Server.Data.Attachment", b =>
+                {
+                    b.HasOne("Cv.Server.Data.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Cv.Server.Data.Certificate", b =>
                 {
                     b.HasOne("Cv.Server.Data.UserProfile", "Profile")
@@ -943,6 +1212,24 @@ namespace Cv.Server.Data.Migrations
                     b.Navigation("Profile");
                 });
 
+            modelBuilder.Entity("Cv.Server.Data.JobApplication", b =>
+                {
+                    b.HasOne("Cv.Server.Data.CoverLetter", "CoverLetter")
+                        .WithMany()
+                        .HasForeignKey("CoverLetterId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("Cv.Server.Data.User", "User")
+                        .WithMany("Applications")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CoverLetter");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Cv.Server.Data.LanguageSkill", b =>
                 {
                     b.HasOne("Cv.Server.Data.UserProfile", "Profile")
@@ -998,6 +1285,17 @@ namespace Cv.Server.Data.Migrations
                     b.Navigation("Profile");
                 });
 
+            modelBuilder.Entity("Cv.Server.Data.UserAiConfig", b =>
+                {
+                    b.HasOne("Cv.Server.Data.User", "User")
+                        .WithOne("AiConfig")
+                        .HasForeignKey("Cv.Server.Data.UserAiConfig", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Cv.Server.Data.UserProfile", b =>
                 {
                     b.HasOne("Cv.Server.Data.User", "User")
@@ -1014,6 +1312,11 @@ namespace Cv.Server.Data.Migrations
                     b.Navigation("Items");
                 });
 
+            modelBuilder.Entity("Cv.Server.Data.JobApplication", b =>
+                {
+                    b.Navigation("Events");
+                });
+
             modelBuilder.Entity("Cv.Server.Data.Session", b =>
                 {
                     b.Navigation("RefreshTokens");
@@ -1021,6 +1324,10 @@ namespace Cv.Server.Data.Migrations
 
             modelBuilder.Entity("Cv.Server.Data.User", b =>
                 {
+                    b.Navigation("AiConfig");
+
+                    b.Navigation("Applications");
+
                     b.Navigation("CoverLetters");
 
                     b.Navigation("Profile");

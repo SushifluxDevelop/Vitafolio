@@ -5,6 +5,7 @@ import { coverLettersApi, profileApi } from '../../api/endpoints'
 import type { CoverLetter, CoverLetterPayload, CoverLetterRenderOptions } from '../../api/types'
 import { useConfirm } from '../../components/ui/ConfirmDialog'
 import { Icon } from '../../components/ui/Icon'
+import { AiAssistantModal } from '../../components/ai/AiAssistantModal'
 import { formatDateTime } from '../../format'
 
 const PRESET_COLORS = [
@@ -36,6 +37,7 @@ export function CoverLettersPage() {
   const [isDownloadingDocx, setIsDownloadingDocx] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [activeTab, setActiveTab] = useState<'editor' | 'preview'>('editor')
+  const [isAiModalOpen, setIsAiModalOpen] = useState(false)
 
   // PDF Preview State
   const [previewBlobUrl, setPreviewBlobUrl] = useState<string | null>(null)
@@ -321,6 +323,14 @@ export function CoverLettersPage() {
               >
                 <Icon name="chevronLeft" className="w-4 h-4" />
                 <span>{t('coverLetters.actions.backToList')}</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setIsAiModalOpen(true)}
+                className="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-semibold rounded-md border border-purple-500/40 bg-purple-500/10 text-purple-700 dark:text-purple-300 hover:bg-purple-500/20 shadow-xs"
+              >
+                <Icon name="sparkles" className="w-4 h-4 text-purple-600 dark:text-purple-400" />
+                <span>{t('ai.title')}</span>
               </button>
               <button
                 type="button"
@@ -902,6 +912,25 @@ export function CoverLettersPage() {
             </div>
           )}
         </div>
+      )}
+
+      {selectedLetter && (
+        <AiAssistantModal
+          open={isAiModalOpen}
+          onClose={() => setIsAiModalOpen(false)}
+          task="generate_cover_letter"
+          initialJobTitle={selectedLetter.title || undefined}
+          initialCompany={selectedLetter.recipientCompany || undefined}
+          initialRecipient={selectedLetter.recipientContactPerson || undefined}
+          onApplyCoverLetter={(res) => {
+            setSelectedLetter({
+              ...selectedLetter,
+              subject: res.subject || selectedLetter.subject,
+              salutation: res.salutation || selectedLetter.salutation,
+              body: `${res.opening}\n\n${res.body}\n\n${res.closing}`.trim(),
+            })
+          }}
+        />
       )}
     </div>
   )

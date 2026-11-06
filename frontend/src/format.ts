@@ -7,6 +7,13 @@ export function formatDateTime(iso: string | null | undefined, language: string)
   return new Intl.DateTimeFormat(language, { dateStyle: 'medium', timeStyle: 'short' }).format(date)
 }
 
+export function formatDate(iso: string | null | undefined, language: string): string {
+  if (!iso) return '-'
+  const date = new Date(iso)
+  if (Number.isNaN(date.getTime())) return iso
+  return new Intl.DateTimeFormat(language, { dateStyle: 'medium' }).format(date)
+}
+
 export function formatBytes(bytes: number, language: string): string {
   const units = ['B', 'KB', 'MB', 'GB', 'TB']
   let value = bytes

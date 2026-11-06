@@ -1,10 +1,10 @@
 ---
 title: Vitafolio
 subtitle: Handbuch
-tagline: Installieren, einrichten, absichern – so benutzen Sie Vitafolio Schritt für Schritt.
-version: Vorabversion
-date: 2026-11-04
-status: Vorabversion
+tagline: Installieren, einrichten, absichern und perfekte Bewerbungen erstellen – so benutzen Sie Vitafolio Schritt für Schritt.
+version: Beta (v2026.11)
+date: 2026-11-06
+status: Beta
 classification: Öffentlich
 copyright: © 2026 SushiFlux Develop
 lang: de
@@ -12,19 +12,26 @@ lang: de
 
 # 1 Was ist Vitafolio?
 
-Vitafolio ist eine kostenlose App für Bewerbungen. Sie ist **Open Source**: Die „Bauanleitung“ des Programms ist öffentlich
-einsehbar, und jeder darf das Programm kostenlos nutzen.
+Vitafolio ist eine moderne, datenschutzfreundliche Komplettlösung für Ihre Bewerbungen. Sie ist **Open Source**: Die
+„Bauanleitung“ des Programms ist öffentlich einsehbar, und jeder darf das Programm dauerhaft kostenlos nutzen.
 
-Dieses Handbuch beschreibt die **Vorabversion**. Sie bildet das Fundament der App. Das können Sie damit schon tun:
+Dieses Handbuch beschreibt die **aktuelle Version** von Vitafolio. Das können Sie damit tun:
 
-- Vitafolio auf Windows installieren oder als Docker-Container auf einem Heimserver betreiben (zum Beispiel Unraid).
-- Konten anlegen und sich sicher anmelden, auf Wunsch mit einem zweiten Nachweis (Zwei-Faktor).
-- Das Aussehen wählen: hell, dunkel oder wie Ihr System, auf Deutsch oder Englisch.
-- Als Administrator Konten und Einstellungen verwalten und nachlesen, wer wann was getan hat.
-- Ihre Daten sichern: automatisch nach Zeitplan, per Knopfdruck, zum Herunterladen und zum Wiederherstellen.
-
-Die Funktionen zum Schreiben von Bewerbungen selbst – Lebenslauf, Anschreiben, Export – sind in dieser Version noch
-**nicht enthalten**. Dieses Handbuch beschreibt sie deshalb nicht.
+- **Stammprofil & Lebenslauf:** Erfassen Sie Ihre Daten, Stationen, Fähigkeiten und Zeugnisse einmalig an einem zentralen Ort.
+  Erstellen Sie daraus per Knopfdruck professionelle Lebensläufe in verschiedenen typografischen Designs (Klassisch, Modern, Schlicht)
+  mit nativer Typst-PDF-Kompilierung und Word-Export (.docx).
+- **Anschreiben nach DIN 5008:** Verfassen Sie normgerechte Anschreiben (Form B) mit Falt- und Lochmarken, passendem Adressfeld
+  für Fensterbriefumschläge, formatiertem Text und digitaler Unterschrift.
+- **Bewerbungs-Tracker & Dossier:** Behalten Sie alle laufenden Bewerbungen auf einem übersichtlichen Kanban-Board im Blick,
+  verfolgen Sie Ereignisse chronologisch, lassen Sie sich nach 14 Tagen ans Nachfassen erinnern und frieren Sie gesendete
+  Bewerbungsmappen (Deckblatt + Anschreiben + Lebenslauf) revisionssicher als PDF ein.
+- **Datenschutzfreundliche KI-Unterstützung:** Nutzen Sie KI als Formulierungshilfe (Anschreiben, Stellenanalyse, Kurzprofil,
+  Stichpunkt-Optimierung, Übersetzung) – 100% kostenlos im Copy & Paste Modus oder über eigene API-Keys und lokale Modelle (Ollama),
+  stets abgesichert durch automatische Zero-Trust-Pseudonymisierung Ihrer persönlichen Kontaktdaten.
+- **Sicherer Betrieb:** Installieren Sie Vitafolio als schlankes Windows-Programm oder betreiben Sie es als Docker-Container
+  auf Ihrem Heimserver (z. B. Unraid, Synology NAS oder Linux).
+- **Benutzerverwaltung & Datensicherung:** Nutzen Sie Zwei-Faktor-Authentifizierung (2FA), Rollentrennung, Notfall-Zugang für
+  den Administrator und automatisierte Sicherungszeitpläne.
 
 ## 1.1 Wie Sie dieses Handbuch benutzen
 
@@ -32,14 +39,20 @@ Sie müssen es nicht von vorn bis hinten lesen. Suchen Sie sich Ihr Ziel aus:
 
 | Ich möchte … | Lesen Sie |
 |---|---|
-| Vitafolio auf meinem Windows-PC benutzen | Kapitel 2 und 3, dann 7, 9, 11 und 12 |
-| Vitafolio auf meinem Heimserver (Docker, Unraid, NAS) betreiben | Kapitel 2 und 4, dann 5 bis 11 |
-| mein Konto sicherer machen | Kapitel 8 |
-| Konten anderer Personen verwalten | Kapitel 10 |
-| meine Daten sichern oder zurückholen | Kapitel 11 |
-| eine Fehlermeldung verstehen | Kapitel 13 |
+| Vitafolio auf meinem Windows-PC installieren | Kapitel 2 und 3, dann 7 bis 11 und 16 |
+| Vitafolio auf meinem Heimserver (Docker, Unraid, NAS) betreiben | Kapitel 2 und 4, dann 5 bis 15 |
+| mein Stammprofil und meinen Lebenslauf anlegen | Kapitel 8 |
+| ein Anschreiben nach DIN 5008 verfassen | Kapitel 9 |
+| Bewerbungen nachverfolgen und Mappen archivieren | Kapitel 10 |
+| die KI-Hilfe mit Datenschutz nutzen | Kapitel 11 |
+| mein Konto absichern (Passwort, 2FA, Sitzungen) | Kapitel 12 |
+| Aussehen und Sprache einstellen | Kapitel 13 |
+| als Administrator Konten und Protokolle verwalten | Kapitel 14 |
+| meine Daten sichern oder wiederherstellen | Kapitel 15 |
+| eine Fehlermeldung oder ein Problem lösen | Kapitel 17 |
+| mich über den Datenschutz informieren | Kapitel 18 |
 
-Fachwörter werden beim ersten Auftreten erklärt. Am Ende steht in Kapitel 15 eine kurze Liste der Begriffe.
+Fachwörter werden beim ersten Auftreten erklärt. Am Ende steht in Kapitel 19 eine kurze Liste der wichtigsten Begriffe.
 
 # 2 Die zwei Versionen im Überblick
 
@@ -336,39 +349,278 @@ etwas merken. Wer 30 Tage lang gar nicht vorbeischaut, muss sich neu anmelden. A
 Administrator Ihr Konto sperrt oder Ihnen ein neues Passwort setzt, wenn Sie Ihr Passwort ändern (auf allen anderen
 Geräten) oder wenn eine Sicherung wiederhergestellt wird.
 
-# 7 Das Hauptfenster
+# 7 Das Hauptfenster und die Navigation
 
 Nach der Anmeldung (im Windows-Programm gleich nach dem Start) sehen Sie das Hauptfenster (siehe Abbildung 4).
 
 ![Das Hauptfenster von Vitafolio](bilder/hauptfenster.png)
 
-Links ist die **Seitenleiste**. Die Zahlen in Abbildung 4 gehören zu den Punkten dieser Liste:
+Links befindet sich die **Seitenleiste** als zentrale Steuerzentrale:
 
-1. **Das Menü:** „Übersicht“ führt zur Startseite. „App-Administration“ erscheint nur für Administratoren der
-   Docker-Version.
-2. **Ihr Bereich:** Ihr Name und Ihre Rolle (im Windows-Programm steht dort „Lokales Konto“), darunter „Einstellungen“.
-3. **Der Schalter fürs Farbschema** mit den Symbolen für „System“, „Hell“ und „Dunkel“ (Kapitel 9).
-4. **Die Fußzeile** mit der Zeile „Mit ♥ gemacht“ und der Versionsnummer. Nennen Sie diese Nummer, wenn Sie einen
-   Fehler melden.
+1. **Die Navigation:**
+   - **Übersicht:** Das persönliche Dashboard mit Schnellzugriffen, Kontostatus und Backup-Informationen.
+   - **Stammprofil:** Ihr zentraler Lebenslauf mit allen Bausteinen, Fotos, Dokumentenvorschau und Exportfunktionen (Kapitel 8).
+   - **Anschreiben:** Verwaltung aller individuellen Bewerbungsanschreiben nach DIN 5008 (Kapitel 9).
+   - **Bewerbungen:** Der interaktive Bewerbungs-Tracker mit Kanban-Board, Timeline und Dossier-Mappen (Kapitel 10).
+   - **App-Administration:** (nur für Administratoren der Server-/Docker-Version) Verwaltung von Benutzern, Protokollen und Systemeinstellungen (Kapitel 14).
+2. **Ihr Benutzerbereich:**
+   - Zeigt Ihren Anzeigenamen und Ihre Rolle (im Windows-Programm „Lokales Konto“).
+   - Klick auf das Benutzerfeld öffnet die **Einstellungen** (Sicherheit, Backups) und die **KI-Einstellungen** (Kapitel 11).
+3. **Der Schalter fürs Farbschema:** Schnellumschaltung zwischen „System“, „Hell“ und „Dunkel“ (Kapitel 13).
+4. **Die Fußzeile:** Zeigt das Siegel „Mit ♥ gemacht“ und die exakte Versionsnummer der laufenden Vitafolio-Instanz. In der Docker-Version befindet sich hier zudem der Abmelde-Knopf.
 
-In der Docker-Version steht in der Seitenleiste außerdem der Knopf „Abmelden“.
+Rechts sehen Sie den Arbeitsbereich mit der aktuellen Seite.
 
-Rechts ist die **Übersicht**. Sie begrüßt Sie und zeigt Karten:
+# 8 Ihr Stammprofil & der Lebenslauf
 
-- **Ihr Konto:** Name, Benutzername und Rolle.
-- **Zwei-Faktor-Anmeldung** (nur Docker-Version): ob sie aktiv ist, mit einem Verweis zu den Einstellungen.
-- **Betrieb:** ob Sie die Server-Version oder das Windows-Programm benutzen.
-- **Datensicherung** (nur für Administratoren, im Windows-Programm für Sie): wann die letzte Sicherung gemacht wurde,
-  mit einem Verweis zur Datensicherung.
+Das **Stammprofil** ist das Herzstück Ihrer Bewerbungen in Vitafolio. Sie pflegen Ihre persönlichen Daten, beruflichen Stationen und Qualifikationen einmalig vollständig ein. Auf dieser Basis generiert Vitafolio jederzeit blitzschnell maßgeschneiderte Lebensläufe.
 
-# 8 Ihr Konto schützen
+## 8.1 Die Bausteine des Lebenslaufs
+
+Über die Reiter im Stammprofil füllen Sie Ihre Stationen strukturiert aus:
+
+- **Persönliche Daten:**
+  - Vor- und Nachname, akademischer Grad, E-Mail-Adresse, Telefonnummer, Anschrift (Straße, PLZ, Ort, Land), Geburtsdatum und Geburtsort, Staatsangehörigkeit.
+  - **Kurzprofil / Elevator Pitch:** Ein prägnanter 2–4-zeiliger Einleitungstext, der Ihre Kernkompetenzen und berufliche Motivation auf den Punkt bringt (kann mit dem KI-Assistenten formuliert werden).
+- **Berufserfahrung:**
+  - Berufsbezeichnung / Rolle, Arbeitgeber / Unternehmen, Standort, Zeitraum (Monat/Jahr von–bis oder „bis heute“).
+  - Beschreibung der Aufgaben und Erfolge: Nutzen Sie Aufzählungspunkte mit messbaren Ergebnissen (z. B. nach der STAR/XYZ-Methode).
+- **Ausbildung & Studium:**
+  - Art der Ausbildung (z. B. Bachelor, Master, Berufsausbildung, Abitur), Ausbildungsstätte / Hochschule / Schule, Ort, Zeitraum, Abschlussnote und Themenschwerpunkte.
+- **Fähigkeiten & Qualifikationen:**
+  - Einteilung in Fachkompetenzen, Methodenkompetenzen oder Softwarekenntnisse mit frei wählbaren Skill-Levels (z. B. Grundkenntnisse, Fortgeschritten, Experte).
+- **Sprachen:**
+  - Sprache und Einstufung nach dem Gemeinsamen Europäischen Referenzrahmen (A1 bis C2) oder als Muttersprache.
+- **Zertifikate & Weiterbildungen:**
+  - Name des Zertifikats, ausstellende Organisation, Ausstellungsdatum und Gültigkeit.
+- **Interessen & Engagement:**
+  - Hobbys, ehrenamtliche Tätigkeiten und persönliche Interessen, die das Profil abrunden.
+- **Eigene Abschnitte:**
+  - Beliebig viele freie Abschnitte mit eigenem Titel (z. B. „Publikationen“, „Projekte“, „Patente“ oder „Auszeichnungen“).
+
+## 8.2 Bewerbungsfoto und handschriftliche Unterschrift
+
+Vitafolio integriert Fotos und Signaturen nahtlos und typografisch perfekt in Ihre Dokumente:
+
+1. **Bewerbungsfoto hochladen:**
+   - Laden Sie ein Porträtfoto (JPG, PNG oder WebP) im Stammprofil hoch.
+   - Sie können das Foto ein- oder ausblenden und den Zuschnittsstil wählen:
+     - **Rechteck:** Klassisches Hochformat mit dezentem Schatten.
+     - **Abgerundet:** Zeitgemäß weiche Ecken.
+     - **Kreis:** Modernes, kreisrundes Porträt.
+2. **Handschriftliche Unterschrift:**
+   - Laden Sie einen Scan oder ein Foto Ihrer handschriftlichen Signatur hoch (idealerweise mit transparentem oder weißem Hintergrund).
+   - Vitafolio platziert Ihre Unterschrift automatisch unter dem Lebenslauf und am Ende Ihres Anschreibens.
+
+## 8.3 Typografische Designs und Akzentfarben
+
+Vitafolio setzt Dokumente nicht mit einfachen HTML-Seiten um, sondern nutzt die moderne Satz-Engine **Typst** im Speicher des Servers. Dadurch entstehen gestochen scharfe Vektor-PDFs in Verlagsqualität.
+
+In der Leiste **Design & Layout** wählen Sie Ihr Erscheinungsbild:
+
+- **Die Vorlagen:**
+  - **Klassisch:** Bewährte, einspaltige Struktur mit klaren Trennlinien. Ideal für konservative Branchen, Verwaltung, Finanzen und traditionelle Unternehmen.
+  - **Modern:** Elegantes zweispaltiges Layout mit einer farblich abgesetzten Seitenleiste für Kontaktdaten, Sprachen und Fähigkeiten. Perfekt für IT, Marketing, Medien und Start-ups.
+  - **Schlicht:** Minimalistisches, schnörkelloses Layout mit hohem Weißraum und zeitloser Schweizer Typografie.
+- **8 kuratierte Akzentfarben:**
+  - Marineblau, Schiefergrau, Smaragdgrün, Bordeauxrot, Petrol, Violett, Bernstein, Graphit.
+- **Schriftarten:**
+  - Vier harmonische Schriftfamilien: *Outfit* (modern, charakterstark), *Inter* (neutral, hochgradig lesbar), *Playfair Display* (klassische Serifenschrift) und *Source Sans*.
+- **Sprache des Dokuments:**
+  - Schalten Sie zwischen **Deutsch** und **Englisch** um. Überschriften (z. B. „Work Experience“, „Education“, „Skills“) werden automatisch übersetzt.
+
+## 8.4 Live-Vorschau und Export (PDF & Word)
+
+Rechts neben den Eingabefeldern steht Ihnen die interaktive **Live-Vorschau** zur Verfügung:
+
+- Bei jeder Änderung rendert Typst im Hintergrund in weniger als 600 Millisekunden eine druckfertige PDF-Vorschau.
+- Sie können die Seiten vergrößern, durchblättern und das Seitenumbruch-Verhalten direkt prüfen.
+- **PDF herunterladen:** Erzeugt die finale, vektorbasierte PDF-Datei (PDF/A-kompatibel, durchsuchbar, barrierefrei).
+- **Word herunterladen (.docx):** Vitafolio generiert über das native Open XML SDK eine saubere Microsoft-Word-Datei. Nützlich, wenn Personalvermittler oder Online-Portale zwingend ein bearbeitbares Word-Dokument verlangen.
+
+## 8.5 JSON Resume Import & Export (Schema v1.0.0)
+
+Vitafolio unterstützt das offene Standardformat **JSON Resume** (Schema v1.0.0), das von Entwickler- und Karriere-Werkzeugen weltweit genutzt wird:
+
+- **1-Klick-Export:** Über den Knopf **JSON Resume** in der Kopfzeile des Stammprofils laden Sie Ihre gesamten Lebenslauf-Daten als strukturierte `resume.json` herunter. Damit besitzen Sie Ihre Daten unabhängig von der Anwendung.
+- **Flexibler Import:** Laden Sie eine vorhandene `resume.json` hoch. Vitafolio bietet zwei Modi:
+  - **Zusammenführen & Ergänzen (Merge):** Bestehende Stationen und Fähigkeiten bleiben erhalten; neue Einträge aus der Datei werden nahtlos hinzugefügt.
+  - **Vollständig Ersetzen (Replace):** Das Stammprofil wird sauber mit dem Inhalt der JSON-Datei überschrieben (z. B. beim Import von einer externen Plattform).
+- **Vollständige Feldabbildung:** Stammdaten, Berufsstationen (`work`), Ausbildung (`education`), Zertifikate (`certificates`), Kenntnisse (`skills`), Sprachen (`languages`), Interessen (`interests`) und individuelle Zusatzabschnitte werden bidirektional abgebildet.
+
+## 8.6 Lücken-Analyse im Werdegang (Gap Analyzer)
+
+Ein vollständiger, lückenloser Lebenslauf ist bei Personalverantwortlichen ein wichtiges Qualitätskriterium. Vitafolio unterstützt Sie mit einer integrierten, wertschätzenden **Lücken-Analyse**:
+
+- **Automatische Erkennung:** Das System scannt alle Stationen Ihrer Berufserfahrung und Ausbildung chronologisch auf zeitliche Unterbrechungen von mehr als 30 bis 45 Tagen.
+- **Wertschätzende, konstruktive Hinweise:** Statt Fehlermeldungen erhalten Sie dezente Vorschläge, wie Zeiten beruflicher Neuorientierung, Fortbildung, Elternzeit oder Pflege positiv im Lebenslauf formuliert werden können.
+- **1-Klick-Schnellaktionen:** Über Aktionsknöpfe wie **„+ Neuorientierung“** oder **„+ Weiterbildung“** können Sie die identifizierte Lücke mit einem Klick als neue Station anlegen – die Datumsangaben werden automatisch passgenau vorausgefüllt.
+
+## 8.7 Geführter Assistenten-Modus (Wizard)
+
+Wer zum ersten Mal einen Lebenslauf anlegt oder eine strukturierte Schritt-für-Schritt-Führung bevorzugt, kann mit einem Klick in den **Assistenten-Modus** wechseln:
+
+- **5 klare Schritte:**
+  1. *Stammdaten:* Kontaktdaten, Foto und Elevator Pitch.
+  2. *Berufserfahrung:* Stationen, Rollen und Erfolge.
+  3. *Ausbildung:* Schule, Studium, Abschlüsse.
+  4. *Kenntnisse & Sprachen:* Fachkompetenzen und Sprachniveaus.
+  5. *Vorschau & Fertigstellung:* Designauswahl, Feinschliff und Download.
+- **Verlustfreier Wechsel:** Sie können jederzeit nahtlos zwischen der klassischen Reiter-Ansicht und dem Assistenten hin- und herschalten, ohne dass Eingaben verloren gehen.
+
+# 9 Anschreiben nach DIN 5008
+
+Unter **Anschreiben** erstellen und verwalten Sie individuelle Bewerbungsschreiben. Vitafolio setzt dabei konsequent die deutsche Industrienorm **DIN 5008 (Form B)** für Geschäftsbriefe um.
+
+## 9.1 Normgerechter Aufbau nach DIN 5008
+
+Das Anschreiben entspricht exakt den Vorgaben für standardisierte Fenster-Briefumschläge (C4 und C5):
+
+- **Absender-Rücksendezeile:** Einzeilige Absenderangabe (Name, Straße, PLZ Ort) im Sichtfenster über der Empfängeranschrift.
+- **Empfänger-Anschriftfeld:** 45 mm hohes Adressfeld nach Form B mit Firmenname, Ansprechpartner, Straße/Postfach, PLZ und Ort.
+- **Falt- und Lochmarken:** Dezente Markierungen am linken Blattrand (zwei Faltmarken für Dreifachfaltung und eine mittige Lochmarke) für millimetergenaues Falzen und Abheften.
+- **Datum und Ort:** Rechtsbündig platziert.
+- **Betreffzeile:** Deutlich hervorgehobene Betreffzeile (z. B. *„Bewerbung als Senior Software Engineer – Referenz-Nr. 2026-X“*), zwei Zeilen über der Anrede.
+- **Persönliche Anrede:** Individuelle Anrede (z. B. *„Sehr geehrte Frau Dr. Schneider,“*).
+- **Strukturierter Textkörper:** Einleitung, beruflicher Werdegang, Stärken & Motivation, Mehrwert fürs Unternehmen, Gehaltsvorstellung & Kündigungsfrist sowie abschließende Grußformel.
+- **Handschriftliche Signatur:** Automatisch eingefügte Unterschrift aus Ihrem Stammprofil.
+- **Anlagenvermerk:** Standardisierter Hinweis auf beigefügte Dokumente (z. B. *„Anlagen: Lebenslauf, Zeugnisse“*).
+
+## 9.2 Anschreiben verwalten und exportieren
+
+- Legen Sie für jede Stelle ein separates Anschreiben an.
+- Nutzen Sie den komfortablen Editor mit Sofort-Formatierung.
+- Exportieren Sie jedes Anschreiben einzeln als **PDF** oder als **Word-Datei (.docx)**.
+- Alternativ binden Sie das Anschreiben direkt in den Bewerbungs-Tracker ein, um eine vollständige Bewerbungsmappe zu erzeugen.
+
+# 10 Der Bewerbungs-Tracker & die Dossier-Mappe
+
+Unter **Bewerbungen** behalten Sie Ihre aktiven und vergangenen Bewerbungsprozesse im Überblick. Vitafolio kombiniert die strukturierte Prozessverfolgung mit der automatischen Archivierung Ihrer eingereichten Unterlagen.
+
+## 10.1 Neue Bewerbung anlegen
+
+Klicken Sie auf **Neue Bewerbung** und erfassen Sie die Rahmendaten:
+- **Stelle & Firma:** Berufsbezeichnung, Unternehmensname, Standort.
+- **Konditionen:** Gehaltsvorstellung, mögliches Eintrittsdatum.
+- **Kontaktdaten:** Name des Ansprechpartners, E-Mail-Adresse, Telefonnummer.
+- **Stellenanzeige:** Volltext der Stellenanzeige und Link zur Online-Ausschreibung (wird für den KI-Fit-Check genutzt).
+- **Mappen-Zusammenstellung:** Wählen Sie das gewünschte Anschreiben und entscheiden Sie, ob ein Deckblatt vorangestellt werden soll.
+
+## 10.2 Kanban-Board und Listenansicht
+
+Wechseln Sie nach Wunsch zwischen zwei Ansichten:
+
+1. **Kanban-Board:**
+   - Sechs übersichtliche Spalten bilden den gesamten Bewerbungszyklus ab:
+     1. **Entwurf:** Bewerbung in Vorbereitung.
+     2. **Beworben:** Unterlagen wurden abgeschickt.
+     3. **Eingangsbestätigung:** Rückmeldung über den Erhalt liegt vor.
+     4. **Vorstellungsgespräch:** Telefoninterview, Video-Call oder persönliches Gespräch vor Ort.
+     5. **Angebot:** Vertrag oder Angebot erhalten.
+     6. **Abgeschlossen:** Zusage angenommen, Absage erhalten oder Bewerbung zurückgezogen.
+2. **Listen- und Tabellenansicht:**
+   - Kompakte Übersicht mit Filterung nach Status, Sortierung und Volltextsuche über Firma und Jobtitel.
+
+## 10.3 Die Bewerbungs-Timeline
+
+In der Detailansicht jeder Bewerbung finden Sie den Reiter **Verlauf (Timeline)**:
+- Jeder Statuswechsel wird automatisch mit Zeitstempel protokolliert.
+- Sie können jederzeit manuelle Ereignisse hinzufügen (z. B. *„2. Vorstellungsgespräch mit dem Abteilungsleiter vereinbart“*, Notizen zu Gehaltsgesprächen oder Feedback).
+
+## 10.4 Der Nachfass-Alarm
+
+Wer sich bewirbt, wartet oft wochenlang auf eine Rückmeldung. Vitafolio hilft Ihnen, den richtigen Zeitpunkt für eine freundliche Nachfrage nicht zu verpassen:
+- Liegt das Absendedatum mehr als **14 Tage** zurück und der Status steht weiterhin auf *Beworben* oder *Eingangsbestätigung*, blendet Vitafolio automatisch ein auffälliges oranges **Nachfass-Banner** ein.
+- Sie können für jede Bewerbung auch ein individuelles **Wiedervorlage-Datum** (Follow-up) festlegen.
+- Ein Klick auf das Banner filtert die Ansicht auf alle fälligen Bewerbungen.
+
+## 10.5 Das kombinierte Dossier & Revisionssichere Archivierung
+
+Für eine professionelle Bewerbung schnürt Vitafolio alle Teile zu einer einzigen, konsistenten PDF zusammen:
+1. **Deckblatt:** Großflächige Präsentation Ihres Namens, Ihrer Wunschposition, Ihres Porträtfotos, Ihrer Kontaktdaten und eines Inhaltsverzeichnisses der Mappe.
+2. **Anschreiben nach DIN 5008:** Passgenau zur Zielposition.
+3. **Lebenslauf:** Im harmonisch abgestimmten Farbschema und Design.
+
+> [!WICHTIG]
+> **Revisionssicheres Einfrieren (Snapshot):** Sobald Sie den Status einer Bewerbung auf **„Beworben“** setzen, erzeugt Vitafolio automatisch einen unumstößlichen PDF-Snapshot und speichert ihn fest im Datenordner ab.
+> Wenn Sie später Ihr Stammprofil für eine andere Stelle aktualisieren, bleibt das Dossier vergangener Bewerbungen unverändert erhalten. Vor einem Vorstellungsgespräch sehen Sie mit einem Klick genau das Dokument, das die Personalabteilung auf dem Tisch liegen hat.
+
+## 10.6 Anlagen & Zeugnisse-Verwaltung (Dossier-Anhang)
+
+Zu einer vollständigen Bewerbungsmappe gehören relevante Nachweise wie Arbeitszeugnisse, Diplomurkunden, Fortbildungszertifikate und Arbeitsproben:
+
+- **Zentrale Dokumentenablage:** Über den Knopf **Anlagen verwalten** auf der Bewerbungsseite laden Sie Nachweise hoch (unterstützt PDF sowie hochauflösende Bildformate wie PNG, JPEG und WebP bis maximal 20 MB pro Datei).
+- **Kategorisierung & Benennung:** Jedes Dokument erhält einen aussagekräftigen Titel und eine Kategorie (z. B. *Arbeitszeugnis*, *Abschlusszeugnis*, *Zertifikat*, *Sonstiges*).
+- **Pro Bewerbung selektieren:** Beim Bearbeiten einer Bewerbung wählen Sie über Checkboxen exakt die Nachweise aus, die für die jeweilige Stelle relevant sind.
+- **Nahtlose Einbindung ins Dossier:** Beim Erzeugen des Bewerbungsdossiers werden Bildnachweise (PNG, JPEG, WebP) über Typst automatisch auf eigenen hochauflösenden Anlagenseiten am Ende der PDF eingefügt, während PDF-Dokumente im strukturierten Anlagenverzeichnis aufgeführt sind.
+
+# 11 KI-Unterstützung & Zero-Trust Datenschutz
+
+Vitafolio stellt Ihnen eine intelligente Assistenz zur Seite, die beim Formulieren, Strukturieren und Analysieren hilft. Die Nutzung ist **vollständig freiwillig** – die gesamte App funktioniert auch ohne KI uneingeschränkt.
+
+## 11.1 Die drei Wege: Flexibel und kostenbewusst
+
+Sie entscheiden selbst, wie Sie die KI anbinden:
+
+| Weg | Funktionsweise | Voraussetzungen & Kosten |
+|---|---|---|
+| **Kopieren & Einfügen (Standard)** | Vitafolio erzeugt den fertigen, optimierten Prompt samt JSON-Vorgabe. Sie kopieren ihn mit einem Klick in Ihren Chatbot (z. B. ChatGPT, Claude.ai, Gemini, Perplexity) und fügen die Antwort zurück in Vitafolio ein. | **100% kostenlos**, kein API-Key erforderlich, funktioniert mit jedem kostenlosen Konto. |
+| **Eigener API-Key (Cloud)** | Direkte Anbindung an **OpenAI** (z. B. GPT-4o), **Anthropic Claude** (Claude 3.5 Sonnet) oder **Google Gemini** (Gemini 2.5 Flash/Pro). Die App sendet die Anfrage im Hintergrund und übernimmt das Ergebnis sofort. | Eigener API-Key beim Anbieter nötig; Abrechnung direkt mit dem Anbieter nach Verbrauch (meist wenige Cent-Bruchteile). |
+| **Lokale KI (Ollama / LM Studio)** | Verbindung zu einer lokalen Instanz von **Ollama** oder **LM Studio** auf Ihrem PC oder im Heimnetzwerk. | Kostenlos, benötigt einen leistungsfähigen Rechner; **kein einziges Byte verlässt Ihr lokales Netzwerk**. |
+
+In den **KI-Einstellungen** (über das Profilmenü) wählen Sie Ihren bevorzugten Anbieter, das gewünschte Sprachmodell und testen die Verbindung per Knopfdruck.
+
+## 11.2 Zero-Trust Datenschutz & Automatische Pseudonymisierung
+
+Bewerbungsunterlagen enthalten hochsensible personenbezogene Daten. Vitafolio implementiert daher eine strikte **Zero-Trust-Pseudonymisierung**:
+
+1. Bevor eine Anfrage an eine externe KI übermittelt (oder als Prompt kopiert) wird, scannt Vitafolio den Text und ersetzt alle persönlichen Angaben durch standardisierte Platzhalter:
+   - Name → `[BEWERBER_NAME]`
+   - E-Mail → `[BEWERBER_EMAIL]`
+   - Telefon → `[BEWERBER_TELEFON]`
+   - Anschrift → `[BEWERBER_ANSCHRIFT]`
+   - Geburtsdatum → `[BEWERBER_GEBURTSDATUM]`
+   - Wohnort → `[BEWERBER_ORT]`
+2. Das Sprachmodell arbeitet ausschließlich mit Ihren beruflichen Stationen und Fähigkeiten, erfährt aber **zu keinem Zeitpunkt Ihren echten Namen oder Ihre Kontaktdaten**.
+3. Nach Erhalt der Antwort tauscht Vitafolio im Speicher des Servers alle Platzhalter wieder gegen Ihre echten Daten aus.
+4. **Schlüsselschutz:** Hinterlegte API-Schlüssel werden über den Verschlüsselungsdienst von ASP.NET Core (Data Protection) geschützt in der Datenbank abgelegt. Das Frontend erfährt niemals Ihren Klartext-Key.
+
+## 11.3 Die fünf KI-Assistenten
+
+Über den Zauberstab-Knopf im Anschreiben, Profil oder Bewerbungs-Tracker starten Sie den Assistenten für fünf spezialisierte Aufgaben:
+
+1. **Anschreiben formulieren (`generate_cover_letter`):**
+   - Kombiniert die Anforderungen der Stellenanzeige mit Ihren Qualifikationen aus dem Stammprofil und formuliert ein individuelles, überzeugendes DIN-5008-Anschreiben.
+2. **Stellenanzeige analysieren (`analyze_job`):**
+   - Analysiert die Ausschreibung auf Kernanforderungen, berechnet die prozentuale Profil-Übereinstimmung (Fit-Score), listet identifizierte Qualifikationslücken auf und gibt wertvolle Vorbereitungstipps für das Bewerbungsgespräch.
+3. **Kurzprofil / Elevator Pitch (`generate_summary`):**
+   - Destilliert Ihren bisherigen Werdegang in ein prägnantes, selbstbewusstes Kurzprofil für das Deckblatt oder den Anfang des Lebenslaufs.
+4. **Lebenslauf-Stichpunkte optimieren (`improve_bullet`):**
+   - Schärft einzelne Tätigkeitsbeschreibungen nach der bewährten **STAR/XYZ-Methode** (*„Erreichte [X], gemessen an [Y], durch Ausführung von [Z]“*), um greifbare Ergebnisse statt passiver Aufzählungen hervorzuheben.
+5. **Bilinguale Übersetzung (`translate_content`):**
+   - Übersetzt deutsche Profileinträge oder Anschreiben ins Englische (oder umgekehrt) unter Beibehaltung korrekter Fachterminologie und branchenüblicher Bewerbungsbegriffe.
+
+## 11.4 Vorschau und 1-Klick-Übernahme
+
+- Der integrierte JSON-Parser extrahiert strukturierte Inhalte fehlertolerant – selbst wenn die KI Markdown-Codeblöcke oder erläuternde Höflichkeitssätze beifügt.
+- Im Vorschaufenster sehen Sie das strukturierte Ergebnis und übernehmen mit einem Klick entweder den gesamten Entwurf oder selektiv einzelne Textpassagen.
+
+## 11.5 Geteilter Server-Schlüssel für Administratoren
+
+Auf Mehrbenutzer-Installationen (z. B. Docker auf Unraid oder einem Familien- und Bürosystem) können Administratoren einen zentralen KI-Zugang hinterlegen:
+
+- **Einfache Bereitstellung:** Unter **Einstellungen → Administration** hinterlegt der Administrator einmalig einen Standardanbieter (z. B. OpenAI oder Claude), das Sprachmodell und den API-Schlüssel.
+- **Sichere DPAPI-Verschlüsselung:** Der Schlüssel wird über ASP.NET Core Data Protection verschlüsselt gespeichert und ist in der Oberfläche niemals im Klartext sichtbar.
+- **Automatischer Benutzer-Fallback:** Wenn ein Benutzer keinen eigenen API-Key in seinem persönlichen Profil hinterlegt hat, nutzt Vitafolio automatisch die zentrale Server-Konfiguration. Nutzer können so ohne eigenen API-Account sofort von der KI-Unterstützung profitieren. Sobald ein Benutzer einen eigenen Schlüssel einträgt, hat dieser stets Vorrang vor dem Serverschlüssel.
+
+# 12 Ihr Konto schützen
 
 Dieses Kapitel gilt für die Docker-Version. Im Windows-Programm gibt es kein Konto, das man schützen müsste.
 
 Öffnen Sie dazu in der Seitenleiste **Einstellungen** und dann den Reiter **Sicherheit**. Dort stehen drei Bereiche:
 „Passwort ändern“, „Zwei-Faktor-Anmeldung“ und „Angemeldete Geräte“.
 
-## 8.1 Das Passwort ändern
+## 12.1 Das Passwort ändern
 
 1. Geben Sie unter **Aktuelles Passwort** Ihr heutiges Passwort ein.
 2. Geben Sie unter **Neues Passwort** das neue Passwort ein (mindestens 12 Zeichen).
@@ -378,7 +630,7 @@ Dieses Kapitel gilt für die Docker-Version. Im Windows-Programm gibt es kein Ko
 Sie sehen die Meldung „Das Passwort wurde geändert.“ Sie bleiben auf diesem Gerät angemeldet. Auf allen anderen Geräten
 werden Sie abgemeldet.
 
-## 8.2 Die Zwei-Faktor-Anmeldung einschalten
+## 12.2 Die Zwei-Faktor-Anmeldung einschalten
 
 Dafür brauchen Sie eine **Authenticator-App** auf Ihrem Handy. Das ist eine App, die alle 30 Sekunden einen neuen
 sechsstelligen Code erzeugt. Installieren Sie sie, bevor Sie anfangen.
@@ -407,21 +659,21 @@ Sie das Handy verlieren.
 
 Von jetzt an fragt Vitafolio bei jeder Anmeldung nach dem Code (Abschnitt 6.2).
 
-## 8.3 Mit einem Wiederherstellungscode anmelden
+## 12.3 Mit einem Wiederherstellungscode anmelden
 
 Haben Sie das Handy nicht dabei, geben Sie im zweiten Schritt statt des Codes einen Wiederherstellungscode ein. Er sieht
 so aus: `abcde-fghij`. Bindestrich, Leerzeichen und Groß- oder Kleinschreibung spielen keine Rolle. Der Code ist danach
 verbraucht. Die übrigen Codes bleiben gültig.
 
-## 8.4 Die Zwei-Faktor-Anmeldung ausschalten
+## 12.4 Die Zwei-Faktor-Anmeldung ausschalten
 
 1. Geben Sie im Bereich „Zwei-Faktor-Anmeldung“ Ihr **Aktuelles Passwort** ein.
 2. Geben Sie einen **Code oder Wiederherstellungscode** ein.
 3. Klicken Sie auf **Zwei-Faktor ausschalten**.
 
-Verlangt der Administrator die Zwei-Faktor-Anmeldung für alle (Abschnitt 10.5), können Sie sie nicht ausschalten.
+Verlangt der Administrator die Zwei-Faktor-Anmeldung für alle (Abschnitt 14.5), können Sie sie nicht ausschalten.
 
-## 8.5 Angemeldete Geräte ansehen und beenden
+## 12.5 Angemeldete Geräte ansehen und beenden
 
 Unter „Angemeldete Geräte“ steht jede Anmeldung Ihres Kontos (siehe Abbildung 7): das Gerät (zum Beispiel „Chrome ·
 Windows“), die IP-Adresse, seit wann Sie dort angemeldet sind und wann es zuletzt benutzt wurde. Ihr jetziges Gerät
@@ -436,7 +688,7 @@ Das Gerät ist sofort abgemeldet. Ändern Sie dann Ihr Passwort.
 
 ![Angemeldete Geräte](bilder/geraete.png)
 
-# 9 Aussehen und Sprache
+# 13 Aussehen und Sprache
 
 Öffnen Sie **Einstellungen** und den Reiter **Darstellung** (siehe Abbildung 8).
 
@@ -451,16 +703,16 @@ Beides gilt sofort. In der Docker-Version wird Ihre Wahl auch in Ihrem Konto ges
 Die Meldungen des Windows-Programms selbst (zum Beispiel beim Start) richten sich nach der Sprache Ihres Windows, nicht nach
 dieser Einstellung.
 
-# 10 App-Administration
+# 14 App-Administration
 
 Dieses Kapitel gilt für **Administratoren** der Docker-Version. Die App-Administration enthält alles, was die ganze App für
 alle betrifft. Ihre persönlichen Einstellungen stehen getrennt davon unter „Einstellungen“. Die App-Administration finden
 Sie in der Seitenleiste. Sie hat vier Reiter: „Benutzer“, „Einstellungen“, „Aktivitätsprotokoll“ und „Datensicherung“
-(Kapitel 11).
+(Kapitel 15).
 
 Ein Administrator verwaltet Konten und die App. Er sieht **keine Bewerbungsdaten** anderer Personen.
 
-## 10.1 Benutzer
+## 14.1 Benutzer
 
 Der Reiter „Benutzer“ zeigt alle Konten (siehe Abbildung 9) mit Name, Rolle („Administrator“ oder „Benutzer“), Status
 („Aktiv“ oder „Gesperrt“), Zwei-Faktor („Ein“ oder „Aus“) und der letzten Anmeldung.
@@ -474,17 +726,17 @@ Am Ende jeder Zeile stehen vier Symbole. Sie zeigen beim Daraufzeigen ihren Name
 
 ![Benutzer verwalten](bilder/benutzer.png)
 
-## 10.2 Einen neuen Benutzer anlegen
+## 14.2 Einen neuen Benutzer anlegen
 
 1. Klicken Sie auf **Benutzer anlegen**.
 2. Geben Sie Benutzername, Anzeigename und Passwort ein, wie in Kapitel 5 (siehe Abbildung 10).
 3. Wählen Sie die **Rolle**: „Benutzer“ arbeitet mit den eigenen Daten. „Administrator“ verwaltet Konten und die App.
 4. Klicken Sie auf **Anlegen**.
-5. Geben Sie der Person das Passwort auf einem sicheren Weg weiter. Sie kann es danach selbst ändern (Abschnitt 8.1).
+5. Geben Sie der Person das Passwort auf einem sicheren Weg weiter. Sie kann es danach selbst ändern (Abschnitt 12.1).
 
 ![Einen neuen Benutzer anlegen](bilder/benutzer-anlegen.png)
 
-## 10.3 Konten ändern, sperren und löschen
+## 14.3 Konten ändern, sperren und löschen
 
 - **Sperren:** Öffnen Sie „Bearbeiten“ und schalten Sie „Konto aktiv“ aus. Ein gesperrtes Konto kann sich nicht mehr
   anmelden und ist sofort überall abgemeldet.
@@ -498,11 +750,11 @@ Zwei Schutzregeln verhindern, dass sich jemand aussperrt:
 - Der **letzte aktive Administrator** kann nicht gelöscht, gesperrt oder zum Benutzer herabgestuft werden.
 - Niemand kann das **eigene Konto** sperren, löschen oder sich selbst die Administrator-Rolle nehmen.
 
-## 10.4 Gleiche Namen
+## 14.4 Gleiche Namen
 
 Ein Benutzername ist einmalig. Dabei spielt Groß- und Kleinschreibung keine Rolle: „Mira“ und „mira“ sind derselbe Name.
 
-## 10.5 Einstellungen: Registrierung und Zwei-Faktor für alle
+## 14.5 Einstellungen: Registrierung und Zwei-Faktor für alle
 
 Im Reiter „Einstellungen“ gibt es den Bereich „Zugang“ mit zwei Schaltern (siehe Abbildung 11). Jede Änderung gilt sofort
 für die ganze App und speichert sich selbst. Ein grüner Schalter mit „Ein“ ist an, ein roter mit „Aus“ ist aus.
@@ -515,7 +767,7 @@ für die ganze App und speichert sich selbst. Ein grüner Schalter mit „Ein“
 
 ![Registrierung und Zwei-Faktor für alle](bilder/admin-einstellungen.png)
 
-## 10.6 Das Aktivitätsprotokoll
+## 14.6 Das Aktivitätsprotokoll
 
 Das Aktivitätsprotokoll hält fest, **wer wann was getan hat** (siehe Abbildung 12). Dazu gehören Anmeldungen und
 fehlgeschlagene Anmeldungen, Abmeldungen, Änderungen an Konten und Einstellungen, die Zwei-Faktor-Anmeldung, und alles
@@ -531,10 +783,10 @@ IP-Adresse und auf Wunsch Details (Knopf „Anzeigen“).
 
 > [!TIPP]
 > Viele „Anmeldung fehlgeschlagen“-Einträge kurz hintereinander, auch für ein Konto, das es nicht gibt, deuten auf
-> jemanden hin, der Passwörter durchprobiert. Vitafolio bremst das automatisch (Kapitel 13). Prüfen Sie, ob Ihr Server
+> jemanden hin, der Passwörter durchprobiert. Vitafolio bremst das automatisch (Kapitel 17). Prüfen Sie, ob Ihr Server
 > aus dem Internet erreichbar sein muss.
 
-# 11 Datensicherung
+# 15 Datensicherung
 
 Eine **Sicherung** ist eine Kopie Ihrer Daten. Mit ihr holen Sie Ihre Daten zurück, wenn etwas schiefgeht.
 
@@ -545,7 +797,7 @@ Sie finden die Datensicherung:
 
 Die Seite hat drei Teile: „Automatisch sichern“, „Die nächsten 7 Tage“ und „Sicherungen“.
 
-## 11.1 Automatisch sichern
+## 15.1 Automatisch sichern
 
 Hier legen Sie fest, wann Vitafolio von allein sichert (siehe Abbildung 13). Die Zahlen in der Abbildung gehören zu den Punkten der Liste darunter.
 
@@ -580,7 +832,7 @@ Was Sie wissen sollten:
 - Jede Sicherung wird nach dem Anlegen geprüft. Eine fehlerhafte wird verworfen.
 - Der Zeitplan rechnet in der Zeitzone des Rechners, auf dem Vitafolio läuft (im Container die Einstellung `TZ`).
 
-## 11.2 Die Wochenvorschau
+## 15.2 Die Wochenvorschau
 
 Der Bereich „Die nächsten 7 Tage“ zeigt, wann in der nächsten Woche gesichert wird (siehe Abbildung 14). Jede Zeile ist ein
 Tag, jeder Strich eine geplante Sicherung, daneben stehen die genauen Uhrzeiten. Die Vorschau ändert sich live, während
@@ -590,7 +842,7 @@ Darunter stehen die Zeitzone und der Sicherungsordner.
 
 ![Die Wochenvorschau](bilder/vorschau.png)
 
-## 11.3 Sicherungen ansehen, machen, herunterladen, hochladen
+## 15.3 Sicherungen ansehen, machen, herunterladen, hochladen
 
 Der Bereich „Sicherungen“ zeigt alle Sicherungen, die neueste zuerst (siehe Abbildung 15). Jede hat einen Zeitpunkt, eine
 **Art** und eine Größe. Die Arten sind:
@@ -624,7 +876,7 @@ aus einer neueren Version stammen. Auch hier fragt die Docker-Version nach Passw
 „Hochgeladen“ in der Liste. Wiederhergestellt wird erst, wenn Sie es dort auslösen. Hochgeladene Sicherungen werden
 **nie automatisch gelöscht**.
 
-## 11.4 Eine Sicherung wiederherstellen
+## 15.4 Eine Sicherung wiederherstellen
 
 Beim Wiederherstellen ersetzen Sie die jetzigen Daten durch den Stand einer Sicherung.
 
@@ -650,21 +902,21 @@ Misslingt die Wiederherstellung, wird der Stand von vorher automatisch zurückge
 „Die Wiederherstellung ist fehlgeschlagen. Die laufende App wurde nicht verändert; der vorherige Stand ist als Sicherung
 „Vor Wiederherstellung“ gespeichert. Einzelheiten stehen im Protokoll des Servers.“
 
-## 11.5 Umzug auf einen anderen Rechner
+## 15.5 Umzug auf einen anderen Rechner
 
 Eine Sicherungsdatei enthält Ihre Daten, aber **nicht die geheimen Schlüssel** im Unterordner `keys` des Datenordners.
-Das betrifft die Zwei-Faktor-Anmeldung der Docker-Version.
+Das betrifft die Zwei-Faktor-Anmeldung und verschlüsselte KI-Keys der Docker-Version.
 
 - Spielen Sie die Sicherung in einen **neuen, leeren Datenordner** ein, ohne den Ordner `keys` mitzunehmen, kann
   Vitafolio die Codes aus der Authenticator-App nicht mehr prüfen. Sie sehen dann die Meldung „Der Schlüssel der
   Zwei-Faktor-Anmeldung kann nicht gelesen werden. Lassen Sie sie vom Administrator zurücksetzen und richten Sie sie neu ein.“
 - Die **Wiederherstellungscodes** funktionieren weiter, und ein Administrator kann die Zwei-Faktor-Anmeldung eines Kontos
-  zurücksetzen (Abschnitt 10.3).
+  zurücksetzen (Abschnitt 14.3).
 - Am einfachsten ist es, beim Umzug den ganzen Datenordner mitzunehmen.
 
 Bei einer Wiederherstellung im selben Datenordner auf demselben Rechner spielt das keine Rolle.
 
-## 11.6 Wo liegen die Sicherungen?
+## 15.6 Wo liegen die Sicherungen?
 
 Im **Sicherungsordner**, den Sie in Abbildung 14 sehen. Er hat Unterordner: `recent` (die neuesten Sicherungen), `daily`
 (je eine pro Tag) und `uploaded` (hochgeladene). Die Dateien heißen zum Beispiel `app-20261104-020000-scheduled.db`
@@ -674,7 +926,7 @@ Vitafolio löscht beim Aufräumen nur Dateien mit diesem Namensmuster. Alles and
 Der Ordner `recent` zählt alle Arten gleich. Auch die Sicherheitskopie „Vor Wiederherstellung“ wird irgendwann aufgeräumt,
 wenn viele neuere Sicherungen dazukommen. Wollen Sie eine Sicherung dauerhaft behalten, laden Sie sie herunter.
 
-# 12 Das Windows-Programm im Alltag
+# 16 Das Windows-Programm im Alltag
 
 Das Windows-Programm unterscheidet sich in diesen Punkten von der Docker-Version:
 
@@ -682,7 +934,7 @@ Das Windows-Programm unterscheidet sich in diesen Punkten von der Docker-Version
   In der Seitenleiste steht „Lokales Konto“. Als Anzeigename verwendet Vitafolio Ihren Windows-Benutzernamen.
 - **Kein Abmelden, keine Benutzer, kein Protokoll, keine Zwei-Faktor-Anmeldung.** Es gibt auch keine App-Administration.
 - **Die Einstellungen** haben zwei Reiter: „Darstellung“ und „Datensicherung“.
-- **Die Datensicherung** funktioniert wie in Kapitel 11, aber **ohne Passwort-Abfrage**. Sie läuft nur, solange das Programm
+- **Die Datensicherung** funktioniert wie in Kapitel 15, aber **ohne Passwort-Abfrage**. Sie läuft nur, solange das Programm
   geöffnet ist. Verpasstes holt es beim nächsten Start nach, wenn Sie das nicht ausgeschaltet haben.
 - **Beenden:** Wenn Sie das Fenster schließen, sehen Sie kurz „Wird beendet – die Datensicherung läuft …“. Warten Sie, bis
   das Fenster verschwindet. Dabei wird noch einmal gesichert. Fährt Windows herunter, während Vitafolio offen ist,
@@ -704,14 +956,14 @@ Den Ordner öffnen Sie so:
 1. Drücken Sie die Windows-Taste und die Taste R gleichzeitig.
 2. Geben Sie `%LOCALAPPDATA%\SushiFlux Develop\Vitafolio` ein und drücken Sie die Eingabetaste.
 
-Im Ordner liegen die Datenbank, die geheimen Schlüssel (`keys`), die Sicherungen (`backups`) und Programm-Protokolle.
+Im Ordner liegen die Datenbank, die geheimen Schlüssel (`keys`), die Sicherungen (`backups`), gespeicherte Dokumente und Programm-Protokolle.
 Löschen oder verändern Sie dort nichts von Hand, solange Sie die Daten behalten wollen. Kopieren Sie den Ordner nicht,
-während das Programm läuft. Laden Sie stattdessen in der App eine Sicherung herunter (Kapitel 11). Wollen Sie alle Daten
+während das Programm läuft. Laden Sie stattdessen in der App eine Sicherung herunter (Kapitel 15). Wollen Sie alle Daten
 **endgültig löschen**, beenden Sie Vitafolio und löschen Sie diesen Ordner.
 
-# 13 Probleme lösen
+# 17 Probleme lösen
 
-## 13.1 Fehlermeldungen kopieren
+## 17.1 Fehlermeldungen kopieren
 
 Vitafolio zeigt Fehlermeldungen **vollständig** und in verständlichen Worten (siehe Abbildung 17). Jede Meldung hat einen
 Knopf **Kopieren**. Er kopiert die ganze Meldung mit den technischen Einzelheiten, dem Fehlercode, der Programmversion
@@ -720,22 +972,24 @@ Einzelheiten auf.
 
 ![Eine Fehlermeldung mit Kopieren-Knopf](bilder/fehlermeldung.png)
 
-## 13.2 Häufige Probleme
+## 17.2 Häufige Probleme
 
 | Was Sie sehen | Ursache | Was Sie tun |
 |---|---|---|
 | Im Browser erscheint statt der App eine kurze Textmeldung auf Englisch: „This server is not reachable under this host name. The operator can allow it with the setting ALLOWED_HOSTS.“ | Sie rufen Vitafolio unter einem Namen auf, der nicht in `ALLOWED_HOSTS` steht. | Tragen Sie den Namen in `ALLOWED_HOSTS` ein (Abschnitt 4.6) und starten Sie den Container neu. Mit der IP-Adresse des Servers geht es immer. Im Protokoll steht die Zeile „Anfrage mit nicht erlaubtem Hostnamen … abgewiesen“. |
 | „Benutzername oder Passwort ist falsch.“ | Eingabe falsch. Vitafolio verrät absichtlich nicht, was davon. | Prüfen Sie beides. Achten Sie auf Tastaturbelegung und Feststelltaste. |
 | „Zu viele Versuche. Bitte in … Sekunden noch einmal probieren.“ | Zu viele Anmeldungen oder Codes in kurzer Zeit von derselben Adresse. Das ist eine Schutzbremse. Standard: 10 Anmeldungen pro Minute. | Warten Sie die genannte Zeit. Hinter einem Reverse-Proxy: Prüfen Sie `TRUSTED_PROXIES` (Abschnitt 4.6), sonst zählen alle Besucher gemeinsam. |
-| „Dieses Konto ist gesperrt. Wenden Sie sich an den Administrator.“ | Ein Administrator hat das Konto gesperrt. | Bitten Sie einen Administrator, es wieder zu aktivieren (Abschnitt 10.3). |
+| „Dieses Konto ist gesperrt. Wenden Sie sich an den Administrator.“ | Ein Administrator hat das Konto gesperrt. | Bitten Sie einen Administrator, es wieder zu aktivieren (Abschnitt 14.3). |
 | „Der Code ist falsch oder wurde schon verwendet.“ | Falscher Code, oder ein alter Code. | Prüfen Sie die Uhrzeit auf Ihrem Handy: Sie muss stimmen. Geben Sie den aktuellen Code ein. Oder benutzen Sie einen Wiederherstellungscode. |
 | „Dieser Code wurde schon verwendet. Warten Sie auf den nächsten Code der App oder nehmen Sie einen Wiederherstellungscode.“ | Der Code war richtig, aber Sie haben ihn gerade schon benutzt. Jeder Code gilt nur einmal. | Warten Sie bis zu 30 Sekunden auf den nächsten Code der App oder nehmen Sie einen Wiederherstellungscode. |
-| „Der Schlüssel der Zwei-Faktor-Anmeldung kann nicht gelesen werden. …“ | Die Sicherung wurde in einen neuen Datenordner eingespielt, ohne den Ordner `keys` (Abschnitt 11.5). | Melden Sie sich mit einem Wiederherstellungscode an oder lassen Sie die Zwei-Faktor-Anmeldung von einem Administrator zurücksetzen. |
+| „Der Schlüssel der Zwei-Faktor-Anmeldung kann nicht gelesen werden. …“ | Die Sicherung wurde in einen neuen Datenordner eingespielt, ohne den Ordner `keys` (Abschnitt 15.5). | Melden Sie sich mit einem Wiederherstellungscode an oder lassen Sie die Zwei-Faktor-Anmeldung von einem Administrator zurücksetzen. |
 | „Die Anmeldung ist abgelaufen. Bitte beginnen Sie noch einmal mit Benutzername und Passwort.“ | Der zweite Schritt dauerte länger als 5 Minuten oder hatte mehr als 5 Versuche. | Melden Sie sich neu an. |
-| Handy und Wiederherstellungscodes verloren | – | Bitten Sie einen Administrator, Ihre Zwei-Faktor-Anmeldung zurückzusetzen (Abschnitt 10.3). Als einziger Administrator nutzen Sie den Notfall-Zugang, der auch 2FA zurücksetzt. |
-| Passwort vergessen | – | Ein anderer Administrator setzt Ihnen ein neues Passwort (Abschnitt 10.3). Für den **einzigen** Administrator nutzen Sie den Link „Passwort vergessen? (Administrator-Notfallzugang)“ auf der Anmeldeseite: Er erzeugt einen Einmal-Code in den Server-Logs (Docker/Unraid Logs), mit dem Sie ein neues Passwort festlegen können. |
+| Handy und Wiederherstellungscodes verloren | – | Bitten Sie einen Administrator, Ihre Zwei-Faktor-Anmeldung zurückzusetzen (Abschnitt 14.3). Als einziger Administrator nutzen Sie den Notfall-Zugang, der auch 2FA zurücksetzt. |
+| Passwort vergessen | – | Ein anderer Administrator setzt Ihnen ein neues Passwort (Abschnitt 14.3). Für den **einzigen** Administrator nutzen Sie den Link „Passwort vergessen? (Administrator-Notfallzugang)“ auf der Anmeldeseite: Er erzeugt einen Einmal-Code in den Server-Logs (Docker/Unraid Logs), mit dem Sie ein neues Passwort festlegen können. |
 | „Die Registrierung ist geschlossen. Bitten Sie den Administrator um ein Konto.“ | Registrierung ist aus. | Lassen Sie sich ein Konto anlegen. |
-| „Die Zwei-Faktor-Anmeldung muss zuerst eingerichtet werden.“ | Der Administrator verlangt sie für alle. | Richten Sie sie ein (Abschnitt 8.2). Vorher geht nichts anderes. |
+| „Die Zwei-Faktor-Anmeldung muss zuerst eingerichtet werden.“ | Der Administrator verlangt sie für alle. | Richten Sie sie ein (Abschnitt 12.2). Vorher geht nichts anderes. |
+| „Die KI-Antwort konnte nicht als gültiges JSON interpretiert werden.“ | Das Sprachmodell hat kein striktes JSON geliefert oder die Antwort abgeschnitten. | Klicken Sie auf „Korrektur-Prompt kopieren“ und senden Sie ihn an Ihren Chatbot, oder schalten Sie auf ein anderes Sprachmodell um. |
+| „Verbindung zum KI-Dienst fehlgeschlagen.“ | Falscher API-Schlüssel oder fehlerhafte Base-URL (z. B. lokales Ollama läuft nicht). | Prüfen Sie in den KI-Einstellungen den API-Key und nutzen Sie den Knopf „Verbindung testen“. Stellen Sie sicher, dass Ollama (`ollama serve`) gestartet ist. |
 | „Die Anfrage wurde aus Sicherheitsgründen abgelehnt. Bitte laden Sie die Seite neu.“ | Die Seite war alt oder wurde von einer fremden Seite aufgerufen. | Laden Sie die Seite neu. |
 | „Der Server ist nicht erreichbar. Prüfen Sie die Verbindung und versuchen Sie es noch einmal.“ | Vitafolio läuft nicht, oder die Verbindung ist weg. | Prüfen Sie, ob der Container läuft, und die Verbindung zum Server. |
 | „Die App wird gerade gewartet (z. B. wird eine Sicherung wiederhergestellt).“ | Eine Wiederherstellung läuft. | Warten Sie einen Moment und versuchen Sie es noch einmal. |
@@ -744,7 +998,7 @@ Einzelheiten auf.
 | „Die Datei ist zu groß: … (erlaubt sind höchstens 512 MB).“ | Die Sicherung ist größer als 512 MB. | – (diese Grenze gilt für das Hochladen). |
 | „Passwort oder Code stimmt nicht. Es wurde nichts verändert.“ | Bei einer Sicherung (Herunterladen, Hochladen, Wiederherstellen) war Ihre Bestätigung falsch. | Geben Sie Ihr aktuelles Passwort und, falls eingeschaltet, einen frischen Code ein. |
 
-## 13.3 Probleme beim Start im Container
+## 17.3 Probleme beim Start im Container
 
 Diese Meldungen stehen im Protokoll des Containers (auf Unraid: Symbol „Logs“ beim Container). Sie sind deutsch.
 
@@ -764,9 +1018,8 @@ Diese Meldungen stehen im Protokoll des Containers (auf Unraid: Symbol „Logs�
 3. Löschen Sie im Datenordner die Dateien `app.db`, `app.db-wal` und `app.db-shm`.
 4. Kopieren Sie die gewünschte Sicherung in den Datenordner und nennen Sie sie `app.db`.
 5. Starten Sie den Container. Die Datenbank wird beim Start auf den neuesten Stand gebracht.
-<!-- Schlusslauf: Notfall-Handgriff (Schritte 3 bis 5) mit einer echten Sicherung ausprobieren und bestätigen; bisher nur aus dem Code abgeleitet. -->
 
-## 13.4 Probleme im Windows-Programm
+## 17.4 Probleme im Windows-Programm
 
 | Was Sie sehen | Was Sie tun |
 |---|---|
@@ -778,49 +1031,65 @@ Diese Meldungen stehen im Protokoll des Containers (auf Unraid: Symbol „Logs�
 Das Programm schreibt ein Protokoll in seinen Datenordner (Unterordner `logs`). Seine Meldungen erscheinen in der
 Sprache Ihres Windows: Englisch, wenn Windows Englisch ist, sonst Deutsch.
 
-# 14 Datenschutz
+# 18 Datenschutz
 
-Vitafolio sendet **keine Daten an den Hersteller**. Es gibt keine Nutzungsstatistik und keine Fernüberwachung. Die App
-lädt auch keine Schriften oder Programmteile aus dem Internet nach: Alles kommt von Vitafolio selbst.
+Vitafolio sendet **keine Telemetriedaten oder Nutzungsstatistiken an den Hersteller**. Die App
+lädt auch keine Schriftarten, CDNs oder Programmteile aus dem Internet nach: Alles wird lokal von Vitafolio selbst ausgeliefert.
 
 **Was wo gespeichert wird:**
 
 | Was | Wo |
 |---|---|
-| Konten (Benutzername, Anzeigename, Rolle, Passwort) | im Datenordner. Das Passwort wird nie im Klartext gespeichert, nur als Prüfwert (Hash). |
-| Ihre Wahl von Farbschema und Sprache | im Browser und in Ihrem Konto |
+| Konten (Benutzername, Anzeigename, Rolle, Passwort) | im Datenordner. Das Passwort wird nie im Klartext gespeichert, nur als PBKDF2/Argon2-Prüfwert (Hash). |
+| Stammprofil (Stationen, Ausbildungen, Skills, Texte) | im Datenordner in der SQLite-Datenbank. |
+| Bewerbungsfotos und Unterschriften | im Datenordner (`data/profiles/...`). |
+| Anschreiben & Bewerbungs-Tracker | im Datenordner in der SQLite-Datenbank. |
+| Archivierte Bewerbungsdossiers (PDF) | im Datenordner (`data/applications/...`). |
+| KI-Konfiguration & API-Schlüssel | Schlüssel werden mit ASP.NET Core Data Protection verschlüsselt in der Datenbank abgelegt. |
+| KI-Anfragen & Pseudonymisierung | Externe KI-Dienste erhalten niemals Ihren Klarnamen, Kontaktdaten oder Anschrift (Zero-Trust Pseudonymisierung). |
+| Ihre Wahl von Farbschema und Sprache | im Browser und in Ihrem Konto. |
 | Zwei-Faktor-Geheimnis | verschlüsselt in der Datenbank. Die Schlüssel dazu liegen im Ordner `keys`. |
-| Wiederherstellungscodes | nur als Prüfwerte, nicht lesbar |
-| Angemeldete Geräte | Name des Browsers, IP-Adresse, Zeiten, im Datenordner. Beendete oder abgelaufene Sitzungen werden nach 30 Tagen gelöscht. |
-| Aktivitätsprotokoll | im Datenordner: wer, wann, was, von welcher IP-Adresse |
+| Wiederherstellungscodes | nur als Prüfwerte, nicht im Klartext lesbar. |
+| Angemeldete Geräte | Name des Browsers, IP-Adresse, Zeiten, im Datenordner. Beendete Sitzungen werden nach 30 Tagen bereinigt. |
+| Aktivitätsprotokoll | im Datenordner: wer, wann, was, von welcher IP-Adresse. |
 | Sicherungen | im Sicherungsordner. Sie enthalten alle Daten aller Konten. |
-| Windows-Programm: Fensterprofil, Fensterlage, Programm-Protokoll | im Datenordner auf Ihrem PC |
+| Windows-Programm: Fensterprofil, Fensterlage, Programm-Protokoll | im lokalen Datenordner auf Ihrem PC. |
 
 **Cookies:** Die Docker-Version benutzt zwei kleine Textmarken (Cookies), die Ihre Anmeldung halten. Der Browser sendet sie
-bei jeder Anfrage selbst mit. Skripte der Seite können sie nicht lesen, und sie gehen nur an Vitafolio. Das
-Windows-Programm benutzt statt dessen eine Marke, die bei jedem Start neu erzeugt wird und nur zwischen Fenster und
+bei jeder Anfrage selbst mit. Skripte der Seite können sie nicht lesen (HttpOnly), und sie gehen nur an Vitafolio. Das
+Windows-Programm benutzt stattdessen eine Marke, die bei jedem Start neu erzeugt wird und nur zwischen Fenster und
 Programm besteht.
 
-**Wer sieht was?** Ein Administrator sieht die Konten, das Aktivitätsprotokoll und die Sicherungen. Mit den Sicherungen
-liegen aber alle Daten offen. Geben Sie die Administrator-Rolle deshalb nur an Personen, denen Sie vertrauen.
+**Wer sieht was?** Ein Administrator sieht die Konten, das Aktivitätsprotokoll und die Sicherungen. Ein Administrator
+sieht in der Benutzeroberfläche **keine** Bewerbungsinhalte oder Profile anderer Benutzer. Durch den Zugriff auf Sicherungsdateien
+könnte er die Datenbank jedoch einsehen. Geben Sie die Administrator-Rolle deshalb nur an Personen, denen Sie uneingeschränkt vertrauen.
 
-**Löschen:** Ein gelöschtes Konto verschwindet mit seinen Daten aus der Datenbank. In älteren Sicherungen steckt es noch.
-Wollen Sie wirklich alles loswerden, löschen Sie auch die Sicherungen und den Datenordner (im Windows-Programm der Ordner
-aus Kapitel 12).
+**Löschen:** Ein gelöschtes Konto verschwindet mit all seinen Bewerbungen, Anschreiben und Profilen restlos aus der Datenbank.
+In älteren Sicherungsständen existiert es noch. Wollen Sie wirklich alles löschen, entfernen Sie auch die Sicherungsdateien
+und den Datenordner.
 
-# 15 Begriffe
+# 19 Begriffe
 
 | Begriff | Bedeutung |
 |---|---|
 | Administrator | Konto, das andere Konten und die Einstellungen der App verwaltet. Das erste Konto wird automatisch Administrator. |
-| Authenticator-App | App auf dem Handy, die alle 30 Sekunden einen sechsstelligen Code erzeugt. |
+| API-Key | Persönlicher Zugriffsschlüssel für Cloud-KI-Dienste (OpenAI, Anthropic, Gemini). Wird in Vitafolio verschlüsselt hinterlegt. |
+| Authenticator-App | App auf dem Smartphone, die alle 30 Sekunden einen neuen sechsstelligen Einmalcode erzeugt (TOTP nach RFC 6238). |
 | Container | Abgeschlossenes Paket, in dem ein Programm samt allem Nötigen läuft (Docker). |
-| Datenordner | Ordner, in dem Datenbank, Schlüssel und (standardmäßig) Sicherungen liegen. |
-| Docker | Technik, Programme in Containern zu betreiben. |
-| HTTPS | Verschlüsselte Verbindung zwischen Browser und Server. Erkennbar am Schloss in der Adresszeile. |
-| Open Source | Der Quelltext ist öffentlich; jeder darf das Programm einsehen und nutzen. |
-| Reverse-Proxy | Vorgeschalteter Dienst, der Anfragen aus dem Internet annimmt, verschlüsselt und an Vitafolio weiterreicht. |
-| Sicherung | Kopie Ihrer Daten, mit der Sie sie wiederherstellen können. |
-| Umgebungsvariable | Benannter Wert, den man einem Programm oder Container beim Start mitgibt. |
-| Wiederherstellungscode | Notfall-Code für die Anmeldung, wenn das Handy nicht da ist. Jeder gilt nur einmal. |
-| Zwei-Faktor-Anmeldung | Zum Passwort kommt ein zweiter Nachweis, zum Beispiel ein Code aus einer App. |
+| Datenordner | Ordner, in dem Datenbank, Schlüssel, Dokument-Snapshots und Sicherungen liegen. |
+| DIN 5008 | Deutsche Industrienorm für den Aufbau von geschäftlichen Briefen (unter anderem Fenster-Briefumschläge Form B). |
+| Docker | Technik, Programme plattformunabhängig in Containern zu betreiben. |
+| Dossier | Vollständige Bewerbungsmappe aus Deckblatt, DIN 5008 Anschreiben und typografischem Lebenslauf als einheitliche PDF. |
+| HTTPS | Verschlüsselte Verbindung zwischen Webbrowser und Server. Erkennbar am Schloss in der Adresszeile. |
+| Ollama / LM Studio | Lokale Programme, die KI-Sprachmodelle direkt auf dem eigenen PC/Server ausführen (100% offline, keine Cloud). |
+| Open Source | Der Quelltext ist öffentlich; jeder darf das Programm transparent einsehen, prüfen und kostenlos nutzen. |
+| Open XML SDK | Bibliothek zur Erzeugung nativer Microsoft-Word-Dokumente (.docx) ohne installiertes Office. |
+| Prompt | Strukturierte Arbeitsanweisung an eine KI. Vitafolio baut diese Anweisungen datenschutzkonform zusammen. |
+| Pseudonymisierung | Ersetzung von Klarnamen und Kontaktdaten durch Platzhalter (`[BEWERBER_*]`), damit externe KIs die Identität nicht erfahren. |
+| Reverse-Proxy | Vorgeschalteter Dienst (z. B. Nginx, Caddy, Traefik), der Anfragen verschlüsselt und an Vitafolio weiterleitet. |
+| Sicherung (Backup) | Konsistente Online-Kopie der SQLite-Datenbank, mit der Sie den Datenbestand vollständig wiederherstellen können. |
+| Typst | Moderne, hochperformante Satz-Engine zur Erstellung verlagsreifer Vektor-PDF-Dokumente im Speicher des Servers. |
+| Umgebungsvariable | Benannter Wert, den man einem Container oder Programm beim Start mitgibt (z. B. `PUID`, `PGID`, `TZ`). |
+| Velopack | Modernes Installations- und Update-Framework für das Windows-Desktopprogramm. |
+| Wiederherstellungscode | Notfall-Code für die Anmeldung, falls das Smartphone nicht verfügbar ist. Jeder Code gilt genau einmal. |
+| Zwei-Faktor-Anmeldung | Sicherheitsverfahren, bei dem zum Passwort ein zweiter Nachweis (Zahlencode aus der Authenticator-App) nötig ist. |

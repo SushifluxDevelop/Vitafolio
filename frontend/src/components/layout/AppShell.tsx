@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { NavLink, Outlet, useNavigate } from 'react-router'
 import { authApi } from '../../api/endpoints'
@@ -6,6 +7,7 @@ import { SIGNED_OUT, ME_KEY } from '../../auth/useAuth'
 import type { Session } from '../../auth/useAuth'
 import { useAppState } from '../../auth/AppState'
 import { useAppearance } from '../../theme/useAppearance'
+import { AiSettingsModal } from '../ai/AiSettingsModal'
 import { MadeWith, VersionLabel, Wordmark } from '../ui/Brand'
 import { useErrorDialog } from '../ui/ErrorDialog'
 import { Icon } from '../ui/Icon'
@@ -45,6 +47,7 @@ export function AppShell() {
   const queryClient = useQueryClient()
   const showError = useErrorDialog()
   const desktop = bootstrap.mode === 'desktop'
+  const [isAiSettingsOpen, setIsAiSettingsOpen] = useState(false)
 
   const signOut = useMutation({
     mutationFn: authApi.logout,
@@ -61,6 +64,7 @@ export function AppShell() {
     { to: '/', label: t('nav.overview'), icon: 'home', end: true },
     { to: '/profile', label: t('nav.profile'), icon: 'fileText' },
     { to: '/cover-letters', label: t('nav.coverLetters'), icon: 'files' },
+    { to: '/applications', label: t('nav.applications'), icon: 'briefcase' },
     ...(user.role === 'admin' && !desktop ? [{ to: '/admin', label: t('nav.admin'), icon: 'userShield' as const }] : []),
   ]
 
@@ -95,6 +99,15 @@ export function AppShell() {
               <p className="truncate text-xs text-ink-muted">{desktop ? t('shell.localAccount') : t(`roles.${user.role}`)}</p>
             </div>
           </div>
+
+          <button
+            type="button"
+            onClick={() => setIsAiSettingsOpen(true)}
+            className="flex items-center gap-3 rounded-sm px-3 py-2 text-sm font-semibold text-ink-muted hover:bg-surface-2 hover:text-ink transition-colors text-left"
+          >
+            <Icon name="sparkles" size={19} className="text-purple-600 dark:text-purple-400" />
+            {t('nav.aiSettings')}
+          </button>
 
           <NavLink to="/settings" className={navLinkClass}>
             <Icon name="settings" size={19} />
@@ -134,6 +147,8 @@ export function AppShell() {
           <Outlet />
         </div>
       </main>
+
+      <AiSettingsModal open={isAiSettingsOpen} onClose={() => setIsAiSettingsOpen(false)} />
     </div>
   )
 }

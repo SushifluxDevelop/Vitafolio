@@ -38,6 +38,14 @@ public sealed class AppDbContext(DbContextOptions<AppDbContext> options) : DbCon
 
     public DbSet<CoverLetter> CoverLetters => Set<CoverLetter>();
 
+    public DbSet<JobApplication> Applications => Set<JobApplication>();
+
+    public DbSet<ApplicationEvent> ApplicationEvents => Set<ApplicationEvent>();
+
+    public DbSet<Attachment> Attachments => Set<Attachment>();
+
+    public DbSet<UserAiConfig> AiConfigs => Set<UserAiConfig>();
+
     protected override void OnModelCreating(ModelBuilder model)
     {
         model.Entity<User>(e =>
@@ -55,6 +63,7 @@ public sealed class AppDbContext(DbContextOptions<AppDbContext> options) : DbCon
             e.HasMany(x => x.RecoveryCodes).WithOne(x => x.User).HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Cascade);
             e.HasMany(x => x.Sessions).WithOne(x => x.User).HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Cascade);
             e.HasOne(x => x.Profile).WithOne(x => x.User).HasForeignKey<UserProfile>(x => x.UserId).OnDelete(DeleteBehavior.Cascade);
+            e.HasOne(x => x.AiConfig).WithOne(x => x.User).HasForeignKey<UserAiConfig>(x => x.UserId).OnDelete(DeleteBehavior.Cascade);
         });
 
         model.Entity<RecoveryCode>(e =>
@@ -277,6 +286,80 @@ public sealed class AppDbContext(DbContextOptions<AppDbContext> options) : DbCon
                 .OnDelete(DeleteBehavior.Cascade);
 
             e.HasIndex(x => new { x.UserId, x.UpdatedAt });
+        });
+
+        model.Entity<JobApplication>(e =>
+        {
+            e.ToTable("applications");
+            e.HasKey(x => x.Id);
+            e.Property(x => x.JobTitle).HasMaxLength(128).IsRequired();
+            e.Property(x => x.Company).HasMaxLength(128).IsRequired();
+            e.Property(x => x.Location).HasMaxLength(128);
+            e.Property(x => x.ContactPerson).HasMaxLength(128);
+            e.Property(x => x.ContactEmail).HasMaxLength(256);
+            e.Property(x => x.ContactPhone).HasMaxLength(64);
+            e.Property(x => x.JobPostingUrl).HasMaxLength(512);
+            e.Property(x => x.SalaryExpectation).HasMaxLength(64);
+            e.Property(x => x.Status).HasMaxLength(32).IsRequired();
+            e.Property(x => x.CvDesign).HasMaxLength(32).IsRequired();
+            e.Property(x => x.CvAccentColor).HasMaxLength(16);
+            e.Property(x => x.CvFont).HasMaxLength(64);
+            e.Property(x => x.CvLanguage).HasMaxLength(8).IsRequired();
+            e.Property(x => x.CvPhotoShape).HasMaxLength(16).IsRequired();
+            e.Property(x => x.AttachmentIds).HasMaxLength(1024);
+            e.Property(x => x.ArchivedPdfPath).HasMaxLength(256);
+
+            e.HasOne(x => x.User)
+                .WithMany(u => u.Applications)
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            e.HasOne(x => x.CoverLetter)
+                .WithMany()
+                .HasForeignKey(x => x.CoverLetterId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            e.HasMany(x => x.Events)
+                .WithOne(ev => ev.Application)
+                .HasForeignKey(ev => ev.ApplicationId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            e.HasIndex(x => new { x.UserId, x.UpdatedAt });
+            e.HasIndex(x => new { x.UserId, x.Status });
+        });
+
+        model.Entity<ApplicationEvent>(e =>
+        {
+            e.ToTable("application_events");
+            e.HasKey(x => x.Id);
+            e.Property(x => x.Status).HasMaxLength(32).IsRequired();
+            e.Property(x => x.Title).HasMaxLength(128);
+            e.Property(x => x.Note).HasMaxLength(2048);
+
+            e.HasIndex(x => new { x.ApplicationId, x.Date });
+        });
+
+        model.Entity<Attachment>(e =>
+        {
+            e.ToTable("attachments");
+            e.HasKey(x => x.Id);
+            e.Property(x => x.Title).HasMaxLength(128).IsRequired();
+            e.Property(x => x.FileName).HasMaxLength(256).IsRequired();
+            e.Property(x => x.Category).HasMaxLength(64);
+            e.Property(x => x.ContentType).HasMaxLength(64).IsRequired();
+            e.Property(x => x.StoragePath).HasMaxLength(256).IsRequired();
+            e.HasOne(x => x.User).WithMany().HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Cascade);
+            e.HasIndex(x => new { x.UserId, x.SortOrder });
+        });
+
+        model.Entity<UserAiConfig>(e =>
+        {
+            e.ToTable("user_ai_configs");
+            e.HasKey(x => x.Id);
+            e.HasIndex(x => x.UserId).IsUnique();
+            e.Property(x => x.Provider).HasMaxLength(32).IsRequired();
+            e.Property(x => x.Model).HasMaxLength(64).IsRequired();
+            e.Property(x => x.BaseUrl).HasMaxLength(512);
         });
 
         // SQLite has no date type: values are stored as ISO text (sorts correctly) and always read back as UTC

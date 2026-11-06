@@ -115,3 +115,73 @@ public sealed partial record CoverSheetOptions(
         _ => "de"
     };
 }
+
+public sealed record DossierAttachmentItem(
+    string Title,
+    string FilePath,
+    string ContentType);
+
+/// <summary>
+/// Options when rendering a complete application portfolio dossier (Deckblatt, Anschreiben, Lebenslauf).
+/// </summary>
+public sealed partial record DossierRenderOptions(
+    string? Design,
+    string? AccentColor,
+    string? Font,
+    bool? ShowPhoto,
+    string? PhotoShape,
+    string? Language,
+    bool? IncludeCoverSheet,
+    string? TargetJob,
+    string? TargetCompany,
+    IReadOnlyList<string>? Contents,
+    IReadOnlyList<DossierAttachmentItem>? Attachments = null)
+{
+    [GeneratedRegex("^#[0-9a-fA-F]{3}([0-9a-fA-F]{3})?([0-9a-fA-F]{2})?$")]
+    private static partial Regex HexColorRegex();
+
+    public string NormalizedDesign => Design?.Trim().ToLowerInvariant() switch
+    {
+        "modern" => "modern",
+        "plain" or "schlicht" => "plain",
+        _ => "classic"
+    };
+
+    public string NormalizedAccentColor
+    {
+        get
+        {
+            if (string.IsNullOrWhiteSpace(AccentColor)) return "#14213D";
+            var color = AccentColor.Trim();
+            if (!color.StartsWith('#')) color = "#" + color;
+            return HexColorRegex().IsMatch(color) ? color : "#14213D";
+        }
+    }
+
+    public string NormalizedFont
+    {
+        get
+        {
+            if (string.IsNullOrWhiteSpace(Font)) return "Liberation Sans";
+            var f = Font.Trim();
+            return f.All(c => char.IsLetterOrDigit(c) || c == ' ' || c == '-') ? f : "Liberation Sans";
+        }
+    }
+
+    public bool NormalizedShowPhoto => ShowPhoto ?? true;
+
+    public string NormalizedPhotoShape => PhotoShape?.Trim().ToLowerInvariant() switch
+    {
+        "round" => "round",
+        "rect" or "square" => "rect",
+        _ => "rounded"
+    };
+
+    public string NormalizedLanguage => Language?.Trim().ToLowerInvariant() switch
+    {
+        "en" or "english" => "en",
+        _ => "de"
+    };
+
+    public bool NormalizedIncludeCoverSheet => IncludeCoverSheet ?? true;
+}

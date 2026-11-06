@@ -1,10 +1,10 @@
 ---
 title: Vitafolio
 subtitle: Handbook
-tagline: Install, set up, protect – how to use Vitafolio step by step.
-version: Pre-release
-date: 2026-11-04
-status: Pre-release
+tagline: Install, configure, secure, and create perfect job applications – how to use Vitafolio step by step.
+version: Beta (v2026.11)
+date: 2026-11-06
+status: Beta
 classification: Public
 copyright: © 2026 SushiFlux Develop
 lang: en
@@ -12,19 +12,24 @@ lang: en
 
 # 1 What is Vitafolio?
 
-Vitafolio is a free app for job applications. It is **open source**: the "recipe" of the program is public for everyone
-to read, and anyone may use the program for free.
+Vitafolio is a modern, privacy-first complete solution for your job applications. It is **open source**: the "recipe"
+of the program is public for everyone to inspect, and anyone may use the software for free indefinitely.
 
-This handbook describes the **pre-release**. It is the foundation of the app. This is what you can already do with it:
+This handbook describes the **current release** of Vitafolio. Here is what you can do with it:
 
-- Install Vitafolio on Windows, or run it as a Docker container on a home server (for example Unraid).
-- Create accounts and sign in safely, optionally with a second proof (two-factor).
-- Choose the look: light, dark or like your system, in German or English.
-- As an administrator, manage accounts and settings and read who did what and when.
-- Back up your data: automatically on a schedule, by button, to download and to restore.
-
-The functions for writing applications themselves – CV, cover letter, export – are **not included** in this version yet.
-This handbook therefore does not describe them.
+- **Master Profile & CV:** Maintain your personal data, work history, education, skills, and certifications once in a single central place.
+  Generate tailored, professional curriculum vitae with native Typst in-memory PDF compilation (Classic, Modern, Plain) and Word (.docx) export.
+- **DIN 5008 Cover Letters:** Draft standardized German and international cover letters (DIN 5008 Form B) with fold and punch marks,
+  proper address windows for envelope mailing, rich formatting, and handwritten signatures.
+- **Application Tracker & Dossier Portfolios:** Track every active application on an interactive Kanban board, monitor timeline events,
+  receive automatic 14-day follow-up reminders, and archive submitted portfolios (cover sheet + cover letter + CV) as immutable PDF snapshots.
+- **Privacy-First AI Assistance:** Leverage optional AI helpers for drafting cover letters, analyzing job postings (fit check & gap analysis),
+  formulating executive summaries, polishing bullet points (STAR/XYZ method), and translating content – available 100% free in Copy & Paste mode
+  or via custom API keys and local offline models (Ollama), protected by zero-trust PII pseudonymization.
+- **Flexible Self-Hosting & Desktop:** Run Vitafolio as a lightweight standalone Windows desktop application or as a hardened Docker container
+  on your home server (Unraid, Synology NAS, Linux).
+- **Security & Backups:** Benefit from two-factor authentication (TOTP 2FA), role-based permissions, administrator emergency recovery tokens,
+  and automated online SQLite backup schedules.
 
 ## 1.1 How to use this handbook
 
@@ -32,14 +37,20 @@ You do not have to read it from start to finish. Pick your goal:
 
 | I want to … | Read |
 |---|---|
-| use Vitafolio on my Windows PC | Chapters 2 and 3, then 7, 9, 11 and 12 |
-| run Vitafolio on my home server (Docker, Unraid, NAS) | Chapters 2 and 4, then 5 to 11 |
-| make my account more secure | Chapter 8 |
-| manage the accounts of other people | Chapter 10 |
-| back up or restore my data | Chapter 11 |
-| understand an error message | Chapter 13 |
+| install Vitafolio on my Windows PC | Chapters 2 and 3, then 7 to 11 and 16 |
+| run Vitafolio on my home server (Docker, Unraid, NAS) | Chapters 2 and 4, then 5 to 15 |
+| build my master profile and curriculum vitae | Chapter 8 |
+| write a cover letter according to DIN 5008 | Chapter 9 |
+| track applications and archive dossier portfolios | Chapter 10 |
+| use privacy-friendly AI assistance | Chapter 11 |
+| protect my account (password, 2FA, sessions) | Chapter 12 |
+| adjust appearance and interface language | Chapter 13 |
+| manage accounts and activity logs as an administrator | Chapter 14 |
+| back up or restore my data | Chapter 15 |
+| troubleshoot problems or understand error messages | Chapter 17 |
+| learn about data privacy and confidentiality | Chapter 18 |
 
-Technical terms are explained where they first appear. At the end, Chapter 15 has a short list of terms.
+Technical terms are explained where they first appear. At the end, Chapter 19 contains a glossary of key terms.
 
 # 2 The two versions at a glance
 
@@ -326,38 +337,278 @@ Whoever does not visit for 30 days has to sign in again. You are also signed out
 account or sets a new password for you, when you change your password (on all other devices), or when a backup is
 restored.
 
-# 7 The main window
+# 7 The Main Window and Navigation
 
-After signing in (in the Windows program right after the start) you see the main window (see Figure 4).
+After signing in (or right after launching the Windows desktop application) you see the main window (see Figure 4).
 
 ![The main window of Vitafolio](bilder/hauptfenster.png)
 
-On the left is the **sidebar**. The numbers in Figure 4 belong to the points of this list:
+On the left is the **sidebar**, serving as your central navigation hub:
 
-1. **The menu:** "Overview" leads to the start page. "App administration" appears only for administrators of the Docker
-   version.
-2. **Your area:** your name and your role (in the Windows program it says "Local account"), below it "Settings".
-3. **The colour scheme switch** with the symbols for "System", "Light" and "Dark" (Chapter 9).
-4. **The footer** with the line "Made with ♥" and the version number. Quote this number when you report a problem.
+1. **The Navigation:**
+   - **Overview:** Your personal dashboard with quick stats, account status, and backup indicators.
+   - **Master Profile:** Your central resume profile with all building blocks, portrait photos, signatures, live preview, and export tools (Chapter 8).
+   - **Cover Letters:** Management of individual DIN 5008 cover letters with dedicated editor and live preview (Chapter 9).
+   - **Applications:** The interactive application tracker featuring a Kanban board, chronological timeline, and compiled dossier portfolios (Chapter 10).
+   - **App Administration:** (administrators of the Docker/server version only) Manage user accounts, activity audit logs, and system settings (Chapter 14).
+2. **Your User Area:**
+   - Displays your display name and role (in the Windows program, "Local Account").
+   - Clicking your user card opens **Settings** (security, backups) and **AI Settings** (Chapter 11).
+3. **The Theme Switcher:** Fast toggle between "System", "Light", and "Dark" modes (Chapter 13).
+4. **The Footer:** Displays the "Made with ♥" brand seal and the exact version number of the running instance. In the Docker version, the sign-out button is located here.
 
-In the Docker version the sidebar also holds the button "Sign out".
+On the right is your primary workspace displaying the selected page.
 
-On the right is the **overview**. It welcomes you and shows cards:
+# 8 Master Profile & Curriculum Vitae
 
-- **Your account:** name, username and role.
-- **Two-factor sign-in** (Docker version only): whether it is active, with a link to the settings.
-- **Operation:** whether you use the server version or the Windows program.
-- **Backups** (administrators only, in the Windows program you): when the last backup was made, with a link to the
-  backups.
+The **Master Profile** is the foundational core of your job applications in Vitafolio. You enter your personal data, career history, education, and credentials once completely. From this single source of truth, Vitafolio generates beautifully formatted, publication-ready CVs in milliseconds.
 
-# 8 Protecting your account
+## 8.1 Resume Building Blocks
+
+Using the organized tabs in the Master Profile, fill in your background details:
+
+- **Personal Information:**
+  - Full name, academic titles, email, phone number, address (street, postal code, city, country), date and place of birth, and nationality.
+  - **Executive Summary / Elevator Pitch:** A concise 2–4 line summary highlighting your unique value proposition, strengths, and career direction (can be generated with AI assistance).
+- **Work Experience:**
+  - Job title / role, employer / company, location, employment period (month/year from–to or "present").
+  - Accomplishment bullets: Frame your tasks and achievements using action verbs and measurable metrics (e.g. the STAR/XYZ method).
+- **Education & Training:**
+  - Degree / qualification (Bachelor, Master, Apprenticeship, Secondary School), institution / university, location, period, graduation grade, and study focus areas.
+- **Skills & Competencies:**
+  - Technical skills, soft skills, or tool competencies with customizable proficiency levels (e.g. Beginner, Intermediate, Advanced, Expert).
+- **Languages:**
+  - Language and proficiency rating according to the Common European Framework of Reference (CEFR A1 through C2) or native speaker.
+- **Certifications & Licenses:**
+  - Certificate title, issuing organization, issue date, and optional expiration date.
+- **Interests & Volunteering:**
+  - Hobbies, community volunteering, and personal pursuits that round out your profile.
+- **Custom Sections:**
+  - Add arbitrary custom sections with custom headings (e.g. "Publications", "Key Projects", "Patents", or "Awards").
+
+## 8.2 Profile Photo and Handwritten Signature
+
+Vitafolio seamlessly incorporates portrait imagery and vector signatures into your documents:
+
+1. **Uploading a Portrait Photo:**
+   - Upload a headshot photo (JPG, PNG, or WebP) directly in the Master Profile.
+   - Toggle visibility and choose from three crop styles:
+     - **Rectangle:** Classic portrait format with a subtle shadow.
+     - **Rounded:** Contemporary soft rounded corners.
+     - **Circle:** Modern circular headshot crop.
+2. **Handwritten Signature:**
+   - Upload a scan or photo of your handwritten signature (ideally with a white or transparent background).
+   - Vitafolio places your signature beneath the curriculum vitae and at the close of your cover letters.
+
+## 8.3 Typographic Designs and Accent Colours
+
+Vitafolio does not rely on fragile HTML-to-PDF converters. Instead, it embeds the cutting-edge **Typst** typesetting engine natively in-memory on the server, generating crisp, publication-grade vector PDFs in under 600 ms.
+
+Under **Design & Layout**, customize your visual styling:
+
+- **Templates:**
+  - **Classic:** Proven single-column layout with clear divider rules. Ideal for traditional industries, administration, finance, and legal roles.
+  - **Modern:** Elegant two-column layout featuring an accent-tinted sidebar for contact details, languages, and competencies. Perfect for tech, marketing, media, and creative professions.
+  - **Plain:** Clean, minimalist Swiss typography with generous white space and understated sophistication.
+- **8 Curated Accent Colours:**
+  - Navy Blue, Slate Grey, Emerald Green, Burgundy Red, Teal, Purple, Amber, and Graphite.
+- **Font Families:**
+  - Four typographic pairings: *Outfit* (contemporary, confident), *Inter* (neutral, ultra-readable), *Playfair Display* (editorial serif), and *Source Sans*.
+- **Document Language:**
+  - Switch between **German** and **English**. Section headings ("Berufserfahrung" vs. "Work Experience", "Ausbildung" vs. "Education", etc.) are translated automatically.
+
+## 8.4 Live Preview and Export (PDF & Word)
+
+An interactive **Live Preview** renders right next to your form fields:
+
+- With every modification, Typst produces an updated print-ready PDF in real time.
+- Zoom, pan, inspect page breaks, and evaluate layout density directly in your browser.
+- **Download PDF:** Exports the final vector PDF (PDF/A compliant, searchable, accessible).
+- **Download Word (.docx):** Generates a clean Microsoft Word file via the native Open XML SDK. Invaluable when recruiters or applicant tracking systems (ATS) specifically require an editable document.
+
+## 8.5 JSON Resume Import & Export (Schema v1.0.0)
+
+Vitafolio supports the open industry standard **JSON Resume** (schema v1.0.0), widely used by developers and modern recruitment tooling:
+
+- **1-Click Export:** Download your entire profile data as a structured `resume.json` via the **JSON Resume** button in the profile header. You retain full ownership of your data without vendor lock-in.
+- **Flexible Import:** Upload an existing `resume.json`. Vitafolio offers two distinct modes:
+  - **Merge:** Existing stations and skills are preserved; new records from the JSON file are seamlessly added.
+  - **Replace:** The master profile is cleanly replaced with the imported JSON content (ideal when migrating from another platform).
+- **Comprehensive Field Mapping:** Master basics, work experience, education, certificates, skills, languages, interests, and custom sections are mapped bi-directionally.
+
+## 8.6 Career Gap Analyzer
+
+Recruiters pay close attention to chronological continuity in CVs. Vitafolio includes a built-in, non-judgmental **Gap Analyzer**:
+
+- **Automated Detection:** The system chronologically scans your work experience and education for gaps greater than 30 to 45 days.
+- **Supportive Guidance:** Instead of harsh error messages, Vitafolio offers friendly recommendations on how to constructively frame sabbatical, career transition, parental leave, or further education periods.
+- **1-Click Quick Actions:** Buttons like **"+ Career transition"** or **"+ Further training"** create a new station pre-filled with the exact gap dates.
+
+## 8.7 Guided Profile Wizard
+
+For users building their first CV or those who prefer step-by-step guidance, switch to **Wizard Mode** with one click:
+
+- **5 Guided Steps:**
+  1. *Personal Details:* Contact information, photo, and elevator pitch.
+  2. *Experience:* Career history, roles, and STAR-based accomplishments.
+  3. *Education:* Degrees, universities, and specializations.
+  4. *Skills & Languages:* Professional competencies and proficiency levels.
+  5. *Preview & Finish:* Design templates, fine-tuning, and export.
+- **Seamless Toggling:** Switch freely between the classic tabbed view and the wizard mode at any time without losing any input.
+
+# 9 Cover Letters according to DIN 5008
+
+Under **Cover Letters**, craft and manage tailored application letters. Vitafolio adheres strictly to the German business standard **DIN 5008 (Form B)**.
+
+## 9.1 Standardized Structure (Form B)
+
+The letter layout precisely matches standard window envelopes (C4 and C5):
+
+- **Sender Return Line:** Single-line sender address (Name, Street, Postal Code City) positioned directly in the address window envelope header.
+- **Recipient Address Field:** 45 mm standardized address window block (Form B) accommodating company name, contact person, street/P.O. box, postal code, and city.
+- **Fold and Punch Marks:** Discreet marks along the left margin (two fold marks for three-fold envelopes and one center punch mark) ensuring precise folding and binder archiving.
+- **Date and City:** Right-aligned header positioning.
+- **Subject Line:** Prominent bold subject line (e.g. *"Application for Senior Software Engineer – Ref. 2026-X"*), positioned two lines above the salutation.
+- **Personal Salutation:** Customized greeting (e.g. *"Dear Dr. Schneider,"*).
+- **Structured Letter Body:** Introduction, experience and key qualifications, company connection and motivation, salary expectations / notice period, and polite sign-off.
+- **Handwritten Signature:** Automatic inclusion of your signature from the Master Profile.
+- **Enclosure Notation:** Standardized attachment note at the bottom (e.g. *"Enclosures: Curriculum Vitae, Diplomas"*).
+
+## 9.2 Managing and Exporting Cover Letters
+
+- Create distinct cover letters for each target company and opportunity.
+- Utilize the rich text editor with instant markdown and formatting controls.
+- Export individual letters as standalone **PDF** or **Word (.docx)** files.
+- Link cover letters directly into the Application Tracker to produce full candidate dossiers.
+
+# 10 Application Tracker & Dossier Portfolios
+
+Under **Applications**, oversee your entire job hunt. Vitafolio unites workflow tracking with immutable document snapshotting.
+
+## 10.1 Creating a New Application
+
+Click **New Application** and enter the role details:
+- **Position & Company:** Job title, organization name, work location.
+- **Terms:** Desired salary, target starting date.
+- **Contacts:** Primary contact person, email address, phone number.
+- **Job Posting:** Paste the full job description and URL (used by the AI fit check).
+- **Portfolio Composition:** Link a specific cover letter and choose whether to prepend a formal cover sheet.
+
+## 10.2 Kanban Board and Table Views
+
+Toggle effortlessly between two viewing modes:
+
+1. **Kanban Board:**
+   - Six lifecycle columns track your progression:
+     1. **Draft:** Application in preparation.
+     2. **Applied:** Materials submitted to the company.
+     3. **Acknowledged:** Confirmation of receipt received.
+     4. **Interview:** Phone screen, technical interview, or on-site rounds.
+     5. **Offer:** Contract or written offer extended.
+     6. **Closed:** Offer accepted, rejected, or application withdrawn.
+2. **List and Table View:**
+   - High-density view with status filters, sorting, and full-text search across job titles and organizations.
+
+## 10.3 Chronological Timeline
+
+Open any application to inspect its **History (Timeline)** tab:
+- Status changes are logged automatically with date stamps.
+- Record custom milestones and interactions (e.g. *"Follow-up phone call with hiring manager"*, salary negotiation notes, feedback).
+
+## 10.4 Automated Follow-Up Alarm
+
+Job seekers often wait weeks for replies. Vitafolio ensures you never miss the right moment to follow up:
+- If 14 days elapse after submission while in *Applied* or *Acknowledged* status, Vitafolio highlights the application with a distinct orange **Follow-up Due banner**.
+- You can also set a custom follow-up deadline date for any application.
+- One click on the alert banner filters the dashboard to show all pending follow-ups.
+
+## 10.5 Combined Dossier & Immutable Archiving
+
+Vitafolio bundles all components into a cohesive, single PDF portfolio:
+1. **Cover Sheet:** Prominent display of your name, target position, portrait photo, contact coordinates, and table of contents.
+2. **DIN 5008 Cover Letter:** Tailored to the organization.
+3. **Curriculum Vitae:** Formatted with harmonious fonts and accent colours.
+
+> [!IMPORTANT]
+> **Immutable Snapshot Archiving:** The moment you transition an application status to **"Applied"**, Vitafolio captures an immutable PDF snapshot and permanently stores it in the data directory.
+> When you subsequently modify your master profile for other opportunities, historical dossiers remain permanently intact. Before stepping into an interview, one click retrieves the exact document the hiring committee received.
+
+## 10.6 Document Attachments & Credentials (Dossier Annex)
+
+A complete application package typically requires supporting documentation, including reference letters, university certificates, and work samples:
+
+- **Centralized Attachment Repository:** Open **Manage Attachments** on the applications screen to upload documents (supports PDF and high-resolution image formats such as PNG, JPEG, and WebP up to 20 MB per file).
+- **Categorization & Labeling:** Assign clear titles and categories (e.g. *Work Certificate*, *Degree Certificate*, *Training*, *Other*).
+- **Per-Application Selection:** In each application, simply check the boxes for the specific credentials required for that position.
+- **Embedded Dossier Inclusion:** When generating the application dossier, image credentials (PNG, JPEG, WebP) are rendered onto dedicated high-resolution pages via Typst, while PDF attachments are catalogued in the structured dossier index.
+
+# 11 Privacy-First AI Assistance
+
+Vitafolio offers an intelligent pair-writing assistant to refine phrasing, analyze job specifications, and polish bullet points. AI usage is **100% voluntary** – the application remains completely functional without connecting to any AI service.
+
+## 11.1 Three Flexible Integration Modes
+
+Choose the workflow that fits your privacy preferences and budget:
+
+| Mode | How it works | Requirements & Cost |
+|---|---|---|
+| **Copy & Paste (Default)** | Vitafolio prepares a fully structured, task-specific prompt with a strict JSON schema. Copy it with one click into your favorite chatbot (ChatGPT, Claude.ai, Gemini, Perplexity) and paste the response back. | **100% free**, zero API key required, works with any free or subscription account. |
+| **Custom Cloud API Key** | Connect directly to **OpenAI** (e.g. GPT-4o), **Anthropic Claude** (Claude 3.5 Sonnet), or **Google Gemini** (Gemini 2.5 Flash/Pro). Requests are processed in the background and results populate in one click. | Requires your own provider API key; billed directly by the provider per token (typically fractions of a cent). |
+| **Local Offline Models (Ollama)** | Connect to a local instance of **Ollama** or **LM Studio** running on your computer or home server. | Free, requires sufficient hardware; **zero bytes ever leave your private local network**. |
+
+Under **AI Settings** (accessible via the user menu), configure your preferred provider, model identifier, and test the connection with a live health check.
+
+## 11.2 Zero-Trust Candidate Privacy & Pseudonymization
+
+Candidate CVs contain sensitive Personally Identifiable Information (PII). Vitafolio protects your privacy with strict **Zero-Trust Tokenization**:
+
+1. Before any prompt is sent to an external LLM (or copied to clipboard), Vitafolio tokenizes personal identity data:
+   - Name → `[BEWERBER_NAME]`
+   - Email → `[BEWERBER_EMAIL]`
+   - Phone → `[BEWERBER_TELEFON]`
+   - Address → `[BEWERBER_ANSCHRIFT]`
+   - Date of Birth → `[BEWERBER_GEBURTSDATUM]`
+   - City → `[BEWERBER_ORT]`
+2. The AI model operates exclusively on your career milestones and competencies, never learning your true identity or contact channels.
+3. Upon parsing the AI response, Vitafolio automatically de-pseudonymizes the content in server memory.
+4. **Key Encryption:** Cloud API keys are stored encrypted using ASP.NET Core Data Protection (`Cv.Server.AiApiKey.v1`). The web client never receives the decrypted key.
+
+## 11.3 Five Specialized AI Tasks
+
+Launch the AI Assistant modal via the magic wand button for five tailored tasks:
+
+1. **Draft Cover Letter (`generate_cover_letter`):**
+   - Synthesizes job posting requirements with your profile background to draft a compelling DIN 5008 letter.
+2. **Analyze Job Posting (`analyze_job`):**
+   - Evaluates requirements, calculates a fit percentage score, highlights qualification gaps, and suggests interview preparation pointers.
+3. **Executive Summary (`generate_summary`):**
+   - Distills your career accomplishments into a persuasive elevator pitch for your CV or cover sheet.
+4. **Improve Achievement Bullets (`improve_bullet`):**
+   - Reframes responsibilities using the proven **STAR/XYZ formula** (*"Accomplished [X], measured by [Y], by doing [Z]"*).
+5. **Bilingual Translation (`translate_content`):**
+   - Translates resume sections or cover letters between German and English while maintaining professional industry terminology.
+
+## 11.4 Fault-Tolerant Preview and 1-Click Apply
+
+- The built-in JSON parser extracts structured outputs reliably, even if the model encloses text in markdown fences or prepends conversational greetings.
+- Review results in a structured preview and apply either the full suggestion or individual fields selectively.
+
+## 11.5 Shared Server Key for Administrators
+
+In multi-user deployments (e.g. Unraid Docker or shared family/office setups), administrators can configure a shared default AI provider:
+
+- **Simplified Provisioning:** Under **Settings → Administration**, administrators specify the default provider (e.g. OpenAI or Claude), model identifier, and server-wide API key.
+- **Secure DPAPI Protection:** Keys are encrypted at rest via ASP.NET Core Data Protection and never exposed in plaintext to the user interface.
+- **Automatic Fallback:** If an individual user has not configured their own API credentials in their personal profile, Vitafolio automatically utilizes the shared server configuration. When a user does provide their own personal key, it always overrides the shared server configuration.
+
+# 12 Protecting your account
 
 This chapter applies to the Docker version. The Windows program has no account that would need protecting.
 
 For this, open **Settings** in the sidebar and then the tab **Security**. It has three areas: "Change password",
 "Two-factor sign-in" and "Signed-in devices".
 
-## 8.1 Changing the password
+## 12.1 Changing the password
 
 1. Under **Current password**, enter your present password.
 2. Under **New password**, enter the new password (at least 12 characters).
@@ -367,7 +618,7 @@ For this, open **Settings** in the sidebar and then the tab **Security**. It has
 You see the message "The password was changed." You stay signed in on this device. On all other devices you are signed
 out.
 
-## 8.2 Switching on two-factor sign-in
+## 12.2 Switching on two-factor sign-in
 
 For this you need an **authenticator app** on your phone. This is an app that creates a new six-digit code every 30
 seconds. Install it before you begin.
@@ -395,21 +646,21 @@ After that Vitafolio shows **ten recovery codes** (see Figure 6). These are emer
 
 From now on Vitafolio asks for the code at every sign-in (Section 6.2).
 
-## 8.3 Signing in with a recovery code
+## 12.3 Signing in with a recovery code
 
 If you do not have the phone with you, enter a recovery code in the second step instead of the code. It looks like this:
 `abcde-fghij`. Hyphen, spaces and upper or lower case do not matter. The code is used up afterwards. The remaining codes
 stay valid.
 
-## 8.4 Switching off two-factor sign-in
+## 12.4 Switching off two-factor sign-in
 
 1. In the area "Two-factor sign-in", enter your **Current password**.
 2. Enter a **Code or recovery code**.
 3. Click **Turn off two-factor**.
 
-If the administrator requires two-factor sign-in for everybody (Section 10.5), you cannot switch it off.
+If the administrator requires two-factor sign-in for everybody (Section 14.5), you cannot switch it off.
 
-## 8.5 Viewing and ending signed-in devices
+## 12.5 Viewing and ending signed-in devices
 
 Under "Signed-in devices" you find every sign-in of your account (see Figure 7): the device (for example "Chrome ·
 Windows"), the IP address, since when you are signed in there and when it was last used. Your present device carries the
@@ -424,7 +675,7 @@ The device is signed out at once. Then change your password.
 
 ![Signed-in devices](bilder/geraete.png)
 
-# 9 Look and language
+# 13 Look and language
 
 Open **Settings** and the tab **Appearance** (see Figure 8).
 
@@ -438,15 +689,15 @@ Both apply at once. In the Docker version your choice is also saved in your acco
 
 The messages of the Windows program itself (for example at start) follow the language of your Windows, not this setting.
 
-# 10 App administration
+# 14 App administration
 
 This chapter applies to **administrators** of the Docker version. The app administration holds everything that concerns
 the whole app for everybody. Your personal settings are kept apart from it under "Settings". You find the app
-administration in the sidebar. It has four tabs: "Users", "Settings", "Activity log" and "Backups" (Chapter 11).
+administration in the sidebar. It has four tabs: "Users", "Settings", "Activity log" and "Backups" (Chapter 15).
 
 An administrator manages accounts and the app. They see **no application data** of other people.
 
-## 10.1 Users
+## 14.1 Users
 
 The tab "Users" shows all accounts (see Figure 9) with name, role ("Administrator" or "User"), status ("Active" or
 "Disabled"), two-factor ("On" or "Off") and the last sign-in.
@@ -460,17 +711,17 @@ At the end of each row are four symbols. They show their name when you point at 
 
 ![Managing users](bilder/benutzer.png)
 
-## 10.2 Adding a new user
+## 14.2 Adding a new user
 
 1. Click **Add user**.
 2. Enter username, display name and password, as in Chapter 5 (see Figure 10).
 3. Choose the **role**: "User" works with their own data. "Administrator" manages accounts and the app.
 4. Click **Add**.
-5. Pass the password on to the person in a safe way. They can change it themselves afterwards (Section 8.1).
+5. Pass the password on to the person in a safe way. They can change it themselves afterwards (Section 12.1).
 
 ![Adding a new user](bilder/benutzer-anlegen.png)
 
-## 10.3 Changing, disabling and deleting accounts
+## 14.3 Changing, disabling and deleting accounts
 
 - **Disabling:** Open "Edit" and switch "Account active" off. A disabled account can no longer sign in and is signed out
   everywhere at once.
@@ -484,11 +735,11 @@ Two protective rules keep anybody from locking themselves out:
 - The **last active administrator** cannot be deleted, disabled or demoted to user.
 - Nobody can disable or delete their **own account** or take away their own administrator role.
 
-## 10.4 Same names
+## 14.4 Same names
 
 A username is unique. Upper and lower case do not matter: "Mira" and "mira" are the same name.
 
-## 10.5 Settings: registration and two-factor for everybody
+## 14.5 Settings: registration and two-factor for everybody
 
 The tab "Settings" has the area "Access" with two switches (see Figure 11). Every change applies to the whole app at once
 and saves itself. A green switch with "On" is on, a red one with "Off" is off.
@@ -501,7 +752,7 @@ and saves itself. A green switch with "On" is on, a red one with "Off" is off.
 
 ![Registration and two-factor for everybody](bilder/admin-einstellungen.png)
 
-## 10.6 The activity log
+## 14.6 The activity log
 
 The activity log records **who did what and when** (see Figure 12). It includes sign-ins and failed sign-ins, sign-outs,
 changes to accounts and settings, two-factor sign-in, and everything around backups (the automatic ones too). Nobody can change or delete
@@ -517,10 +768,10 @@ like, details (button "Show").
 
 > [!TIP]
 > Many "Sign-in failed" entries in a short time, also for an account that does not exist, point to somebody trying out
-> passwords. Vitafolio slows this down automatically (Chapter 13). Check whether your server needs to be reachable from
+> passwords. Vitafolio slows this down automatically (Chapter 17). Check whether your server needs to be reachable from
 > the internet.
 
-# 11 Backups
+# 15 Backups
 
 A **backup** is a copy of your data. With it you get your data back if something goes wrong.
 
@@ -531,7 +782,7 @@ You find the backups:
 
 The page has three parts: "Back up automatically", "The next 7 days" and "Backups".
 
-## 11.1 Backing up automatically
+## 15.1 Backing up automatically
 
 Here you decide when Vitafolio backs up on its own (see Figure 13). The numbers in the figure belong to the points of the list below it.
 
@@ -564,7 +815,7 @@ What you should know:
 - Every backup is checked after it is made. A faulty one is discarded.
 - The schedule uses the time zone of the computer Vitafolio runs on (in the container the setting `TZ`).
 
-## 11.2 The week preview
+## 15.2 The week preview
 
 The area "The next 7 days" shows when backups will be made next week (see Figure 14). Each row is a day, each bar a planned
 backup, with the exact times beside it. The preview changes live while you edit the schedule. As long as you have not
@@ -574,7 +825,7 @@ Below it you find the time zone and the backup folder.
 
 ![The week preview](bilder/vorschau.png)
 
-## 11.3 Viewing, making, downloading, uploading backups
+## 15.3 Viewing, making, downloading, uploading backups
 
 The area "Backups" shows all backups, newest first (see Figure 15). Each has a time, a **kind** and a size. The kinds are:
 
@@ -606,7 +857,7 @@ accounts**, including the protected passwords. Keep it safe. In the Docker versi
 newer version. Here too the Docker version asks for password and code. Afterwards it appears as "Uploaded" in the list.
 Nothing is restored until you trigger that there. Uploaded backups are **never deleted automatically**.
 
-## 11.4 Restoring a backup
+## 15.4 Restoring a backup
 
 When restoring, you replace the present data with the state of a backup.
 
@@ -630,20 +881,20 @@ For a short time Vitafolio answers "The app is being maintained right now". Wait
 If the restore fails, the previous state is written back automatically. You then see the message "The restore failed. The
 running app was not changed; the previous state is saved as the backup “Before restore”. Details are in the server’s log."
 
-## 11.5 Moving to another computer
+## 15.5 Moving to another computer
 
 A backup file contains your data, but **not the secret keys** in the subfolder `keys` of the data folder. This concerns the
-two-factor sign-in of the Docker version.
+two-factor sign-in and encrypted AI credentials of the Docker version.
 
 - If you restore the backup into a **new, empty data folder** without taking the `keys` folder along, Vitafolio can no
   longer check the codes from the authenticator app. You then see the message "The key of the two-factor sign-in cannot be
   read. Have the administrator reset it and set it up again."
-- The **recovery codes** keep working, and an administrator can reset the two-factor sign-in of an account (Section 10.3).
+- The **recovery codes** keep working, and an administrator can reset the two-factor sign-in of an account (Section 14.3).
 - The easiest way is to take the whole data folder along when moving.
 
 For a restore into the same data folder on the same computer this does not matter.
 
-## 11.6 Where are the backups?
+## 15.6 Where are the backups?
 
 In the **backup folder** that you see in Figure 14. It has subfolders: `recent` (the newest backups), `daily` (one per day)
 and `uploaded` (uploaded ones). The files are called, for example, `app-20261104-020000-scheduled.db` (date, time, kind).
@@ -652,7 +903,7 @@ When tidying up, Vitafolio deletes only files with this name pattern. It leaves 
 the `recent` folder counts all kinds alike. The safety copy "Before restore" is also tidied up at some point when many newer
 backups are added. If you want to keep a backup for good, download it.
 
-# 12 The Windows program in daily use
+# 16 The Windows program in daily use
 
 The Windows program differs from the Docker version in these points:
 
@@ -660,7 +911,7 @@ The Windows program differs from the Docker version in these points:
   sidebar says "Local account". As the display name Vitafolio uses your Windows user name.
 - **No sign-out, no users, no log, no two-factor sign-in.** There is no app administration either.
 - **The settings** have two tabs: "Appearance" and "Backups".
-- **The backups** work as in Chapter 11, but **without a password prompt**. They run only while the program is open.
+- **The backups** work as in Chapter 15, but **without a password prompt**. They run only while the program is open.
   What was missed is caught up at the next start, unless you switched that off.
 - **Closing:** When you close the window you briefly see "Closing – the backup is running …". Wait until the window
   disappears. One more backup is made then. If Windows shuts down while Vitafolio is open, the program waits only briefly
@@ -681,14 +932,14 @@ You open the folder like this:
 1. Press the Windows key and the R key at the same time.
 2. Enter `%LOCALAPPDATA%\SushiFlux Develop\Vitafolio` and press Enter.
 
-The folder holds the database, the secret keys (`keys`), the backups (`backups`) and program logs. Do not delete or change
-anything there by hand as long as you want to keep the data. Do not copy the folder while the program is running. Download
-a backup in the app instead (Chapter 11). If you want to **delete all data for good**, close Vitafolio and delete this
-folder.
+The folder holds the database, the secret keys (`keys`), the backups (`backups`), generated dossiers, and program logs.
+Do not delete or change anything there by hand as long as you want to keep the data. Do not copy the folder while the
+program is running. Download a backup in the app instead (Chapter 15). If you want to **delete all data for good**,
+close Vitafolio and delete this folder.
 
-# 13 Solving problems
+# 17 Solving problems
 
-## 13.1 Copying error messages
+## 17.1 Copying error messages
 
 Vitafolio shows error messages **in full** and in understandable words (see Figure 17). Every message has a **Copy**
 button. It copies the whole message with the technical details, the error code, the program version and the time. Paste
@@ -696,22 +947,24 @@ the text into your message when you look for help. With "Details" you open the t
 
 ![An error message with a Copy button](bilder/fehlermeldung.png)
 
-## 13.2 Common problems
+## 17.2 Common problems
 
 | What you see | Cause | What to do |
 |---|---|---|
 | Instead of the app, the browser shows a short text message in English: "This server is not reachable under this host name. The operator can allow it with the setting ALLOWED_HOSTS." | You open Vitafolio under a name that is not in `ALLOWED_HOSTS`. | Enter the name in `ALLOWED_HOSTS` (Section 4.6) and restart the container. With the server's IP address it always works. The log contains the line "Anfrage mit nicht erlaubtem Hostnamen … abgewiesen" (in German). |
 | "Username or password is wrong." | Wrong input. Vitafolio deliberately does not reveal which. | Check both. Mind the keyboard layout and the caps lock key. |
 | "Too many attempts. Please try again in … seconds." | Too many sign-ins or codes in a short time from the same address. This is a protective brake. Default: 10 sign-ins per minute. | Wait the stated time. Behind a reverse proxy: check `TRUSTED_PROXIES` (Section 4.6), otherwise all visitors count together. |
-| "This account is disabled. Contact the administrator." | An administrator disabled the account. | Ask an administrator to enable it again (Section 10.3). |
+| "This account is disabled. Contact the administrator." | An administrator disabled the account. | Ask an administrator to enable it again (Section 14.3). |
 | "The code is wrong or was already used." | Wrong code, or an old code. | Check the time on your phone: it has to be right. Enter the current code. Or use a recovery code. |
 | "This code was already used. Wait for the next code of the app or use a recovery code." | The code was right, but you had just used it. Each code works only once. | Wait up to 30 seconds for the next code of the app, or use a recovery code. |
-| "The key of the two-factor sign-in cannot be read. …" | The backup was restored into a new data folder without the `keys` folder (Section 11.5). | Sign in with a recovery code, or have an administrator reset the two-factor sign-in. |
+| "The key of the two-factor sign-in cannot be read. …" | The backup was restored into a new data folder without the `keys` folder (Section 15.5). | Sign in with a recovery code, or have an administrator reset the two-factor sign-in. |
 | "The sign-in has expired. Please start again with username and password." | The second step took longer than 5 minutes or had more than 5 attempts. | Sign in again. |
-| Phone and recovery codes lost | – | Ask an administrator to reset your two-factor sign-in (Section 10.3). As the sole administrator, use the emergency reset, which also disables 2FA. |
-| Forgotten password | – | Another administrator sets a new password for you (Section 10.3). For the **only** administrator, use the link "Forgot password? (Administrator emergency reset)" on the sign-in page: it prints a one-time code to the server logs (Docker/Unraid logs) that lets you set a new password. |
+| Phone and recovery codes lost | – | Ask an administrator to reset your two-factor sign-in (Section 14.3). As the sole administrator, use the emergency reset, which also disables 2FA. |
+| Forgotten password | – | Another administrator sets a new password for you (Section 14.3). For the **only** administrator, use the link "Forgot password? (Administrator emergency reset)" on the sign-in page: it prints a one-time code to the server logs (Docker/Unraid logs) that lets you set a new password. |
 | "Registration is closed. Ask the administrator for an account." | Registration is off. | Have an account created for you. |
-| "Two-factor sign-in has to be set up first." | The administrator requires it for everybody. | Set it up (Section 8.2). Nothing else works before. |
+| "Two-factor sign-in has to be set up first." | The administrator requires it for everybody. | Set it up (Section 12.2). Nothing else works before. |
+| "AI response could not be parsed as valid JSON." | Language model returned conversational commentary or truncated the output. | Click "Copy Correction Prompt" and resend it to the model, or switch models. |
+| "Connection to AI service failed." | Invalid API key or unreachable custom BaseUrl (e.g. Ollama service not running). | Verify your API key in AI Settings and click "Test Connection". Ensure `ollama serve` is active. |
 | "The request was refused for security reasons. Please reload the page." | The page was old or was called from a foreign page. | Reload the page. |
 | "The server cannot be reached. Check the connection and try again." | Vitafolio is not running, or the connection is gone. | Check whether the container is running, and the connection to the server. |
 | "The app is being maintained right now (e.g. a backup is being restored)." | A restore is running. | Wait a moment and try again. |
@@ -720,7 +973,7 @@ the text into your message when you look for help. With "Details" you open the t
 | "The file is too large: … (at most 512 MB allowed)." | The backup is larger than 512 MB. | – (this limit applies to uploading). |
 | "Password or code does not match. Nothing was changed." | For a backup action (download, upload, restore) your confirmation was wrong. | Enter your current password and, if switched on, a fresh code. |
 
-## 13.3 Problems at start in the container
+## 17.3 Problems at start in the container
 
 These messages are in the container's log (on Unraid: the "Logs" icon at the container). They are in German.
 
@@ -740,9 +993,8 @@ These messages are in the container's log (on Unraid: the "Logs" icon at the con
 3. In the data folder, delete the files `app.db`, `app.db-wal` and `app.db-shm`.
 4. Copy the backup you want into the data folder and name it `app.db`.
 5. Start the container. The database is brought up to date at start.
-<!-- Final pass: try the emergency steps (3 to 5) with a real backup and confirm; so far only derived from the code. -->
 
-## 13.4 Problems in the Windows program
+## 17.4 Problems in the Windows program
 
 | What you see | What to do |
 |---|---|
@@ -754,48 +1006,63 @@ These messages are in the container's log (on Unraid: the "Logs" icon at the con
 The program writes a log into its data folder (subfolder `logs`). Its messages appear in the language of your Windows:
 English if Windows is English, otherwise German.
 
-# 14 Privacy
+# 18 Privacy
 
-Vitafolio sends **no data to the publisher**. There are no usage statistics and no remote monitoring. The app also does not
-load fonts or program parts from the internet: everything comes from Vitafolio itself.
+Vitafolio sends **no data or telemetry to the publisher**. There are no usage statistics and no remote monitoring. The app also does not
+load fonts, CDNs, or scripts from the internet: everything is bundled and served locally from Vitafolio itself.
 
 **What is stored where:**
 
 | What | Where |
 |---|---|
-| Accounts (username, display name, role, password) | in the data folder. The password is never stored in plain text, only as a check value (hash). |
-| Your choice of colour scheme and language | in the browser and in your account |
+| Accounts (username, display name, role, password hash) | in the data folder. The password is never stored in plain text, only as a secure cryptographic hash. |
+| Master profile (career history, education, skills, custom sections) | in the data folder inside the SQLite database. |
+| Portrait photos and signatures | in the data folder (`data/profiles/...`). |
+| Cover letters & Application tracker workflows | in the data folder inside the SQLite database. |
+| Archived application dossier snapshots (PDF) | in the data folder (`data/applications/...`). |
+| AI configuration & API keys | API keys are stored encrypted in the database via ASP.NET Core Data Protection (`keys/`). |
+| AI queries & candidate privacy | External AI providers never receive real names or contact details (Zero-Trust Pseudonymization). |
+| Your choice of colour scheme and language | in the browser and in your account. |
 | Two-factor secret | encrypted in the database. The keys for it are in the `keys` folder. |
-| Recovery codes | only as check values, not readable |
+| Recovery codes | only as check values, not readable. |
 | Signed-in devices | name of the browser, IP address, times, in the data folder. Ended or expired sessions are deleted after 30 days. |
-| Activity log | in the data folder: who, when, what, from which IP address |
+| Activity log | in the data folder: who, when, what, from which IP address. |
 | Backups | in the backup folder. They contain all data of all accounts. |
-| Windows program: window profile, window position, program log | in the data folder on your PC |
+| Windows program: window profile, window position, program log | in the data folder on your PC. |
 
-**Cookies:** The Docker version uses two small text marks (cookies) that hold your sign-in. The browser sends them by
+**Cookies:** The Docker version uses two small secure cookies (HttpOnly) that hold your sign-in. The browser sends them by
 itself with every request. Scripts of the page cannot read them, and they go only to Vitafolio. The Windows program
 instead uses a mark that is created anew at every start and exists only between window and program.
 
-**Who sees what?** An administrator sees the accounts, the activity log and the backups. With the backups, however, all
-data lies open. Give the administrator role only to people you trust.
+**Who sees what?** An administrator sees accounts, the activity audit log, and backups. Administrators cannot browse other
+users' resumes or cover letters in the UI. However, because backup archives contain the full database, grant the
+administrator role only to people you fully trust.
 
-**Deleting:** A deleted account disappears from the database with its data. It is still in older backups. If you really
-want to get rid of everything, delete the backups and the data folder as well (in the Windows program the folder from
-Chapter 12).
+**Deleting:** A deleted account disappears from the database with all its resumes, applications, and documents. To permanently
+remove data from historical backups, delete the corresponding backup files in the data directory.
 
-# 15 Terms
+# 19 Terms
 
 | Term | Meaning |
 |---|---|
 | Administrator | Account that manages other accounts and the settings of the app. The first account automatically becomes administrator. |
-| Authenticator app | App on the phone that creates a six-digit code every 30 seconds. |
-| Backup | Copy of your data with which you can restore it. |
+| API Key | Confidential access token for cloud AI providers (OpenAI, Anthropic, Gemini). Encrypted at rest in Vitafolio. |
+| Authenticator App | Mobile smartphone app that creates a six-digit code every 30 seconds (TOTP RFC 6238). |
 | Container | Closed package in which a program runs together with everything it needs (Docker). |
-| Data folder | Folder that holds the database, keys and (by default) the backups. |
-| Docker | Technique for running programs in containers. |
-| Environment variable | Named value that you give a program or container at start. |
-| HTTPS | Encrypted connection between browser and server. Recognisable by the padlock in the address bar. |
-| Open source | The source code is public; anyone may look at the program and use it. |
-| Recovery code | Emergency code for signing in when the phone is not there. Each works only once. |
-| Reverse proxy | Service placed in front that accepts requests from the internet, encrypts them and passes them on to Vitafolio. |
-| Two-factor sign-in | In addition to the password there is a second proof, for example a code from an app. |
+| Data Folder | Folder that holds the database, keys, dossiers, and backup archives. |
+| DIN 5008 | German industrial standard governing business correspondence layout (including Form B window envelopes). |
+| Docker | Technique for running programs in lightweight, portable containers. |
+| Dossier | Comprehensive job application portfolio unifying cover sheet, DIN 5008 cover letter, and typographic CV into a single PDF. |
+| HTTPS | Encrypted connection between browser and server (padlock icon in the address bar). |
+| Ollama / LM Studio | Local runner tools executing large language models directly on your hardware (100% offline, zero cloud reliance). |
+| Open Source | The source code is public; anyone may look at the program and use it freely under copyleft terms. |
+| Open XML SDK | Library enabling native Microsoft Word (.docx) document compilation without requiring Office desktop installations. |
+| Prompt | Structured instructions and task context provided to an AI model. Vitafolio constructs these with strict JSON schemas. |
+| Pseudonymization | Tokenizing candidate PII with generic placeholders (`[BEWERBER_*]`) so external models never learn real identities. |
+| Reverse Proxy | Service placed in front that accepts requests from the internet, encrypts them, and passes them on to Vitafolio. |
+| Backup Archive | Consistent online snapshot of the SQLite database enabling complete data recovery. |
+| Typst | Modern high-speed typesetting engine compiling publisher-grade vector PDF documents in server memory. |
+| Environment Variable | Named value that you give a program or container at start (e.g. `PUID`, `PGID`, `TZ`). |
+| Velopack | Installation and auto-update packaging framework for the Windows desktop application. |
+| Recovery Code | Emergency code for signing in when the phone is not available. Each works only once. |
+| Two-Factor Sign-In | Security procedure where a second proof (code from an authenticator app) is required alongside the password. |

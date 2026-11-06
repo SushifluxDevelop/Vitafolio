@@ -1,0 +1,205 @@
+name: Release
+
+# Three-tier push model:
+#   v2026.11.12            -> Release push: builds artifacts, publishes a PUBLIC GitHub Release
+#   v2026.11.12-rc1        -> RC push: builds artifacts, publishes a DRAFT GitHub Release
+#   platform scope         -> Specified in annotated tag message: "platform: unraid", "platform: windows-desktop", "platform: all"
+on:
+  push:
+    tags:
+      - "v*"
+
+env:
+  IMAGE_NAME: ghcr.io/sushifluxdevelop/vitafolio
+
+jobs:
+  inspect:
+    name: Inspect Tag and Determine Targets
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.version.outputs.tag }}
+      is_rc: ${{ steps.version.outputs.is_rc }}
+      builds_unraid: ${{ steps.version.outputs.builds_unraid }}
+      builds_windows: ${{ steps.version.outputs.builds_windows }}
+      docker_tag: ${{ steps.version.outputs.docker_tag }}
+      template_tag: ${{ steps.version.outputs.template_tag }}
+      release_name: ${{ steps.version.outputs.release_name }}
+    steps:
+      - name: Check out
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Parse tag and platform scope
+        id: version
+        run: |
+          tag="${GITHUB_REF_NAME}"
+          is_rc=false
+          if [[ "$tag" == *-rc* || "$tag" == *-beta* ]]; then is_rc=true; fi
+
+          git fetch --force origin "refs/tags/${tag}:refs/tags/${tag}" || true
+          platform="$(git tag -l --format='%(contents)' "$tag" | sed -n 's/^platform:[[:space:]]*//p' | head -n1 | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')"
+
+          builds_unraid=false
+          builds_windows=false
+          case ",${platform}," in
+            ",,"|*,all,*)
+              builds_unraid=true
+              builds_windows=true
+              ;;
+            *)
+              if [[ ",${platform}," == *,unraid,* ]]; then builds_unraid=true; fi
+              if [[ ",${platform}," == *,windows-desktop,* || ",${platform}," == *,windows,* || ",${platform}," == *,windows-all,* ]]; then builds_windows=true; fi
+              ;;
+          esac
+
+          echo "Build-Scope: platform='${platform:-all}' builds_unraid=$builds_unraid builds_windows=$builds_windows"
+
+          target_label=""
+          if [[ -z "$platform" || ",${platform}," == *,all,* ]]; then
+            target_label="All"
+          else
+            IFS=',' read -ra ids <<< "$platform"
+            for id in "${ids[@]}"; do
+              case "$id" in
+                unraid) name="Unraid" ;;
+                windows-desktop|windows) name="Windows Desktop" ;;
+                *) name="$id" ;;
+              esac
+              target_label="${target_label:+$target_label, }$name"
+            done
+          fi
+
+          docker_tag="${tag#v}"
+          template_tag="$docker_tag"
+          if [[ "$is_rc" == "true" ]]; then template_tag="rc"; fi
+
+          {
+            echo "tag=$tag"
+            echo "is_rc=$is_rc"
+            echo "builds_unraid=$builds_unraid"
+            echo "builds_windows=$builds_windows"
+            echo "docker_tag=$docker_tag"
+            echo "template_tag=$template_tag"
+            echo "release_name=$tag ($target_label)"
+          } >> "$GITHUB_OUTPUT"
+
+  docker:
+    name: Build & Push Docker Image
+    needs: inspect
+    if: needs.inspect.outputs.builds_unraid == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Check out
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
+
+      - name: Log in to GHCR
+        uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567 # v3.3.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push image
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ env.IMAGE_NAME }}:${{ needs.inspect.outputs.docker_tag }}
+            ${{ env.IMAGE_NAME }}:nightly
+            ${{ needs.inspect.outputs.is_rc == 'true' && format('{0}:rc', env.IMAGE_NAME) || '' }}
+            ${{ needs.inspect.outputs.is_rc == 'true' && format('{0}:beta', env.IMAGE_NAME) || '' }}
+            ${{ needs.inspect.outputs.is_rc == 'false' && format('{0}:latest', env.IMAGE_NAME) || '' }}
+          build-args: |
+            APP_TITLE=Vitafolio
+            APP_VERSION=${{ needs.inspect.outputs.tag }}
+            APP_CHANNEL=${{ needs.inspect.outputs.is_rc == 'true' && 'beta' || 'release' }}
+            VCS_REF=${{ github.sha }}
+
+      - name: Render Unraid template
+        run: |
+          sed "s/__VERSION__/${{ needs.inspect.outputs.template_tag }}/g" \
+            unraid/vitafolio.xml.template > unraid/vitafolio.xml
+
+      - name: Upload Unraid template artifact
+        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 # v4.6.1
+        with:
+          name: unraid-template
+          path: unraid/vitafolio.xml
+
+  windows:
+    name: Build Windows Desktop Installer
+    needs: inspect
+    if: needs.inspect.outputs.builds_windows == 'true'
+    runs-on: windows-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@0f4a354dd5547a28c70b7853dbd95d5b67886e73 # v6.1.0
+        with:
+          global-json-file: global.json
+
+      - name: Set up Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 26
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: npm ci --no-fund --no-audit
+
+      - name: Build Windows installer
+        shell: powershell
+        run: |
+          $flag = if ('${{ needs.inspect.outputs.is_rc }}' -eq 'true') { '-Beta' } else { '' }
+          if ($flag) {
+            .\scripts\build-windows.ps1 $flag
+          } else {
+            .\scripts\build-windows.ps1
+          }
+
+      - name: Upload Windows artifacts
+        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 # v4.6.1
+        with:
+          name: windows-release
+          path: artifacts/windows/*
+
+  publish:
+    name: Publish GitHub Release
+    needs: [inspect, docker, windows]
+    if: always() && (needs.docker.result == 'success' || needs.docker.result == 'skipped') && (needs.windows.result == 'success' || needs.windows.result == 'skipped')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download all workflow artifacts
+        uses: actions/download-artifact@cc203385981b70ca67e1cc392babf9cc229d5806 # v4.1.9
+        with:
+          path: release-files
+
+      - name: Collect release assets
+        id: collect
+        run: |
+          mkdir -p dist
+          find release-files -type f -exec cp {} dist/ \;
+          ls -la dist/
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@c95fe1489396fe8a9eb87238604da99376a70478 # v2.2.1
+        with:
+          tag_name: ${{ needs.inspect.outputs.tag }}
+          name: ${{ needs.inspect.outputs.release_name }}
+          draft: ${{ needs.inspect.outputs.is_rc == 'true' }}
+          prerelease: ${{ needs.inspect.outputs.is_rc == 'true' }}
+          files: dist/*
+          generate_release_notes: true
+
