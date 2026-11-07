@@ -16,6 +16,8 @@ public static partial class VersionFormat
 {
     /// <summary>Greek small letter beta (U+03B2).</summary>
     public const string BetaMark = "\u03B2";
+    /// <summary>Greek small letter alpha (U+03B1).</summary>
+    public const string NightlyMark = "\u03B1";
 
     // The script accepts "<digits>.<digits>" after "<short>." and nothing else (no leading/trailing/double dots, no third part)
     [GeneratedRegex(@"^[0-9]+\.[0-9]+$")]
@@ -39,6 +41,7 @@ public static partial class VersionFormat
         return kind switch
         {
             "beta" => $"{shortVersion} ({counters} {BetaMark})",
+            "nightly" or "alpha" => $"{shortVersion} ({counters} {NightlyMark})",
             "dev" => $"{shortVersion} ({counters}-dev)",
             _ => $"{shortVersion} ({counters})",
         };
@@ -51,10 +54,11 @@ public static partial class VersionFormat
         return Kind(channel) switch
         {
             "beta" => full + "-beta",
+            "nightly" or "alpha" => full + "-nightly",
             "dev" => full + "-dev",
             _ => shortVersion,
         };
     }
 
-    private static string Kind(string? channel) => channel is "beta" or "dev" ? channel : "release";
+    private static string Kind(string? channel) => channel is "beta" or "dev" or "nightly" or "alpha" ? channel : "release";
 }

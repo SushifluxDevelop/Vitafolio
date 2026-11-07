@@ -1,9 +1,18 @@
 name: Release
 
-# Three-tier push model:
-#   v2026.11.12            -> Release push: builds artifacts, publishes a PUBLIC GitHub Release
-#   v2026.11.12-rc1        -> RC push: builds artifacts, publishes a DRAFT GitHub Release
-#   platform scope         -> Specified in annotated tag message: "platform: unraid", "platform: windows-desktop", "platform: all"
+# Four-tier push model (Dev, Nightly, Beta, Release):
+#   Release (v2026.11.12)                -> Publishes public GitHub Release. Docker tags: <version>, :latest, :beta, :nightly
+#   Beta (v2026.11.12.13.557-beta)       -> Publishes public GitHub Pre-Release. Docker tags: <version>, :beta, :nightly
+#   Nightly (v2026.11.12.13.557-nightly) -> Publishes public GitHub Pre-Release. Docker tags: <version>, :nightly
+#   Dev-Build (v2026.11.12.13.557-dev)   -> Private DRAFT GitHub Release (own testing only). Docker tags: <version>, :dev
+#
+# Docker tag hierarchy (Unraid CA branch channels, user rule 2026-11-07):
+#   - Nightly-Build:                 version tag + :nightly
+#   - Beta-Release:                  version tag + :beta + :nightly
+#   - Release (Öffentlich / Stable): version tag + :latest + :beta + :nightly
+#   - Dev-Build:                     version tag + :dev (rein privat / Draft)
+#
+# Platform scope: specified in annotated tag message: "platform: unraid", "platform: windows-desktop", "platform: all"
 on:
   push:
     tags:
@@ -18,7 +27,10 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       tag: ${{ steps.version.outputs.tag }}
-      is_rc: ${{ steps.version.outputs.is_rc }}
+      is_beta: ${{ steps.version.outputs.is_beta }}
+      is_nightly: ${{ steps.version.outputs.is_nightly }}
+      is_prerelease: ${{ steps.version.outputs.is_prerelease }}
+      is_dev: ${{ steps.version.outputs.is_dev }}
       builds_unraid: ${{ steps.version.outputs.builds_unraid }}
       builds_windows: ${{ steps.version.outputs.builds_windows }}
       docker_tag: ${{ steps.version.outputs.docker_tag }}
@@ -32,8 +44,22 @@ jobs:
         id: version
         run: |
           tag="${GITHUB_REF_NAME}"
-          is_rc=false
-          if [[ "$tag" == *-rc* || "$tag" == *-beta* ]]; then is_rc=true; fi
+          is_beta=false
+          is_nightly=false
+          is_prerelease=false
+          is_dev=false
+          if [[ "$tag" == *-beta ]]; then
+            is_beta=true
+            is_prerelease=true
+          elif [[ "$tag" == *-nightly ]]; then
+            is_nightly=true
+            is_prerelease=true
+          elif [[ "$tag" == *-dev ]]; then
+            is_dev=true
+          elif [[ "$tag" == *-rc* ]]; then
+            echo "::error::Release candidates were replaced by betas (tag v<year>.<month>.<commit>.<prompts>.<lines>-beta); $tag cannot be built any more"
+            exit 1
+          fi
 
           git fetch --force origin "refs/tags/${tag}:refs/tags/${tag}" || true
           platform="$(git tag -l --format='%(contents)' "$tag" | sed -n 's/^platform:[[:space:]]*//p' | head -n1 | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')"
@@ -70,11 +96,17 @@ jobs:
 
           docker_tag="${tag#v}"
           template_tag="$docker_tag"
-          if [[ "$is_rc" == "true" ]]; then template_tag="rc"; fi
+          if [[ "$is_beta" == "true" ]]; then template_tag="beta"; fi
+          if [[ "$is_nightly" == "true" ]]; then template_tag="nightly"; fi
+          if [[ "$is_dev" == "true" ]]; then template_tag="dev"; fi
+          if [[ "$is_prerelease" == "false" && "$is_dev" == "false" ]]; then template_tag="latest"; fi
 
           {
             echo "tag=$tag"
-            echo "is_rc=$is_rc"
+            echo "is_beta=$is_beta"
+            echo "is_nightly=$is_nightly"
+            echo "is_prerelease=$is_prerelease"
+            echo "is_dev=$is_dev"
             echo "builds_unraid=$builds_unraid"
             echo "builds_windows=$builds_windows"
             echo "docker_tag=$docker_tag"
@@ -111,14 +143,13 @@ jobs:
           push: true
           tags: |
             ${{ env.IMAGE_NAME }}:${{ needs.inspect.outputs.docker_tag }}
-            ${{ env.IMAGE_NAME }}:nightly
-            ${{ needs.inspect.outputs.is_rc == 'true' && format('{0}:rc', env.IMAGE_NAME) || '' }}
-            ${{ needs.inspect.outputs.is_rc == 'true' && format('{0}:beta', env.IMAGE_NAME) || '' }}
-            ${{ needs.inspect.outputs.is_rc == 'false' && format('{0}:latest', env.IMAGE_NAME) || '' }}
+            ${{ needs.inspect.outputs.is_dev == 'true' && format('{0}:dev', env.IMAGE_NAME) || format('{0}:nightly', env.IMAGE_NAME) }}
+            ${{ (needs.inspect.outputs.is_beta == 'true' || (needs.inspect.outputs.is_prerelease == 'false' && needs.inspect.outputs.is_dev == 'false')) && format('{0}:beta', env.IMAGE_NAME) || '' }}
+            ${{ needs.inspect.outputs.is_prerelease == 'false' && needs.inspect.outputs.is_dev == 'false' && format('{0}:latest', env.IMAGE_NAME) || '' }}
           build-args: |
             APP_TITLE=Vitafolio
             APP_VERSION=${{ needs.inspect.outputs.tag }}
-            APP_CHANNEL=${{ needs.inspect.outputs.is_rc == 'true' && 'beta' || 'release' }}
+            APP_CHANNEL=${{ needs.inspect.outputs.is_beta == 'true' && 'beta' || (needs.inspect.outputs.is_nightly == 'true' && 'nightly' || (needs.inspect.outputs.is_dev == 'true' && 'dev' || 'release')) }}
             VCS_REF=${{ github.sha }}
 
       - name: Render Unraid template
@@ -137,8 +168,8 @@ jobs:
         with:
           tag_name: ${{ needs.inspect.outputs.tag }}
           name: ${{ needs.inspect.outputs.release_name }}
-          draft: ${{ needs.inspect.outputs.is_rc == 'true' }}
-          prerelease: ${{ needs.inspect.outputs.is_rc == 'true' }}
+          draft: true
+          prerelease: ${{ needs.inspect.outputs.is_prerelease }}
           files: unraid/vitafolio.xml
 
   windows:
@@ -171,7 +202,7 @@ jobs:
       - name: Build Windows installer
         shell: powershell
         run: |
-          $flag = if ('${{ needs.inspect.outputs.is_rc }}' -eq 'true') { '-Beta' } else { '' }
+          $flag = if ('${{ needs.inspect.outputs.is_beta }}' -eq 'true') { '-Beta' } elseif ('${{ needs.inspect.outputs.is_nightly }}' -eq 'true') { '-Nightly' } elseif ('${{ needs.inspect.outputs.is_dev }}' -eq 'true') { '-Dev' } else { '' }
           if ($flag) {
             .\scripts\build-windows.ps1 $flag
           } else {
@@ -189,8 +220,8 @@ jobs:
         with:
           tag_name: ${{ needs.inspect.outputs.tag }}
           name: ${{ needs.inspect.outputs.release_name }}
-          draft: ${{ needs.inspect.outputs.is_rc == 'true' }}
-          prerelease: ${{ needs.inspect.outputs.is_rc == 'true' }}
+          draft: true
+          prerelease: ${{ needs.inspect.outputs.is_prerelease }}
           files: artifacts/windows/*
 
   publish:
@@ -201,12 +232,20 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: Create or Update GitHub Release
-        uses: softprops/action-gh-release@v3
-        with:
-          tag_name: ${{ needs.inspect.outputs.tag }}
-          name: ${{ needs.inspect.outputs.release_name }}
-          draft: ${{ needs.inspect.outputs.is_rc == 'true' }}
-          prerelease: ${{ needs.inspect.outputs.is_rc == 'true' }}
-          generate_release_notes: true
-
+      - name: Publish GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ needs.inspect.outputs.tag }}
+          IS_PRERELEASE: ${{ needs.inspect.outputs.is_prerelease }}
+          IS_DEV: ${{ needs.inspect.outputs.is_dev }}
+        run: |
+          if [[ "$IS_DEV" == "true" ]]; then
+            echo "Dev build remains draft."
+            exit 0
+          fi
+          if [[ "$IS_PRERELEASE" == "true" ]]; then
+            gh release edit "$TAG" --repo "$GITHUB_REPOSITORY" --draft=false --prerelease
+          else
+            gh release edit "$TAG" --repo "$GITHUB_REPOSITORY" --draft=false --prerelease=false --latest
+          fi
+          gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json name,isDraft,isPrerelease,url --jq '"\(.name): draft=\(.isDraft) prerelease=\(.isPrerelease) \(.url)"'

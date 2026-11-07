@@ -10,17 +10,19 @@
   The product name is read from branding.json - it is never typed here. The version comes from version.txt (written by the pre-commit hook);
   without it (before the first commit) 0.0.1 is used and a warning is printed.
 
-  Switches: -Beta  channel "beta"  (version 2026.11.12-beta.13.557)
-            -Dev   channel "dev"   (version 2026.11.12-dev.13.557; the program shows "-dev" and never checks for updates)
+  Switches: -Beta     channel "beta"     (version 2026.11.12-beta.13.557)
+            -Nightly  channel "nightly"  (version 2026.11.12-nightly.13.557)
+            -Dev      channel "dev"      (version 2026.11.12-dev.13.557; the program shows "-dev" and never checks for updates)
             -SkipFrontend  do not run "npm run build" first (frontend\dist must exist then)
   Not signed: the exe and the installer carry no code signature, so Windows SmartScreen warns on first start. Signing needs a certificate
   and is a separate step of the release process.
 
   Windows PowerShell 5.1 compatible. Console output is German and ASCII-only.
-  Aufruf:  .\scripts\build-windows.ps1 [-Beta | -Dev] [-SkipFrontend]
+  Aufruf:  .\scripts\build-windows.ps1 [-Beta | -Nightly | -Dev] [-SkipFrontend]
 #>
 param(
     [switch]$Beta,
+    [switch]$Nightly,
     [switch]$Dev,
     [switch]$SkipFrontend
 )
@@ -36,8 +38,9 @@ function Invoke-Native([string]$File, [string[]]$Arguments) {
     if ($LASTEXITCODE -ne 0) { throw "$File $($Arguments -join ' ') ist fehlgeschlagen (Exitcode $LASTEXITCODE)." }
 }
 
-if ($Beta -and $Dev) { throw '-Beta und -Dev schliessen sich aus.' }
-$channel = if ($Beta) { 'beta' } elseif ($Dev) { 'dev' } else { 'release' }
+$modesCount = ($Beta ? 1 : 0) + ($Nightly ? 1 : 0) + ($Dev ? 1 : 0)
+if ($modesCount -gt 1) { throw 'Nur einer der Schalter -Beta, -Nightly oder -Dev darf gesetzt sein.' }
+$channel = if ($Beta) { 'beta' } elseif ($Nightly) { 'nightly' } elseif ($Dev) { 'dev' } else { 'release' }
 
 # ---- product name (branding.json is the only place) -----------------------------------------------------------------------------
 $branding = Get-Content -LiteralPath (Join-Path $root 'branding.json') -Raw -Encoding UTF8 | ConvertFrom-Json

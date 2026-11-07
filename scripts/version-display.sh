@@ -2,13 +2,13 @@
 # How the app version is written for people and for tags. Used by the pre-commit hook (changelog heading) and later by the
 # release workflow (GitHub release title); the server's version helper must produce the same text - keep both in step.
 #
-#   sh scripts/version-display.sh display <short> <buildId> <release|beta|dev>
-#   sh scripts/version-display.sh tag     <short> <buildId> <release|beta|dev>
+#   sh scripts/version-display.sh display <short> <buildId> <release|beta|nightly|dev>
+#   sh scripts/version-display.sh tag     <short> <buildId> <release|beta|nightly|dev>
 #
 # short = line 1 of version.txt (v2026.11.12), buildId = line 2 (v2026.11.12.13.557, may be empty).
-#   display: release "v2026.11.12 (13.557)", beta "v2026.11.12 (13.557 β)", dev "v2026.11.12 (13.557-dev)".
+#   display: release "v2026.11.12 (13.557)", beta "v2026.11.12 (13.557 β)", nightly "v2026.11.12 (13.557 α)", dev "v2026.11.12 (13.557-dev)".
 #            Without counters the plain short version (plus "-dev" for dev) - never empty parentheses.
-#   tag:     release "v2026.11.12", beta "v2026.11.12.13.557-beta", dev "v2026.11.12.13.557-dev"
+#   tag:     release "v2026.11.12", beta "v2026.11.12.13.557-beta", nightly "v2026.11.12.13.557-nightly", dev "v2026.11.12.13.557-dev"
 #            (no spaces, parentheses or β: usable as git/Docker tag and file name).
 
 set -e
@@ -19,12 +19,13 @@ build="${3:-}"
 kind="${4:-release}"
 
 if [ -z "$short" ] || { [ "$mode" != "display" ] && [ "$mode" != "tag" ]; }; then
-    echo "usage: version-display.sh display|tag <short> <buildId> <release|beta|dev>" >&2
+    echo "usage: version-display.sh display|tag <short> <buildId> <release|beta|nightly|dev>" >&2
     exit 2
 fi
 
-# U+03B2 written as its UTF-8 bytes, so the result never depends on the encoding of this file or on the locale
+# U+03B2 (β) and U+03B1 (α) written as their UTF-8 bytes, so the result never depends on the encoding of this file or on the locale
 beta_mark=$(printf '\316\262')
+nightly_mark=$(printf '\316\261')
 
 # "prompts.lines" from the build id: it must be <short>.<digits>.<digits>
 counters=""
@@ -43,6 +44,7 @@ if [ "$mode" = "tag" ]; then
     [ -z "$counters" ] || full="$short.$counters"
     case "$kind" in
         beta) printf '%s-beta\n' "$full" ;;
+        nightly|alpha) printf '%s-nightly\n' "$full" ;;
         dev) printf '%s-dev\n' "$full" ;;
         *) printf '%s\n' "$short" ;;
     esac
@@ -55,6 +57,7 @@ if [ -z "$counters" ]; then
 fi
 case "$kind" in
     beta) printf '%s (%s %s)\n' "$short" "$counters" "$beta_mark" ;;
+    nightly|alpha) printf '%s (%s %s)\n' "$short" "$counters" "$nightly_mark" ;;
     dev) printf '%s (%s-dev)\n' "$short" "$counters" ;;
     *) printf '%s (%s)\n' "$short" "$counters" ;;
 esac

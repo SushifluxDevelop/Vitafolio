@@ -41,6 +41,20 @@ dist/
 coverage/
 playwright-report/
 test-results/
+.playwright/
+.eslintcache
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Database & temporary files
+*.sqlite-wal
+*.sqlite-shm
+*.db-wal
+*.db-shm
+*.tmp
+*.temp
 
 # OS / editors
 Thumbs.db
@@ -48,6 +62,7 @@ Desktop.ini
 .DS_Store
 .idea/
 *.swp
+*.bak
 
 # End-to-end suite: the saved sign-in of the throw-away test instance
 frontend/e2e/.auth/
