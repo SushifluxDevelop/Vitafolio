@@ -7,7 +7,7 @@
 <a name="english"></a>
 ## English
 
-## v2026.11.6 (0.1978 α)
+## v2026.11.7 (0.11 α)
 
 Complete suite for modern job applications: visual resume builder with Typst typesetting and Open XML Word export, DIN 5008 cover letters, Kanban application tracker with revision-safe dossier snapshots, privacy-first AI assistance with PII pseudonymization and server-wide admin keys, JSON Resume data portability, career gap analysis, guided wizard mode, and centralized credential attachment management.
 
@@ -48,7 +48,7 @@ letters and the application tracker build on it in the next versions.
 <a name="deutsch"></a>
 ## Deutsch
 
-## v2026.11.6 (0.1978 α)
+## v2026.11.7 (0.11 α)
 
 Vollständige Suite für professionelle Bewerbungen: Visueller Lebenslauf-Editor mit Typst-Setzmaschine und Word-Export (.docx), normgerechte DIN-5008-Anschreiben, Kanban-Bewerbungs-Tracker mit revisionssicherer Dossier-Archivierung, datenschutzfreundliche KI-Unterstützung mit automatischer Pseudonymisierung und geteiltem Server-Schlüssel, JSON-Resume-Datenportabilität, Lücken-Analyse im Werdegang, geführter Profil-Assistent und zentrale Anlagen- und Zeugnisverwaltung.
 

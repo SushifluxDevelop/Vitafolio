@@ -173,3 +173,4 @@ const md = [
 writeFileSync(join(root, 'THIRD-PARTY-NOTICES.md'), md, 'utf8')
 writeFileSync(join(root, 'frontend', 'public', 'third-party-licenses.json'), JSON.stringify(entries, null, 2), 'utf8')
 console.log(`${entries.length} Komponenten erfasst -> THIRD-PARTY-NOTICES.md & frontend/public/third-party-licenses.json`)
+

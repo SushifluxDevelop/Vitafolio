@@ -38,7 +38,10 @@ function Invoke-Native([string]$File, [string[]]$Arguments) {
     if ($LASTEXITCODE -ne 0) { throw "$File $($Arguments -join ' ') ist fehlgeschlagen (Exitcode $LASTEXITCODE)." }
 }
 
-$modesCount = ($Beta ? 1 : 0) + ($Nightly ? 1 : 0) + ($Dev ? 1 : 0)
+$modesCount = 0
+if ($Beta) { $modesCount++ }
+if ($Nightly) { $modesCount++ }
+if ($Dev) { $modesCount++ }
 if ($modesCount -gt 1) { throw 'Nur einer der Schalter -Beta, -Nightly oder -Dev darf gesetzt sein.' }
 $channel = if ($Beta) { 'beta' } elseif ($Nightly) { 'nightly' } elseif ($Dev) { 'dev' } else { 'release' }
 
